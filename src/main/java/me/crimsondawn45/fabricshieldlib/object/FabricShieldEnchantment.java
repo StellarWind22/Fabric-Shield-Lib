@@ -6,6 +6,7 @@ import java.util.List;
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -103,5 +104,17 @@ public class FabricShieldEnchantment extends Enchantment
 			
 			default:	return false;
 		}
+	}
+	
+	/**
+	 * hasEnchantment
+	 * 
+	 * @param item - Item to look for this enchantment on.
+	 * 
+	 * @return Whether or not the item has this enchantment.
+	 */
+	public boolean hasEnchantment(ItemStack item)
+	{
+		return EnchantmentHelper.getLevel(this, item) > 0;
 	}
 }

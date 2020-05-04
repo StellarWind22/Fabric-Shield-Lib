@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
@@ -38,7 +37,7 @@ public class LivingEntityMixin
 				{
 					for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
 					{
-						if(EnchantmentHelper.getLevel(enchantment, activeItem) > 0)
+						if(enchantment.hasEnchantment(activeItem))
 						{
 							enchantment.onBlockDamage(entity, source, amount);
 						}
@@ -64,7 +63,7 @@ public class LivingEntityMixin
 			{
 				for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
 				{
-					if(EnchantmentHelper.getLevel(enchantment, activeItem) > 0)
+					if(enchantment.hasEnchantment(activeItem))
 					{
 						enchantment.onBlockingTick(entity);
 					}
