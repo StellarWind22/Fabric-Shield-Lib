@@ -1,8 +1,13 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
+import java.util.Arrays;
+import java.util.List;
+
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
+import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -18,7 +23,8 @@ public class FabricShield extends Item
 	private int cooldownTicks;
 	private Item repairItem;
 	private Tag.Identified<Item> repairItemTag;
-	private boolean usesItemTag;
+	private List<Item> repairItemList;
+	private ItemListType itemListType;
 	
 	/**
 	 * Fabric Shield Item
@@ -36,10 +42,9 @@ public class FabricShield extends Item
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
-		this.usesItemTag = false;
+		this.itemListType = ItemListType.ITEM;
 		
 		FabricShieldLib.shields.add(this);
-		FabricShieldLib.logger.info("Registered Instance of Shield: " + this.getClass().getSimpleName() + ".");
 	}
 	
 	/**
@@ -58,23 +63,43 @@ public class FabricShield extends Item
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
-		this.usesItemTag = true;
+		this.itemListType = ItemListType.TAG;
 		
 		FabricShieldLib.shields.add(this);
-		FabricShieldLib.logger.info("Registered Instance of Shield: " + this.getClass().getSimpleName() + ".");
+	}
+	
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
+	{
+		super(settings.maxDamage(durability));
+		
+		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		
+		this.cooldownTicks = cooldownTicks;
+		this.repairItemList = Arrays.asList(repairItems);
+		this.itemListType = ItemListType.LIST;
+		
+		FabricShieldLib.shields.add(this);
 	}
 	
 	/**
-	 * onBlockMelee
+	 * onBlock
 	 * 
-	 * Method called whenever the shield successfully blocks a melee attack.
+	 * Fired whenever this shield successfully blocks an attack.
 	 * 
-	 * @param player - The player.
-	 * @param attacker - Entity attacking the player.
-	 * @param shield - The shield.
-	 * @param shieldHand - Hand holding the shield.
+	 * @param defender - Entity that is using this shield.
+	 * @param source - Source of the damage.
+	 * @param amount - Amount of damage blocked.
 	 */
-	public void onBlockMelee(World world, PlayerEntity player, LivingEntity attacker, ItemStack shield, Hand shieldHand){}
+	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount){}
+	
+	/**
+	 * onBlockTick
+	 * 
+	 * Fired every tick this shield is blocking.
+	 * 
+	 * @param defender - Entity that is using this shield.
+	 */
+	public void onBlockingTick(LivingEntity defender){}
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack)
@@ -99,13 +124,13 @@ public class FabricShield extends Item
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient)
 	{
-		if(this.usesItemTag)
+		switch(this.itemListType)
 		{
-			return this.repairItemTag.contains(ingredient.getItem()) || super.canRepair(stack, ingredient);
-		}
-		else
-		{
-			return this.repairItem == ingredient.getItem() || super.canRepair(stack, ingredient);
+			case ITEM:	return this.repairItem == ingredient.getItem();
+			case LIST:	return this.repairItemList.contains(ingredient.getItem());
+			case TAG:	return this.repairItemTag.contains(ingredient.getItem());
+			
+			default:	return false;
 		}
     }
 	

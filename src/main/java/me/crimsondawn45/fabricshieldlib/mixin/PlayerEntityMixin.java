@@ -6,24 +6,20 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin
 {
-	@Inject(at = @At(value = "RETURN"), method = "damageShield()V", locals=LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "TAIL"), method = "damageShield()V", locals=LocalCapture.CAPTURE_FAILHARD)
 	private void damageShield(float amount, CallbackInfo callBackInfo)
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
@@ -53,7 +49,7 @@ public class PlayerEntityMixin
 		}
 	}
 	
-	@Inject(at = @At(value = "RETURN"), method = "disableShield()V", locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "TAIL"), method = "disableShield()V", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void disableShield(boolean sprinting, CallbackInfo callBackInfo)
 	{	
 		PlayerEntity player = (PlayerEntity) (Object) this;
@@ -70,38 +66,11 @@ public class PlayerEntityMixin
 			
 			if (player.getRandom().nextFloat() < f)
 			{
-				/*
-				 * Disables all shields for the cooldown time of the one that was disabled
-				 */
-				player.getItemCooldownManager().set(Items.SHIELD, ((FabricShield) shield).getCooldownTicks());
-				
-				for(FabricShield entry : FabricShieldLib.shields)
-				{	
-					if(Registry.ITEM.getId(entry) == Registry.ITEM.getDefaultId())
-					{
-						continue;
-					}
-					else
-					{
-						player.getItemCooldownManager().set(entry, ((FabricShield) shield).getCooldownTicks());
-					}
-				}
+				player.getItemCooldownManager().set(shield, ((FabricShield) shield).getCooldownTicks());
 				
 				player.clearActiveItem();
 				player.world.sendEntityStatus(player, (byte)30);
 			}
-		}
-	}
-	
-	@Inject(at = @At(value = "RETURN"), method = "takeShieldHit()V", locals = LocalCapture.CAPTURE_FAILHARD)
-	private void takeShieldHit(LivingEntity attacker, CallbackInfo callBackInfo)
-	{
-		PlayerEntity player = (PlayerEntity) (Object) this;
-		ItemStack shield = player.getActiveItem();
-		
-		if(shield.getItem() instanceof FabricShield)
-		{
-			((FabricShield)shield.getItem()).onBlockMelee(player.world, player, attacker, shield, player.getActiveHand());;
 		}
 	}
 }
