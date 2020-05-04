@@ -44,7 +44,8 @@ public class FabricShield extends Item
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLib.shields.add(this);
+		FabricShieldLib.fabricShields.add(this);
+		FabricShieldLib.allShields.add(this);
 	}
 	
 	/**
@@ -65,7 +66,8 @@ public class FabricShield extends Item
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLib.shields.add(this);
+		FabricShieldLib.fabricShields.add(this);
+		FabricShieldLib.allShields.add(this);
 	}
 	
 	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
@@ -78,7 +80,8 @@ public class FabricShield extends Item
 		this.repairItemList = Arrays.asList(repairItems);
 		this.itemListType = ItemListType.LIST;
 		
-		FabricShieldLib.shields.add(this);
+		FabricShieldLib.fabricShields.add(this);
+		FabricShieldLib.allShields.add(this);
 	}
 	
 	/**
@@ -90,16 +93,26 @@ public class FabricShield extends Item
 	 * @param source - Source of the damage.
 	 * @param amount - Amount of damage blocked.
 	 */
-	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount){}
+	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield){}
 	
 	/**
-	 * onBlockTick
+	 * whileBlockingTick
 	 * 
 	 * Fired every tick this shield is blocking.
 	 * 
 	 * @param defender - Entity that is using this shield.
 	 */
-	public void onBlockingTick(LivingEntity defender){}
+	public void whileBlockingTick(LivingEntity defender, Hand hand, ItemStack shield){}
+	
+	/**
+	 * whileHoldingShieldTick
+	 * 
+	 * Fired every tick this shield is held
+	 * 
+	 * @param defender - Entity that is using this shield.
+	 * @param isBlocking - If the shield is currently blocking.
+	 */
+	public void whileHoldingTick(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield){}
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack)

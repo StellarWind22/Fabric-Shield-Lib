@@ -10,10 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin
@@ -31,7 +33,7 @@ public class LivingEntityMixin
 			{
 				if(activeItem.getItem() instanceof FabricShield)
 				{
-					((FabricShield)activeItem.getItem()).onBlockDamage(entity, source, amount);
+					((FabricShield)activeItem.getItem()).onBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem);
 				}
 				if(activeItem.hasEnchantments())
 				{
@@ -39,7 +41,7 @@ public class LivingEntityMixin
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
-							enchantment.onBlockDamage(entity, source, amount);
+							enchantment.onBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
 						}
 					}
 				}
@@ -53,11 +55,22 @@ public class LivingEntityMixin
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
 		
+		//Holding Ticks
+		if(entity.getMainHandStack().getItem() instanceof FabricShield)
+		{
+			((FabricShield)entity.getMainHandStack().getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, entity.getMainHandStack());
+		}
+		else if(entity.getOffHandStack().getItem() instanceof FabricShield)
+		{
+			((FabricShield)entity.getMainHandStack().getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, entity.getOffHandStack());
+		}
+		
+		//Blocking Ticks
 		if(entity.isBlocking())
 		{
 			if(activeItem.getItem() instanceof FabricShield)
 			{
-				((FabricShield)activeItem.getItem()).onBlockingTick(entity);
+				((FabricShield)activeItem.getItem()).whileBlockingTick(entity, entity.getActiveHand(), activeItem);
 			}
 			if(activeItem.hasEnchantments())
 			{
@@ -65,7 +78,7 @@ public class LivingEntityMixin
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{
-						enchantment.onBlockingTick(entity);
+						enchantment.whileBlockingTick(entity, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
 					}
 				}
 			}

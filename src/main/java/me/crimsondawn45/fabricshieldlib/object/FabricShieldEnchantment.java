@@ -1,6 +1,5 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import java.util.Arrays;
 import java.util.List;
 
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
@@ -14,6 +13,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.Hand;
 
 public class FabricShieldEnchantment extends Enchantment
 {
@@ -63,11 +63,11 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Item...acceptedItems)
+	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, List<Item> acceptedItems)
 	{
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
-		this.acceptedItemList = Arrays.asList(acceptedItems);
+		this.acceptedItemList = acceptedItems;
 		this.itemListType = ItemListType.LIST;
 		
 		FabricShieldLib.enchantments.add(this);
@@ -81,17 +81,29 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param defender - Entity using the enchanted shield.
 	 * @param source - Source of the damage.
 	 * @param amount - Amount of damage that was blocked.
+	 * @param enchantmentLevel - Level of the enchantment.
 	 */
-	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount){}
+	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield, int enchantmentLevel){}
 	
 	/**
-	 * onBlockingTick
+	 * whileBlockingTick
 	 * 
 	 * Fired every tick that a shield with this enchantment is blocking.
 	 * 
 	 * @param defender - Entity using the enchanted shield.
 	 */
-	public void onBlockingTick(LivingEntity defender){}
+	public void whileBlockingTick(LivingEntity defender, Hand hand, ItemStack shield, int enchantmentLevel){}
+	
+	/**
+	 * whileHoldingShieldTick
+	 * 
+	 * Fired every tick this shield is held
+	 * 
+	 * @param defender - Entity that is using this shield.
+	 * @param isBlocking - If the shield is currently blocking.
+	 * @param enchantmentLevel - Level of the enchantment.
+	 */
+	public void whileHoldingTick(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield, int enchantmentLevel){}
 	
 	@Override
 	public boolean isAcceptableItem(ItemStack item)
