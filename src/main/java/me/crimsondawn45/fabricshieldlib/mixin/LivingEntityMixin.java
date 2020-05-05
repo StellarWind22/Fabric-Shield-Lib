@@ -20,7 +20,7 @@ import net.minecraft.util.Hand;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin
 {	
-	@Inject(at = @At(value = "HEAD"), method = "damage()V", locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "HEAD"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
 	{
 		LivingEntity entity = (LivingEntity)(Object)this;

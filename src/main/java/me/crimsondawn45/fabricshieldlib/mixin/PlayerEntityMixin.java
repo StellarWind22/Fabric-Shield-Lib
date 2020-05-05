@@ -19,7 +19,7 @@ import net.minecraft.util.math.MathHelper;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin
 {
-	@Inject(at = @At(value = "TAIL"), method = "damageShield()V", locals=LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "TAIL"), method = "damageShield(F)V", locals=LocalCapture.CAPTURE_FAILHARD)
 	private void damageShield(float amount, CallbackInfo callBackInfo)
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
@@ -49,7 +49,7 @@ public class PlayerEntityMixin
 		}
 	}
 	
-	@Inject(at = @At(value = "TAIL"), method = "disableShield()V", locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "TAIL"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void disableShield(boolean sprinting, CallbackInfo callBackInfo)
 	{	
 		PlayerEntity player = (PlayerEntity) (Object) this;
