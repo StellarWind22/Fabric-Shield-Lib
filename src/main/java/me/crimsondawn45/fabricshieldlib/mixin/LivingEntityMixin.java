@@ -41,7 +41,7 @@ public class LivingEntityMixin
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
-							enchantment.onBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
+							enchantment.onBlockDamage(entity, source, entity.getActiveHand(), activeItem, amount, EnchantmentHelper.getLevel(enchantment, activeItem));
 						}
 					}
 				}

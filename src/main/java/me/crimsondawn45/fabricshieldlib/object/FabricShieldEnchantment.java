@@ -83,7 +83,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param amount - Amount of damage that was blocked.
 	 * @param enchantmentLevel - Level of the enchantment.
 	 */
-	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield, int enchantmentLevel){}
+	public void onBlockDamage(LivingEntity defender, DamageSource source, Hand hand, ItemStack shield, float amount, int enchantmentLevel){}
 	
 	/**
 	 * whileBlockingTick

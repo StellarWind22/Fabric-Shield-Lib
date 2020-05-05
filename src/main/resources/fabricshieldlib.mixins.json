@@ -6,6 +6,7 @@
   "mixins": [
     "PlayerEntityMixin",
     "LivingEntityMixin",
+    "ShieldItemMixin",
     "LivingEntityAccessor"
   ],
   "client": [

@@ -147,6 +147,18 @@ public class FabricShield extends Item
 		}
     }
 	
+	@Override
+	public boolean isEnchantable(ItemStack item)
+	{
+		return !item.hasEnchantments();
+	}
+	
+	@Override
+	public int getEnchantability()
+	{
+		return 9;
+	}
+	
 	/**
 	 * getCoolDownTicks
 	 * 
