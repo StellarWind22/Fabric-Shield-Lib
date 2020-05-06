@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -38,6 +39,8 @@ public class FabricShield extends Item
 	{
 		super(settings.maxDamage(durability));
 		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
+		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
 		this.cooldownTicks = cooldownTicks;
@@ -60,6 +63,8 @@ public class FabricShield extends Item
 	{
 		super(settings.maxDamage(durability));
 		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
+		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
 		this.cooldownTicks = cooldownTicks;
@@ -73,6 +78,8 @@ public class FabricShield extends Item
 	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
 	{
 		super(settings.maxDamage(durability));
+		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
