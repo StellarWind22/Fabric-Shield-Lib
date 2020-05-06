@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
-import me.crimsondawn45.fabricshieldlib.mixin.ModelPredicateProviderRegistryAccessor;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -48,8 +46,6 @@ public class FabricShield extends Item
 		
 		FabricShieldLib.fabricShields.add(this);
 		FabricShieldLib.allShields.add(this);
-		
-		ModelPredicateProviderRegistryAccessor.invokeRegister(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;});
 	}
 	
 	/**
@@ -72,8 +68,6 @@ public class FabricShield extends Item
 		
 		FabricShieldLib.fabricShields.add(this);
 		FabricShieldLib.allShields.add(this);
-		
-		ModelPredicateProviderRegistryAccessor.invokeRegister(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;});
 	}
 	
 	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
@@ -88,8 +82,6 @@ public class FabricShield extends Item
 		
 		FabricShieldLib.fabricShields.add(this);
 		FabricShieldLib.allShields.add(this);
-		
-		ModelPredicateProviderRegistryAccessor.invokeRegister(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;});
 	}
 	
 	/**
