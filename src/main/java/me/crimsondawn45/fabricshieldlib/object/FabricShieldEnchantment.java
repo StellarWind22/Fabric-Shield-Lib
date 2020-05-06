@@ -18,8 +18,8 @@ import net.minecraft.util.Hand;
 public class FabricShieldEnchantment extends Enchantment
 {
 	private Item acceptedItem;
-	private Tag.Identified<Item> acceptedItemTag;
 	private List<Item> acceptedItemList;
+	private Tag<Item> acceptedItemTag;
 	private ItemListType itemListType;
 	
 	/**
@@ -29,7 +29,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItem - Item that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Item acceptedItem)
+	public FabricShieldEnchantment(Enchantment.Weight weight, EnchantmentTarget type, Item acceptedItem)
 	{
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
@@ -46,7 +46,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItemTag - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Tag.Identified<Item> acceptedItemTag)
+	public FabricShieldEnchantment(Enchantment.Weight weight, EnchantmentTarget type, Tag<Item> acceptedItemTag)
 	{
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
@@ -63,7 +63,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, List<Item> acceptedItems)
+	public FabricShieldEnchantment(Enchantment.Weight weight, EnchantmentTarget type, List<Item> acceptedItems)
 	{
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		

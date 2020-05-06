@@ -22,7 +22,7 @@ public class FabricShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
-	private Tag.Identified<Item> repairItemTag;
+	private Tag<Item> repairItemTag;
 	private List<Item> repairItemList;
 	private ItemListType itemListType;
 	
@@ -56,7 +56,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
