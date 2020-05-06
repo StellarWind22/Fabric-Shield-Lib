@@ -49,7 +49,7 @@ public class LivingEntityMixin
 		}
 	}
 	
-	@Inject(at = @At(value = "TAIL"), method = "tick()V", locals = LocalCapture.CAPTURE_FAILHARD)
+	@Inject(at = @At(value = "HEAD"), method = "tick()V", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void tick(CallbackInfo callbackInfo)
 	{
 		LivingEntity entity = (LivingEntity)(Object)this;
