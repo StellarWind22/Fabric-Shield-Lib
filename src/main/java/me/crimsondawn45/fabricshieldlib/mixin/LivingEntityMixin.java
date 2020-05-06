@@ -54,15 +54,39 @@ public class LivingEntityMixin
 	{
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
+		ItemStack mainItem = entity.getMainHandStack();
+		ItemStack offhandItem = entity.getOffHandStack();
 		
-		//Holding Ticks
-		if(entity.getMainHandStack().getItem() instanceof FabricShield)
+		//Holding Ticks ShieldItem
+		if(mainItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)entity.getMainHandStack().getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, entity.getMainHandStack());
+			((FabricShield)mainItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
 		}
-		else if(entity.getOffHandStack().getItem() instanceof FabricShield)
+		else if(offhandItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)entity.getMainHandStack().getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, entity.getOffHandStack());
+			((FabricShield)offhandItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
+		}
+		
+		//Holding Ticks Enchantment
+		if(mainItem.hasEnchantments())
+		{
+			for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+			{
+				if(enchantment.hasEnchantment(mainItem))
+				{
+					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
+				}
+			}
+		}
+		else if(offhandItem.hasEnchantments())
+		{
+			for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+			{
+				if(enchantment.hasEnchantment(offhandItem))
+				{
+					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
+				}
+			}
 		}
 		
 		//Blocking Ticks

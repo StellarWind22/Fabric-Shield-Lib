@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fabricshieldlib",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "name": "Fabric Shield Lib",
   "description": "Library that makes it easy to add shields with fabric without conflictions!",
@@ -13,7 +13,7 @@
     "sources": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib"
   },
 
-  "license": "CC0-1.0",
+  "license": "GPL-3.0",
   "icon": "assets/fabricshieldlib/icon.png",
 
   "environment": "*",
