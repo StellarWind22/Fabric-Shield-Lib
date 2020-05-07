@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fabricshieldlib",
-  "version": "1.0.4",
+  "version": "1.0.3",
 
   "name": "Fabric Shield Lib",
   "description": "Library that makes it easy to add shields with fabric without conflictions!",
