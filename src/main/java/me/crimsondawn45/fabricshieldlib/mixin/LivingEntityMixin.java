@@ -29,7 +29,7 @@ public class LivingEntityMixin
 		{
 			ItemStack activeItem = entity.getActiveItem();
 			
-			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source))
+			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeMethod_6061(source))
 			{
 				if(activeItem.getItem() instanceof FabricShield)
 				{
@@ -60,11 +60,11 @@ public class LivingEntityMixin
 		//Holding Ticks ShieldItem
 		if(mainItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)mainItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
+			((FabricShield)mainItem.getItem()).whileHoldingTick(entity, entity.method_6039(), Hand.MAIN_HAND, mainItem);
 		}
 		else if(offhandItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)offhandItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
+			((FabricShield)offhandItem.getItem()).whileHoldingTick(entity, entity.method_6039(), Hand.OFF_HAND, offhandItem);
 		}
 		
 		//Holding Ticks Enchantment
@@ -74,7 +74,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
-					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
+					enchantment.whileHoldingTick(entity, entity.method_6039(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
 				}
 			}
 		}
@@ -84,13 +84,13 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
-					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
+					enchantment.whileHoldingTick(entity, entity.method_6039(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
 				}
 			}
 		}
 		
 		//Blocking Ticks
-		if(entity.isBlocking())
+		if(entity.method_6039())
 		{
 			if(activeItem.getItem() instanceof FabricShield)
 			{

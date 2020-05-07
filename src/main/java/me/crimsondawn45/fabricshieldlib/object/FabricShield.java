@@ -13,6 +13,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
@@ -22,7 +23,7 @@ public class FabricShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
-	private Tag.Identified<Item> repairItemTag;
+	private Tag<Item> repairItemTag;
 	private List<Item> repairItemList;
 	private ItemListType itemListType;
 	
@@ -56,7 +57,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -127,12 +128,11 @@ public class FabricShield extends Item
 	}
 	
 	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
-	{
+	 public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
-	}
+      return new TypedActionResult<ItemStack>(ActionResult.SUCCESS, itemStack);
+   }
 	
 	@Override
 	public boolean canRepair(ItemStack stack, ItemStack ingredient)

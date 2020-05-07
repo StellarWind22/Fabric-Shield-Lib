@@ -15,5 +15,5 @@ public interface LivingEntityAccessor
 	void setActiveItemStack(ItemStack stack);
 	
 	@Invoker
-	boolean invokeBlockedByShield(DamageSource source);
+	boolean invokeMethod_6061(DamageSource source);
 }
