@@ -36,7 +36,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItem = acceptedItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLib.enchantments.add(this);
+		FabricShieldLib.registerShieldEnchantment(this);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItemTag = acceptedItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLib.enchantments.add(this);
+		FabricShieldLib.registerShieldEnchantment(this);
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItemList = acceptedItems;
 		this.itemListType = ItemListType.LIST;
 		
-		FabricShieldLib.enchantments.add(this);
+		FabricShieldLib.registerShieldEnchantment(this);
 	}
 	
 	/**

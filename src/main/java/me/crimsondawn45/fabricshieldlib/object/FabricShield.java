@@ -44,8 +44,7 @@ public class FabricShield extends Item
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLib.fabricShields.add(this);
-		FabricShieldLib.allShields.add(this);
+		FabricShieldLib.registerShield(this);
 	}
 	
 	/**
@@ -66,10 +65,17 @@ public class FabricShield extends Item
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLib.fabricShields.add(this);
-		FabricShieldLib.allShields.add(this);
+		FabricShieldLib.registerShield(this);
 	}
 	
+	/**
+	 * Fabric Shield Item
+	 * 
+	 * @param settings - Item settings
+	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
+	 * @param durability - How much damage the shield can handle before it breaks.
+	 * @param repairItemTag - Item that can be used to repair the shield.
+	 */
 	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
 	{
 		super(settings.maxDamage(durability));
@@ -80,8 +86,7 @@ public class FabricShield extends Item
 		this.repairItemList = Arrays.asList(repairItems);
 		this.itemListType = ItemListType.LIST;
 		
-		FabricShieldLib.fabricShields.add(this);
-		FabricShieldLib.allShields.add(this);
+		FabricShieldLib.registerShield(this);
 	}
 	
 	/**

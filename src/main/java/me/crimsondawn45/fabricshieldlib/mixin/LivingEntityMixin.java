@@ -37,7 +37,7 @@ public class LivingEntityMixin
 				}
 				if(activeItem.hasEnchantments())
 				{
-					for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+					for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
@@ -70,7 +70,7 @@ public class LivingEntityMixin
 		//Holding Ticks Enchantment
 		if(mainItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+			for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
@@ -80,7 +80,7 @@ public class LivingEntityMixin
 		}
 		else if(offhandItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+			for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
@@ -98,7 +98,7 @@ public class LivingEntityMixin
 			}
 			if(activeItem.hasEnchantments())
 			{
-				for(FabricShieldEnchantment enchantment : FabricShieldLib.enchantments)
+				for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{
