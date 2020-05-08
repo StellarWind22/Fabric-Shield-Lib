@@ -4,5 +4,5 @@ public enum ItemListType
 {
 	ITEM,
 	TAG,
-	LIST
+	ARRAY
 }

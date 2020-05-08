@@ -1,8 +1,5 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import java.util.Arrays;
-import java.util.List;
-
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
@@ -23,7 +20,7 @@ public class FabricShield extends Item
 	private int cooldownTicks;
 	private Item repairItem;
 	private Tag.Identified<Item> repairItemTag;
-	private List<Item> repairItemList;
+	private Item[] repairItemArray;
 	private ItemListType itemListType;
 	
 	/**
@@ -83,8 +80,8 @@ public class FabricShield extends Item
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
 		this.cooldownTicks = cooldownTicks;
-		this.repairItemList = Arrays.asList(repairItems);
-		this.itemListType = ItemListType.LIST;
+		this.repairItemArray = repairItems;
+		this.itemListType = ItemListType.ARRAY;
 		
 		FabricShieldLib.registerShield(this);
 	}
@@ -145,7 +142,15 @@ public class FabricShield extends Item
 		switch(this.itemListType)
 		{
 			case ITEM:	return this.repairItem == ingredient.getItem();
-			case LIST:	return this.repairItemList.contains(ingredient.getItem());
+			case ARRAY:
+				for(Item entry : this.repairItemArray)
+				{
+					if(entry == ingredient.getItem())
+					{
+						return true;
+					}
+				}
+				return false;
 			case TAG:	return this.repairItemTag.contains(ingredient.getItem());
 			
 			default:	return false;

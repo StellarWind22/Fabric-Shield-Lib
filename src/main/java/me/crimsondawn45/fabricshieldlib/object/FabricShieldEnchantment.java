@@ -66,7 +66,7 @@ public class FabricShieldEnchantment extends Enchantment
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
 		this.acceptedItemArray = acceptedItemArray;
-		this.itemListType = ItemListType.LIST;
+		this.itemListType = ItemListType.ARRAY;
 		
 		FabricShieldLib.registerShieldEnchantment(this);
 	}
@@ -108,7 +108,7 @@ public class FabricShieldEnchantment extends Enchantment
 	{
 		switch(this.itemListType)
 		{
-			case LIST:
+			case ARRAY:
 				for(Item entry : this.acceptedItemArray)
 				{
 					if(entry == item.getItem())
