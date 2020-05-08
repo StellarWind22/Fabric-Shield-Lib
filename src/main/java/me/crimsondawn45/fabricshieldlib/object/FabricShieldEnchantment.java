@@ -1,7 +1,5 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import java.util.List;
-
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.enchantment.Enchantment;
@@ -19,7 +17,7 @@ public class FabricShieldEnchantment extends Enchantment
 {
 	private Item acceptedItem;
 	private Tag.Identified<Item> acceptedItemTag;
-	private List<Item> acceptedItemList;
+	private Item[] acceptedItemArray;
 	private ItemListType itemListType;
 	
 	/**
@@ -29,9 +27,9 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItem - Item that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Item acceptedItem)
+	public FabricShieldEnchantment(Rarity weight, Item acceptedItem)
 	{
-		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
 		this.acceptedItem = acceptedItem;
 		this.itemListType = ItemListType.ITEM;
@@ -63,11 +61,11 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, List<Item> acceptedItems)
+	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Item...acceptedItemArray)
 	{
 		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
-		this.acceptedItemList = acceptedItems;
+		this.acceptedItemArray = acceptedItemArray;
 		this.itemListType = ItemListType.LIST;
 		
 		FabricShieldLib.registerShieldEnchantment(this);
@@ -110,7 +108,16 @@ public class FabricShieldEnchantment extends Enchantment
 	{
 		switch(this.itemListType)
 		{
-			case LIST:	return this.acceptedItemList.contains(item.getItem());
+			case LIST:
+				for(Item entry : this.acceptedItemArray)
+				{
+					if(entry == item.getItem())
+					{
+						return true;
+					}
+				}
+				return false;
+
 			case ITEM:	return this.acceptedItem == item.getItem();
 			case TAG:	return this.acceptedItemTag.contains(item.getItem());
 			
