@@ -1,6 +1,6 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
+import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -34,7 +34,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItem = acceptedItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLib.registerShieldEnchantment(this);
+		FabricShieldLibRegistry.registerShieldEnchantment(this);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItemTag = acceptedItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLib.registerShieldEnchantment(this);
+		FabricShieldLibRegistry.registerShieldEnchantment(this);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class FabricShieldEnchantment extends Enchantment
 		this.acceptedItemArray = acceptedItemArray;
 		this.itemListType = ItemListType.ARRAY;
 		
-		FabricShieldLib.registerShieldEnchantment(this);
+		FabricShieldLibRegistry.registerShieldEnchantment(this);
 	}
 	
 	/**

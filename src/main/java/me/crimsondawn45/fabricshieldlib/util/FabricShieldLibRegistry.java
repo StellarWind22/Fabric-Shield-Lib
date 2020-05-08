@@ -1,34 +1,20 @@
-package me.crimsondawn45.fabricshieldlib;
+package me.crimsondawn45.fabricshieldlib.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import me.crimsondawn45.fabricshieldlib.object.FabricBannerShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 
-public class FabricShieldLib implements ModInitializer
-{	
-	public static final String MOD_ID = "fabricshieldlib";
-	
-	public static final Logger logger = LogManager.getLogger("FabricShieldLib");
-	
+public class FabricShieldLibRegistry
+{
 	private static final List<Item> allShields = new ArrayList<Item>();
 	private static final List<FabricShield> fabricShields = new ArrayList<FabricShield>();
+	private static final List<FabricBannerShield> fabricBannerShields = new ArrayList<FabricBannerShield>();
 	public static final List<FabricShieldEnchantment> enchantments = new ArrayList<FabricShieldEnchantment>();
-	
-	@Override
-	public void onInitialize()
-	{	
-		registerShield(Items.SHIELD);
-		logger.info("Fabric Shield Lib Successfully Initialized!");
-	}
 	
 	/**
 	 * registerShield
@@ -44,6 +30,11 @@ public class FabricShieldLib implements ModInitializer
 		if(shield instanceof FabricShield)
 		{
 			fabricShields.add((FabricShield) shield);
+			
+			if(shield instanceof FabricBannerShield)
+			{
+				fabricBannerShields.add((FabricBannerShield) shield);
+			}
 		}
 	}
 	
@@ -62,7 +53,7 @@ public class FabricShieldLib implements ModInitializer
 	/**
 	 * containsShield
 	 * 
-	 * Check if the shield registry contains a particular item instance.
+	 * Check if the shield registry contains a particular Item instance.
 	 * 
 	 * @param shield - Item instance to check for.
 	 */
@@ -74,13 +65,25 @@ public class FabricShieldLib implements ModInitializer
 	/**
 	 * containsFabricShield
 	 * 
-	 * Check if the shield registry contains a particular FabricShieldItem instance.
+	 * Check if the shield registry contains a particular FabricShield instance.
 	 * 
 	 * @param shield - Item instance to check for.
 	 */
 	public static boolean containsFabricShield(Item shield)
 	{
 		return fabricShields.contains(shield);
+	}
+	
+	/**
+	 * containsFabricBannerShield
+	 * 
+	 * Check if the shield registry contains a particular FabricBannerShield instance.
+	 * 
+	 * @param shield - Item instance to check for.
+	 */
+	public static boolean containsFabricBannerShield(Item shield)
+	{
+		return fabricBannerShields.contains(shield);
 	}
 	
 	/**
@@ -98,7 +101,7 @@ public class FabricShieldLib implements ModInitializer
 	/**
 	 * getAllShields
 	 * 
-	 * @return Every registered shield instance at the time this is invoked.
+	 * @return Every registered Item instance at the time this is invoked.
 	 */
 	public static Item[] getAllShields()
 	{
@@ -108,11 +111,21 @@ public class FabricShieldLib implements ModInitializer
 	/**
 	 * getAllFabricShields
 	 * 
-	 * @return Every registered FabricShieldItem instance at the time this is invoked.
+	 * @return Every registered FabricShield instance at the time this is invoked.
 	 */
 	public static FabricShield[] getAllFabricShields()
 	{
 		return (FabricShield[]) fabricShields.toArray();
+	}
+	
+	/**
+	 * getAllFabricBannerShields
+	 * 
+	 * @return Every registered FabricBannerShield instance at the time this is invoked.
+	 */
+	public static FabricBannerShield[] getAllFabricBannerShields()
+	{
+		return (FabricBannerShield[]) fabricBannerShields.toArray();
 	}
 	
 	/**

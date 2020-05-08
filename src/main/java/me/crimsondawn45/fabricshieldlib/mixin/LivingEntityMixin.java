@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
+import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -37,7 +37,7 @@ public class LivingEntityMixin
 				}
 				if(activeItem.hasEnchantments())
 				{
-					for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
+					for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
@@ -70,7 +70,7 @@ public class LivingEntityMixin
 		//Holding Ticks Enchantment
 		if(mainItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
+			for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
@@ -80,7 +80,7 @@ public class LivingEntityMixin
 		}
 		else if(offhandItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
+			for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
@@ -98,7 +98,7 @@ public class LivingEntityMixin
 			}
 			if(activeItem.hasEnchantments())
 			{
-				for(FabricShieldEnchantment enchantment : FabricShieldLib.getAllShieldEnchantments())
+				for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{

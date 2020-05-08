@@ -1,6 +1,6 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
+import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.LivingEntity;
@@ -41,7 +41,7 @@ public class FabricShield extends Item
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLib.registerShield(this);
+		FabricShieldLibRegistry.registerShield(this);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class FabricShield extends Item
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLib.registerShield(this);
+		FabricShieldLibRegistry.registerShield(this);
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class FabricShield extends Item
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
 		
-		FabricShieldLib.registerShield(this);
+		FabricShieldLibRegistry.registerShield(this);
 	}
 	
 	/**
