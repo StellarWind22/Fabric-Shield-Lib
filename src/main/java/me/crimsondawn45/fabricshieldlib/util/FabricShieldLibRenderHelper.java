@@ -12,7 +12,7 @@ public class FabricShieldLibRenderHelper
 	{
 		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT)
 		{
-			BuiltinItemRendererRegistry.INSTANCE.register(shield, new FabricBannerShieldRenderer(shield.getModId(), shield.getItemName()));
+			BuiltinItemRendererRegistry.INSTANCE.register(shield, new FabricBannerShieldRenderer(shield.getModId(),shield.getItemName()));
 		}
 	}
 }

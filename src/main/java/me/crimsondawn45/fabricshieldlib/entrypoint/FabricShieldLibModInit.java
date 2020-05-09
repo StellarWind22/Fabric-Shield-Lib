@@ -21,7 +21,7 @@ public class FabricShieldLibModInit implements ModInitializer
 	
 	@Override
 	public void onInitialize()
-	{	
+	{
 		FabricShieldLibRegistry.registerShield(Items.SHIELD);
 		logger.info("Fabric Shield Lib Successfully Initialized!");
 		
