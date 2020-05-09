@@ -12,24 +12,22 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.texture.SpriteAtlasTexture;
+import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 
 public class FabricBannerShieldRenderer implements BuiltinItemRenderer
 {
 	private ShieldEntityModel modelShield;
-	public SpriteIdentifier shield_base;
-	public SpriteIdentifier shield_base_no_pattern;
+	//public SpriteIdentifier shield_base;
+	//public SpriteIdentifier shield_base_no_pattern;
 	
 	public FabricBannerShieldRenderer(String modId, String itemName)
 	{
-		this.shield_base = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(modId + "entity/" + itemName + "base"));
-		this.shield_base_no_pattern = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(modId + "entity/" + itemName + "_base_nopattern"));
+		
 	}
 	
 	@Override
@@ -38,7 +36,7 @@ public class FabricBannerShieldRenderer implements BuiltinItemRenderer
 		boolean bl = stack.getSubTag("BlockEntityTag") != null;
 		matrices.push();
 		matrices.scale(1.0F, -1.0F, -1.0F);
-		SpriteIdentifier spriteIdentifier = bl ? shield_base : shield_base_no_pattern;
+		SpriteIdentifier spriteIdentifier = bl ? ModelLoader.SHIELD_BASE : ModelLoader.SHIELD_BASE_NO_PATTERN;
 		VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getArmorVertexConsumer(vertexConsumers, this.modelShield.getLayer(spriteIdentifier.getAtlasId()), false, stack.hasEnchantmentGlint()));
 		this.modelShield.method_23775().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 		
@@ -51,5 +49,6 @@ public class FabricBannerShieldRenderer implements BuiltinItemRenderer
         {
         	this.modelShield.method_23774().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
+        matrices.pop();
 	}
 }
