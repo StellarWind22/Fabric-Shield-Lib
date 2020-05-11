@@ -3,7 +3,6 @@ package me.crimsondawn45.fabricshieldlib.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.crimsondawn45.fabricshieldlib.object.FabricBannerShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
 import net.minecraft.enchantment.Enchantment;
@@ -13,7 +12,6 @@ public class FabricShieldLibRegistry
 {
 	private static final List<Item> allShields = new ArrayList<Item>();
 	private static final List<FabricShield> fabricShields = new ArrayList<FabricShield>();
-	private static final List<FabricBannerShield> fabricBannerShields = new ArrayList<FabricBannerShield>();
 	public static final List<FabricShieldEnchantment> enchantments = new ArrayList<FabricShieldEnchantment>();
 	
 	/**
@@ -30,11 +28,6 @@ public class FabricShieldLibRegistry
 		if(shield instanceof FabricShield)
 		{
 			fabricShields.add((FabricShield) shield);
-			
-			if(shield instanceof FabricBannerShield)
-			{
-				fabricBannerShields.add((FabricBannerShield) shield);
-			}
 		}
 	}
 	
@@ -75,18 +68,6 @@ public class FabricShieldLibRegistry
 	}
 	
 	/**
-	 * containsFabricBannerShield
-	 * 
-	 * Check if the shield registry contains a particular FabricBannerShield instance.
-	 * 
-	 * @param shield - Item instance to check for.
-	 */
-	public static boolean containsFabricBannerShield(Item shield)
-	{
-		return fabricBannerShields.contains(shield);
-	}
-	
-	/**
 	 * containsShieldEnchantment
 	 * 
 	 * Check if the enchantment registry contains a particular FabricShieldEnchantment instance.
@@ -116,16 +97,6 @@ public class FabricShieldLibRegistry
 	public static FabricShield[] getAllFabricShields()
 	{
 		return (FabricShield[]) fabricShields.toArray();
-	}
-	
-	/**
-	 * getAllFabricBannerShields
-	 * 
-	 * @return Every registered FabricBannerShield instance at the time this is invoked.
-	 */
-	public static FabricBannerShield[] getAllFabricBannerShields()
-	{
-		return (FabricBannerShield[]) fabricBannerShields.toArray();
 	}
 	
 	/**

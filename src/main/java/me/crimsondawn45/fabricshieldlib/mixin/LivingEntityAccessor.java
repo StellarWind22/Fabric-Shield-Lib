@@ -16,4 +16,7 @@ public interface LivingEntityAccessor
 	
 	@Invoker
 	boolean invokeBlockedByShield(DamageSource source);
+	
+	@Invoker
+	void invokeDamageShield(float amount);
 }

@@ -44,9 +44,9 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItemTag - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Tag.Identified<Item> acceptedItemTag)
+	public FabricShieldEnchantment(Rarity weight, Tag.Identified<Item> acceptedItemTag)
 	{
-		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
 		this.acceptedItemTag = acceptedItemTag;
 		this.itemListType = ItemListType.TAG;
@@ -61,9 +61,9 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param type - Type of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, EnchantmentTarget type, Item...acceptedItemArray)
+	public FabricShieldEnchantment(Rarity weight, Item...acceptedItemArray)
 	{
-		super(weight, type, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
 		this.acceptedItemArray = acceptedItemArray;
 		this.itemListType = ItemListType.ARRAY;
