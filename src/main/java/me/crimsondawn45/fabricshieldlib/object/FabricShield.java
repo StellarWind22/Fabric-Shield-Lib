@@ -98,23 +98,33 @@ public class FabricShield extends Item
 	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield){}
 	
 	/**
-	 * whileBlockingTick
+	 * whileBlocking
 	 * 
 	 * Fired every tick this shield is blocking.
 	 * 
 	 * @param defender - Entity that is using this shield.
 	 */
-	public void whileBlockingTick(LivingEntity defender, Hand hand, ItemStack shield){}
+	public void whileBlocking(LivingEntity defender, Hand hand, ItemStack shield){}
 	
 	/**
-	 * whileHoldingShieldTick
+	 * whileHoldingShield
 	 * 
 	 * Fired every tick this shield is held
 	 * 
 	 * @param defender - Entity that is using this shield.
 	 * @param isBlocking - If the shield is currently blocking.
 	 */
-	public void whileHoldingTick(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield){}
+	public void whileHolding(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield){}
+	
+	/**
+	 * getCoolDownTicks
+	 * 
+	 * @return How many ticks the shield goes into cooldown for after being disabled.
+	 */
+	public int getCooldownTicks()
+	{
+		return this.cooldownTicks;
+	}
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack)
@@ -143,6 +153,7 @@ public class FabricShield extends Item
 		{
 			case ITEM:	return this.repairItem == ingredient.getItem();
 			case ARRAY:
+				
 				for(Item entry : this.repairItemArray)
 				{
 					if(entry == ingredient.getItem())
@@ -151,6 +162,7 @@ public class FabricShield extends Item
 					}
 				}
 				return false;
+				
 			case TAG:	return this.repairItemTag.contains(ingredient.getItem());
 			
 			default:	return false;
@@ -167,15 +179,5 @@ public class FabricShield extends Item
 	public int getEnchantability()
 	{
 		return 9;
-	}
-	
-	/**
-	 * getCoolDownTicks
-	 * 
-	 * @return How many ticks the shield goes into cooldown for after being disabled.
-	 */
-	public int getCooldownTicks()
-	{
-		return this.cooldownTicks;
 	}
 }

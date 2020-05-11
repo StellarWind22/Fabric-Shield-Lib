@@ -7,7 +7,7 @@ import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.item.Items;
 
-public class FabricShieldLibModInit implements ModInitializer
+public class FabricShieldLibMod implements ModInitializer
 {	
 	public static final String MOD_ID = "fabricshieldlib";
 	

@@ -60,11 +60,11 @@ public class LivingEntityMixin
 		//Holding Ticks ShieldItem
 		if(mainItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)mainItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
+			((FabricShield)mainItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
 		}
 		else if(offhandItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)offhandItem.getItem()).whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
+			((FabricShield)offhandItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
 		}
 		
 		//Holding Ticks Enchantment
@@ -74,7 +74,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
-					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
+					enchantment.whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
-					enchantment.whileHoldingTick(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
+					enchantment.whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
 				}
 			}
 		}
@@ -94,7 +94,7 @@ public class LivingEntityMixin
 		{
 			if(activeItem.getItem() instanceof FabricShield)
 			{
-				((FabricShield)activeItem.getItem()).whileBlockingTick(entity, entity.getActiveHand(), activeItem);
+				((FabricShield)activeItem.getItem()).whileBlocking(entity, entity.getActiveHand(), activeItem);
 			}
 			if(activeItem.hasEnchantments())
 			{
@@ -102,7 +102,7 @@ public class LivingEntityMixin
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{
-						enchantment.whileBlockingTick(entity, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
+						enchantment.whileBlocking(entity, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
 					}
 				}
 			}

@@ -24,7 +24,6 @@ public class FabricShieldEnchantment extends Enchantment
 	 * Fabric Shield Enchanement
 	 * 
 	 * @param weight - Rarity of enchantment.
-	 * @param type - Type of enchantment.
 	 * @param acceptedItem - Item that enchantments can be applied to.
 	 */
 	public FabricShieldEnchantment(Rarity weight, Item acceptedItem)
@@ -41,7 +40,6 @@ public class FabricShieldEnchantment extends Enchantment
 	 * Fabric Shield Enchanement
 	 * 
 	 * @param weight - Rarity of enchantment.
-	 * @param type - Type of enchantment.
 	 * @param acceptedItemTag - Items that enchantments can be applied to.
 	 */
 	public FabricShieldEnchantment(Rarity weight, Tag.Identified<Item> acceptedItemTag)
@@ -58,7 +56,6 @@ public class FabricShieldEnchantment extends Enchantment
 	 * Fabric Shield Enchanement
 	 * 
 	 * @param weight - Rarity of enchantment.
-	 * @param type - Type of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
 	public FabricShieldEnchantment(Rarity weight, Item...acceptedItemArray)
@@ -66,6 +63,21 @@ public class FabricShieldEnchantment extends Enchantment
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
 		this.acceptedItemArray = acceptedItemArray;
+		this.itemListType = ItemListType.ARRAY;
+		
+		FabricShieldLibRegistry.registerShieldEnchantment(this);
+	}
+	
+	/**
+	 * Fabric Shield Enchantment
+	 * 
+	 * @param weight Rarity of the enchantment.
+	 */
+	public FabricShieldEnchantment(Rarity weight)
+	{
+		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		
+		this.acceptedItemArray = FabricShieldLibRegistry.getAllShields();
 		this.itemListType = ItemListType.ARRAY;
 		
 		FabricShieldLibRegistry.registerShieldEnchantment(this);
@@ -90,7 +102,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * 
 	 * @param defender - Entity using the enchanted shield.
 	 */
-	public void whileBlockingTick(LivingEntity defender, Hand hand, ItemStack shield, int enchantmentLevel){}
+	public void whileBlocking(LivingEntity defender, Hand hand, ItemStack shield, int enchantmentLevel){}
 	
 	/**
 	 * whileHoldingShieldTick
@@ -101,7 +113,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param isBlocking - If the shield is currently blocking.
 	 * @param enchantmentLevel - Level of the enchantment.
 	 */
-	public void whileHoldingTick(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield, int enchantmentLevel){}
+	public void whileHolding(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield, int enchantmentLevel){}
 	
 	@Override
 	public boolean isAcceptableItem(ItemStack item)
