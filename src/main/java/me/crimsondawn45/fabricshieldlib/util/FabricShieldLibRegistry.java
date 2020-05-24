@@ -86,7 +86,10 @@ public class FabricShieldLibRegistry
 	 */
 	public static Item[] getAllShields()
 	{
-		return (Item[]) allShields.toArray();
+		Item[] result = new Item[allShields.size()];
+		result = allShields.toArray(result);
+
+		return result;
 	}
 	
 	/**
@@ -96,7 +99,10 @@ public class FabricShieldLibRegistry
 	 */
 	public static FabricShield[] getAllFabricShields()
 	{
-		return (FabricShield[]) fabricShields.toArray();
+		FabricShield[] result = new FabricShield[fabricShields.size()];
+		result = fabricShields.toArray(result);
+
+		return result;
 	}
 	
 	/**
@@ -106,6 +112,9 @@ public class FabricShieldLibRegistry
 	 */
 	public static FabricShieldEnchantment[] getAllShieldEnchantments()
 	{
-		return (FabricShieldEnchantment[]) enchantments.toArray();
+		FabricShieldEnchantment[] result = new FabricShieldEnchantment[enchantments.size()];
+		result = enchantments.toArray(result);
+
+		return result;
 	}
 }

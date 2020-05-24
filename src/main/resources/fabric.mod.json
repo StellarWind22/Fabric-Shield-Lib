@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fabricshieldlib",
-  "version": "1.0.4",
+  "version": "1.0.5",
 
   "name": "Fabric Shield Lib",
   "description": "Library that makes it easy to add shields with fabric without conflictions!",
@@ -29,7 +29,7 @@
   "depends": {
     "fabricloader": ">=0.7.10",
     "fabric": "*",
-    "minecraft": "1.16-alpha.20.19.a"
+    "minecraft": "1.16-alpha.20.21.a"
   },
   "suggests": {
     "flamingo": "*"

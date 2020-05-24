@@ -3,6 +3,7 @@ package me.crimsondawn45.fabricshieldlib.object;
 import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
@@ -36,6 +38,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
@@ -57,6 +60,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
@@ -78,6 +82,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
