@@ -3,7 +3,6 @@ package me.crimsondawn45.fabricshieldlib.object;
 import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +10,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -21,7 +21,7 @@ public class FabricShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
-	private Tag.Identified<Item> repairItemTag;
+	private Tag<Item> repairItemTag;
 	private Item[] repairItemArray;
 	private ItemListType itemListType;
 	
@@ -38,7 +38,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
@@ -55,12 +55,12 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
@@ -82,7 +82,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;});
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
@@ -146,9 +146,9 @@ public class FabricShield extends Item
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
 	{
-      ItemStack itemStack = user.getStackInHand(hand);
-      user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+		ItemStack itemStack = user.getStackInHand(hand);
+		user.setCurrentHand(hand);
+		return new TypedActionResult<>(ActionResult.SUCCESS, itemStack);
 	}
 	
 	@Override

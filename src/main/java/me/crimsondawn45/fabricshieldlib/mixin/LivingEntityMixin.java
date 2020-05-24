@@ -60,11 +60,11 @@ public class LivingEntityMixin
 		//Holding Ticks ShieldItem
 		if(mainItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)mainItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
+			((FabricShield)mainItem.getItem()).whileHolding(entity, entity.method_6039(), Hand.MAIN_HAND, mainItem);
 		}
 		else if(offhandItem.getItem() instanceof FabricShield)
 		{
-			((FabricShield)offhandItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
+			((FabricShield)offhandItem.getItem()).whileHolding(entity, entity.method_6039(), Hand.OFF_HAND, offhandItem);
 		}
 		
 		//Holding Ticks Enchantment
@@ -74,7 +74,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
-					enchantment.whileHolding(entity, entity.isBlocking(), EnchantmentHelper.getLevel(enchantment, mainItem), Hand.MAIN_HAND, mainItem);
+					enchantment.whileHolding(entity, entity.method_6039(), EnchantmentHelper.getLevel(enchantment, mainItem), Hand.MAIN_HAND, mainItem);
 				}
 			}
 		}
@@ -84,13 +84,13 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
-					enchantment.whileHolding(entity, entity.isBlocking(), EnchantmentHelper.getLevel(enchantment, offhandItem), Hand.OFF_HAND, offhandItem);
+					enchantment.whileHolding(entity, entity.method_6039(), EnchantmentHelper.getLevel(enchantment, offhandItem), Hand.OFF_HAND, offhandItem);
 				}
 			}
 		}
 		
 		//Blocking Ticks
-		if(entity.isBlocking())
+		if(entity.method_6039())
 		{
 			if(activeItem.getItem() instanceof FabricShield)
 			{
