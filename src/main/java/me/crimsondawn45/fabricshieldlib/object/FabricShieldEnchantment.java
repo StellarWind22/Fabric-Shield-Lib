@@ -77,8 +77,7 @@ public class FabricShieldEnchantment extends Enchantment
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
-		this.acceptedItemArray = FabricShieldLibRegistry.getAllShields();
-		this.itemListType = ItemListType.ARRAY;
+		this.itemListType = ItemListType.REGISTRY;
 		
 		FabricShieldLibRegistry.registerShieldEnchantment(this);
 	}
@@ -132,6 +131,16 @@ public class FabricShieldEnchantment extends Enchantment
 
 			case ITEM:	return this.acceptedItem == item.getItem();
 			case TAG:	return this.acceptedItemTag.contains(item.getItem());
+			
+			case REGISTRY:
+				for(Item entry : FabricShieldLibRegistry.getAllShields())
+				{
+					if(entry == item.getItem())
+					{
+						return true;
+					}
+				}
+				return false;
 			
 			default:	return false;
 		}
