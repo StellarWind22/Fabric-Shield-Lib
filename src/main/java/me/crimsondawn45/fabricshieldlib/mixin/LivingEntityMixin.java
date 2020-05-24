@@ -41,7 +41,7 @@ public class LivingEntityMixin
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
-							enchantment.onBlockDamage(entity, source, entity.getActiveHand(), activeItem, amount, EnchantmentHelper.getLevel(enchantment, activeItem));
+							enchantment.onBlockDamage(entity, source, amount, EnchantmentHelper.getLevel(enchantment, activeItem), entity.getActiveHand(), activeItem);
 						}
 					}
 				}
@@ -74,7 +74,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
-					enchantment.whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, EnchantmentHelper.getLevel(enchantment, mainItem));
+					enchantment.whileHolding(entity, entity.isBlocking(), EnchantmentHelper.getLevel(enchantment, mainItem), Hand.MAIN_HAND, mainItem);
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public class LivingEntityMixin
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
-					enchantment.whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, EnchantmentHelper.getLevel(enchantment, offhandItem));
+					enchantment.whileHolding(entity, entity.isBlocking(), EnchantmentHelper.getLevel(enchantment, offhandItem), Hand.OFF_HAND, offhandItem);
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class LivingEntityMixin
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{
-						enchantment.whileBlocking(entity, entity.getActiveHand(), activeItem, EnchantmentHelper.getLevel(enchantment, activeItem));
+						enchantment.whileBlocking(entity, EnchantmentHelper.getLevel(enchantment, activeItem), entity.getActiveHand(), activeItem);
 					}
 				}
 			}

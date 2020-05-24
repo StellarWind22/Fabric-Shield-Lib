@@ -93,7 +93,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param amount - Amount of damage that was blocked.
 	 * @param enchantmentLevel - Level of the enchantment.
 	 */
-	public void onBlockDamage(LivingEntity defender, DamageSource source, Hand hand, ItemStack shield, float amount, int enchantmentLevel){}
+	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int enchantmentLevel, Hand hand, ItemStack shield){}
 	
 	/**
 	 * whileBlockingTick
@@ -102,7 +102,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * 
 	 * @param defender - Entity using the enchanted shield.
 	 */
-	public void whileBlocking(LivingEntity defender, Hand hand, ItemStack shield, int enchantmentLevel){}
+	public void whileBlocking(LivingEntity defender, int enchantmentLevel, Hand hand, ItemStack shield){}
 	
 	/**
 	 * whileHoldingShieldTick
@@ -113,7 +113,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param isBlocking - If the shield is currently blocking.
 	 * @param enchantmentLevel - Level of the enchantment.
 	 */
-	public void whileHolding(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield, int enchantmentLevel){}
+	public void whileHolding(LivingEntity defender, boolean isBlocking, int enchantmentLevel, Hand hand, ItemStack shield){}
 	
 	@Override
 	public boolean isAcceptableItem(ItemStack item)
