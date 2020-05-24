@@ -16,7 +16,7 @@ import net.minecraft.util.Hand;
 public class FabricShieldEnchantment extends Enchantment
 {
 	private Item acceptedItem;
-	private Tag.Identified<Item> acceptedItemTag;
+	private Tag<Item> acceptedItemTag;
 	private Item[] acceptedItemArray;
 	private ItemListType itemListType;
 	
@@ -26,7 +26,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param weight - Rarity of enchantment.
 	 * @param acceptedItem - Item that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, Item acceptedItem)
+	public FabricShieldEnchantment(Enchantment.Weight weight, Item acceptedItem)
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
@@ -42,7 +42,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param weight - Rarity of enchantment.
 	 * @param acceptedItemTag - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, Tag.Identified<Item> acceptedItemTag)
+	public FabricShieldEnchantment(Enchantment.Weight weight, Tag<Item> acceptedItemTag)
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
@@ -58,7 +58,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * @param weight - Rarity of enchantment.
 	 * @param acceptedItems - Items that enchantments can be applied to.
 	 */
-	public FabricShieldEnchantment(Rarity weight, Item...acceptedItemArray)
+	public FabricShieldEnchantment(Enchantment.Weight weight, Item...acceptedItemArray)
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
@@ -73,7 +73,7 @@ public class FabricShieldEnchantment extends Enchantment
 	 * 
 	 * @param weight Rarity of the enchantment.
 	 */
-	public FabricShieldEnchantment(Rarity weight)
+	public FabricShieldEnchantment(Enchantment.Weight weight)
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
