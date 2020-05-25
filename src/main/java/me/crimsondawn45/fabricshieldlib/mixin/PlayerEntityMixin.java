@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.object.FabricShield;
+import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +25,7 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		ItemStack activeItem = player.getActiveItem();
 		
-		if(amount >= 3.0F && activeItem.getItem() instanceof FabricShield)
+		if(amount >= 3.0F && activeItem.getItem() instanceof AbstractShield)
 		{
 			int i = 1 + MathHelper.floor(amount);
 			Hand activeHand = player.getActiveHand();
@@ -55,7 +55,7 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		Item shield = player.getActiveItem().getItem();
 		
-		if(shield instanceof FabricShield)
+		if(shield instanceof AbstractShield)
 		{
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
 		
@@ -66,7 +66,7 @@ public class PlayerEntityMixin
 			
 			if (player.getRandom().nextFloat() < f)
 			{
-				player.getItemCooldownManager().set(shield, ((FabricShield) shield).getCooldownTicks());
+				player.getItemCooldownManager().set(shield, ((AbstractShield) shield).getCooldownTicks());
 				
 				player.clearActiveItem();
 				player.world.sendEntityStatus(player, (byte)30);

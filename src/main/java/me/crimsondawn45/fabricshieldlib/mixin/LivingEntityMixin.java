@@ -7,9 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.object.FabricShield;
-import me.crimsondawn45.fabricshieldlib.object.FabricShieldEnchantment;
-import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
+import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -31,13 +30,13 @@ public class LivingEntityMixin
 			
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source))
 			{
-				if(activeItem.getItem() instanceof FabricShield)
+				if(activeItem.getItem() instanceof AbstractShield)
 				{
-					((FabricShield)activeItem.getItem()).onBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem);
+					((AbstractShield)activeItem.getItem()).onBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem);
 				}
 				if(activeItem.hasEnchantments())
 				{
-					for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
+					for(FabricShieldEnchantment enchantment : ShieldRegistry.getAllShieldEnchantments())
 					{
 						if(enchantment.hasEnchantment(activeItem))
 						{
@@ -58,19 +57,19 @@ public class LivingEntityMixin
 		ItemStack offhandItem = entity.getOffHandStack();
 		
 		//Holding Ticks ShieldItem
-		if(mainItem.getItem() instanceof FabricShield)
+		if(mainItem.getItem() instanceof AbstractShield)
 		{
-			((FabricShield)mainItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
+			((AbstractShield)mainItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem);
 		}
-		else if(offhandItem.getItem() instanceof FabricShield)
+		else if(offhandItem.getItem() instanceof AbstractShield)
 		{
-			((FabricShield)offhandItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
+			((AbstractShield)offhandItem.getItem()).whileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem);
 		}
 		
 		//Holding Ticks Enchantment
 		if(mainItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
+			for(FabricShieldEnchantment enchantment : ShieldRegistry.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(mainItem))
 				{
@@ -80,7 +79,7 @@ public class LivingEntityMixin
 		}
 		else if(offhandItem.hasEnchantments())
 		{
-			for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
+			for(FabricShieldEnchantment enchantment : ShieldRegistry.getAllShieldEnchantments())
 			{
 				if(enchantment.hasEnchantment(offhandItem))
 				{
@@ -92,13 +91,13 @@ public class LivingEntityMixin
 		//Blocking Ticks
 		if(entity.isBlocking())
 		{
-			if(activeItem.getItem() instanceof FabricShield)
+			if(activeItem.getItem() instanceof AbstractShield)
 			{
-				((FabricShield)activeItem.getItem()).whileBlocking(entity, entity.getActiveHand(), activeItem);
+				((AbstractShield)activeItem.getItem()).whileBlocking(entity, entity.getActiveHand(), activeItem);
 			}
 			if(activeItem.hasEnchantments())
 			{
-				for(FabricShieldEnchantment enchantment : FabricShieldLibRegistry.getAllShieldEnchantments())
+				for(FabricShieldEnchantment enchantment : ShieldRegistry.getAllShieldEnchantments())
 				{
 					if(enchantment.hasEnchantment(activeItem))
 					{

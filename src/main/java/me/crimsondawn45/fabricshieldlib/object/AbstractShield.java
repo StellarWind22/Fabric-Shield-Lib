@@ -1,11 +1,9 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.util.FabricShieldLibRegistry;
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
+import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -17,7 +15,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public class FabricShield extends Item
+public abstract class AbstractShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
@@ -33,7 +31,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Item repairItem)
+	public AbstractShield(Settings settings, int cooldownTicks, int durability, Item repairItem)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -44,7 +42,7 @@ public class FabricShield extends Item
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
 		
-		FabricShieldLibRegistry.registerShield(this);
+		ShieldRegistry.register(this);
 	}
 	
 	/**
@@ -55,7 +53,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public AbstractShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -66,7 +64,7 @@ public class FabricShield extends Item
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
 		
-		FabricShieldLibRegistry.registerShield(this);
+		ShieldRegistry.register(this);
 	}
 	
 	/**
@@ -77,7 +75,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
+	public AbstractShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -88,38 +86,8 @@ public class FabricShield extends Item
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
 		
-		FabricShieldLibRegistry.registerShield(this);
+		ShieldRegistry.register(this);
 	}
-	
-	/**
-	 * onBlock
-	 * 
-	 * Fired whenever this shield successfully blocks an attack.
-	 * 
-	 * @param defender - Entity that is using this shield.
-	 * @param source - Source of the damage.
-	 * @param amount - Amount of damage blocked.
-	 */
-	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield){}
-	
-	/**
-	 * whileBlocking
-	 * 
-	 * Fired every tick this shield is blocking.
-	 * 
-	 * @param defender - Entity that is using this shield.
-	 */
-	public void whileBlocking(LivingEntity defender, Hand hand, ItemStack shield){}
-	
-	/**
-	 * whileHoldingShield
-	 * 
-	 * Fired every tick this shield is held
-	 * 
-	 * @param defender - Entity that is using this shield.
-	 * @param isBlocking - If the shield is currently blocking.
-	 */
-	public void whileHolding(LivingEntity defender, boolean isBlocking, Hand hand, ItemStack shield){}
 	
 	/**
 	 * getCoolDownTicks
