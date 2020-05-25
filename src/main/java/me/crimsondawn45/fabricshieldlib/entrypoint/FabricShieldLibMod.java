@@ -4,8 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import me.crimsondawn45.fabricshieldlib.object.BasicShield;
+import me.crimsondawn45.fabricshieldlib.object.ShieldEnchantment;
+import me.crimsondawn45.fabricshieldlib.object.TestEvent;
 import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tag.ItemTags;
@@ -25,5 +28,8 @@ public class FabricShieldLibMod implements ModInitializer
 		logger.info("Fabric Shield Lib Successfully Initialized!");
 
 		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "basic_shield"), new BasicShield(new Item.Settings(), 100, 377, ItemTags.PLANKS));
+		Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "test_enchantment"), new ShieldEnchantment(Rarity.COMMON, new TestEvent()));
+
+		ShieldRegistry.registerItemEvent(Items.SHIELD, new TestEvent());
 	}
 }

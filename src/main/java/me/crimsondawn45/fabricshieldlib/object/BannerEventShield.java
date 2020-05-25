@@ -5,7 +5,7 @@ import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag.Identified;
 
-public class BannerEventShield extends AbstractShield
+public class BannerEventShield extends BannerShield
 {
     public BannerEventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item repairItem)
     {
