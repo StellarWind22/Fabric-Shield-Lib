@@ -7,6 +7,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 
 public final class ShieldEnchantment extends Enchantment
@@ -17,9 +18,18 @@ public final class ShieldEnchantment extends Enchantment
     private Tag.Identified<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
 
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item acceptedItem)
+    /**
+     * ShieldEnchantment
+     * 
+     * Class for easily making shield enchantments.
+     * 
+     * @param rarity - Rarity of the enchantment.
+     * @param event - ShieldEvent for the enchantment.
+     * @param acceptedItem - Accepted item.
+     */
+    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Item acceptedItem)
     {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
         this.listType = ItemListType.ITEM;
         this.acceptedItem = acceptedItem;
@@ -27,9 +37,18 @@ public final class ShieldEnchantment extends Enchantment
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
+    /**
+     * ShieldEnchantment
+     * 
+     * Class for easily making shield enchantments.
+     * 
+     * @param rarity - Rarity of the enchantment.
+     * @param event - ShieldEvent for the enchantment.
+     * @param acceptedItemTag - Accepted item tag.
+     */
+    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
     {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
         this.listType = ItemListType.TAG;
         this.acceptedItemTag = acceptedItemTag;
@@ -37,9 +56,9 @@ public final class ShieldEnchantment extends Enchantment
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item...acceptedItemArray)
+    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Item...acceptedItemArray)
     {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
         this.listType = ItemListType.ARRAY;
         this.acceptedItemArray = acceptedItemArray;
@@ -47,12 +66,45 @@ public final class ShieldEnchantment extends Enchantment
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
-    public ShieldEnchantment(Rarity weight, ShieldEvent event)
+    public ShieldEnchantment(Rarity rarity, ShieldEvent event)
     {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
         this.listType = ItemListType.REGISTRY;
 
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
+
+    @Override
+	public boolean isAcceptableItem(ItemStack item)
+	{
+		switch(this.listType)
+		{
+            case ARRAY:
+            
+				for(Item entry : this.acceptedItemArray)
+				{
+					if(entry == item.getItem())
+					{
+						return true;
+					}
+				}
+				return false;
+
+			case ITEM:	return this.acceptedItem == item.getItem();
+            case TAG:	return this.acceptedItemTag.contains(item.getItem());
+            case REGISTRY:
+
+                for(Item entry : ShieldRegistry.getAllShields())
+                {
+                    if(entry == item.getItem())
+                    {
+                        return true;
+                    }
+                }
+                return false;
+			
+			default:	return false;
+		}
+	}
 }

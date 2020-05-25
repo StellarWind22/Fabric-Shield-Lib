@@ -5,23 +5,23 @@ import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag.Identified;
 
-public class EventShield extends AbstractShield
+public class BasicEventShield extends AbstractShield
 {
-    public EventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item repairItem)
+    public BasicEventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item repairItem)
     {
         super(settings, cooldownTicks, durability, repairItem);
 
         ShieldRegistry.registerItemEvent(this, event);
     }
 
-    public EventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Identified<Item> repairItemTag)
+    public BasicEventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Identified<Item> repairItemTag)
     {
         super(settings, cooldownTicks, durability, repairItemTag);
 
         ShieldRegistry.registerItemEvent(this, event);
     }
 
-    public EventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item... repairItems)
+    public BasicEventShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item... repairItems)
     {
         super(settings, cooldownTicks, durability, repairItems);
 
