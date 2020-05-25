@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.crimsondawn45.fabricshieldlib.entrypoint.FabricShieldLibMod"
+      "me.crimsondawn45.fabricshieldlib.FabricShieldLib"
     ]
   },
   "mixins": [

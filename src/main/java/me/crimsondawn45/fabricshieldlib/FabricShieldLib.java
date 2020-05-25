@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.entrypoint;
+package me.crimsondawn45.fabricshieldlib;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FabricShieldLibMod implements ModInitializer
+public class FabricShieldLib implements ModInitializer
 {	
 	public static final String MOD_ID = "fabricshieldlib";
 	
