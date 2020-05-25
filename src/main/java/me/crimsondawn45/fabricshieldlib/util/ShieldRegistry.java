@@ -1,9 +1,9 @@
 package me.crimsondawn45.fabricshieldlib.util;
 
 import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.AbstractMap.SimpleImmutableEntry;
 
 import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
@@ -141,6 +141,8 @@ public class ShieldRegistry
 	 * hasEvent
 	 * 
 	 * Wether or not a particular Item instance has any events registered.
+	 * 
+	 * @param shield - Item to check for.
 	 */
 	public static boolean hasEvent(Item shield)
 	{
@@ -158,12 +160,38 @@ public class ShieldRegistry
 	 * hasEvent
 	 * 
 	 * Wether or not a particular Enchantment instance has any events registered.
+	 * 
+	 * @param enchantment - Enchantment to check for.
 	 */
 	public static boolean hasEvent(Enchantment enchantment)
 	{
 		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
 		{
 			if(entry.getKey() == enchantment)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * hasEvent
+	 * 
+	 * Whether or not a particular ItemStack has any events.
+	 * 
+	 * @param shield - ItemStack to check for.
+	 */
+	public static boolean hasEvent(ItemStack shield)
+	{
+		if(hasEvent(shield.getItem()))
+		{
+			return true;
+		}
+		
+		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
+		{
+			if(hasEnchantment(entry.getKey(), shield))
 			{
 				return true;
 			}
@@ -347,6 +375,42 @@ public class ShieldRegistry
 		return result;
 	}
 
+	public static Item[] getItems(ShieldEvent event)
+	{
+		List<Item> temp = new ArrayList<Item>();
+
+		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
+		{
+			if(entry.getValue() == event)
+			{
+				temp.add(entry.getKey());
+			}
+		}
+
+		Item[] result = new Item[temp.size()];
+		result = temp.toArray(result);
+
+		return result;
+	}
+
+	public static Enchantment[] getEnchantments(ShieldEvent event)
+	{
+		List<Enchantment> temp = new ArrayList<Enchantment>();
+
+		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
+		{
+			if(entry.getValue() == event)
+			{
+				temp.add(entry.getKey());
+			}
+		}
+
+		Enchantment[] result = new Enchantment[temp.size()];
+		result = temp.toArray(result);
+
+		return result;
+	}
+
 	public static void fireOnBlockDamage(ShieldEvent event, LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield)
 	{
 		if(event.usesOnBlockDamage())
@@ -368,6 +432,105 @@ public class ShieldRegistry
 		if(event.usesWhileBlocking())
 		{
 			event.whileHolding(defender, blocking, level, hand, shield);
+		}
+	}
+
+	public static void fireOnBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield, ShieldEvent...events)
+	{
+		for(ShieldEvent event : events)
+		{
+			switch(event.getType())
+			{
+				case ITEM:
+
+					fireOnBlockDamage(event, defender, source, amount, 0, hand, shield);
+					continue;
+
+				case ENCHANTMENT:
+
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				case BOTH:
+					
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				default:
+					continue;
+			}
+		}
+	}
+
+	public static void fireWhileBlocking(LivingEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
+	{
+		for(ShieldEvent event : events)
+		{
+			switch(event.getType())
+			{
+				case ITEM:
+
+					fireWhileBlocking(event, defender, 0, hand, shield);
+					continue;
+
+				case ENCHANTMENT:
+
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireWhileBlocking(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				case BOTH:
+					
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireWhileBlocking(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				default:
+					continue;
+			}
+		}
+	}
+
+	public static void fireWhileHolding(LivingEntity defender, boolean blocking, Hand hand, ItemStack shield, ShieldEvent...events)
+	{
+		for(ShieldEvent event : events)
+		{
+			switch(event.getType())
+			{
+				case ITEM:
+
+					fireWhileHolding(event, defender, blocking, 0, hand, shield);
+					continue;
+
+				case ENCHANTMENT:
+
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireWhileHolding(event, defender, blocking, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				case BOTH:
+					
+					for(Enchantment enchantment : getEnchantments(event))
+					{
+						fireWhileHolding(event, defender, blocking, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+					}
+					continue;
+
+				default:
+					continue;
+			}
 		}
 	}
 
