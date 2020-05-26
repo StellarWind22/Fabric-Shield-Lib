@@ -12,6 +12,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -238,17 +239,17 @@ public class ShieldRegistry
 	}
 
 	/**
-	 * hasWhileBlocking
+	 * hasOnDisable
 	 * 
-	 * whether or not the item has an event that makes use of WhileBlocking
+	 * whether or not the item has an event that makes use of OnDisable
 	 * 
 	 * @param shield - Shield to check for event.
 	 */
-	public static boolean hasWhileBlocking(Item shield)
+	public static boolean hasOnDisable(Item shield)
 	{
 		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
 		{
-			if(entry.getKey() == shield && entry.getValue().usesWhileBlocking())
+			if(entry.getKey() == shield && entry.getValue().usesOnDisable())
 			{
 				return true;
 			}
@@ -257,17 +258,17 @@ public class ShieldRegistry
 	}
 
 	/**
-	 * hasWhileBlocking
+	 * hasOnDisable
 	 * 
-	 * whether or not the enchantment has an event that makes use of WhileBlocking
+	 * whether or not the enchantment has an event that makes use of OnDisable
 	 * 
 	 * @param shield - Enchantment to check for event.
 	 */
-	public static boolean hasWhileBlocking(Enchantment enchantment)
+	public static boolean hasOnDisable(Enchantment enchantment)
 	{
 		for(SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
 		{
-			if(entry.getKey() == enchantment && entry.getValue().usesWhileBlocking())
+			if(entry.getKey() == enchantment && entry.getValue().usesOnDisable())
 			{
 				return true;
 			}
@@ -419,19 +420,19 @@ public class ShieldRegistry
 		}
 	}
 
-	public static void fireWhileBlocking(ShieldEvent event, LivingEntity defender, int level, Hand hand, ItemStack shield)
+	public static void fireOnDisable(ShieldEvent event, PlayerEntity defender, int level, Hand hand, ItemStack shield)
 	{
-		if(event.usesWhileBlocking())
+		if(event.usesOnDisable())
 		{
-			event.whileBlocking(defender, level, hand, shield);
+			event.onDisable(defender, level, hand, shield);
 		}
 	}
 
-	public static void fireWhileHolding(ShieldEvent event, LivingEntity defender, boolean blocking, int level, Hand hand, ItemStack shield)
+	public static void fireWhileHolding(ShieldEvent event, LivingEntity defender, int level, Hand hand, ItemStack shield)
 	{
-		if(event.usesWhileBlocking())
+		if(event.usesWhileHolding())
 		{
-			event.whileHolding(defender, blocking, level, hand, shield);
+			event.whileHolding(defender, level, hand, shield);
 		}
 	}
 
@@ -468,7 +469,7 @@ public class ShieldRegistry
 		}
 	}
 
-	public static void fireWhileBlocking(LivingEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
+	public static void fireOnDisable(PlayerEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
 	{
 		for(ShieldEvent event : events)
 		{
@@ -476,14 +477,14 @@ public class ShieldRegistry
 			{
 				case ITEM:
 
-					fireWhileBlocking(event, defender, 0, hand, shield);
+					fireOnDisable(event, defender, 0, hand, shield);
 					continue;
 
 				case ENCHANTMENT:
 
 					for(Enchantment enchantment : getEnchantments(event))
 					{
-						fireWhileBlocking(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
 					}
 					continue;
 
@@ -491,7 +492,7 @@ public class ShieldRegistry
 					
 					for(Enchantment enchantment : getEnchantments(event))
 					{
-						fireWhileBlocking(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
 					}
 					continue;
 
@@ -501,7 +502,7 @@ public class ShieldRegistry
 		}
 	}
 
-	public static void fireWhileHolding(LivingEntity defender, boolean blocking, Hand hand, ItemStack shield, ShieldEvent...events)
+	public static void fireWhileHolding(LivingEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
 	{
 		for(ShieldEvent event : events)
 		{
@@ -509,14 +510,14 @@ public class ShieldRegistry
 			{
 				case ITEM:
 
-					fireWhileHolding(event, defender, blocking, 0, hand, shield);
+					fireWhileHolding(event, defender, 0, hand, shield);
 					continue;
 
 				case ENCHANTMENT:
 
 					for(Enchantment enchantment : getEnchantments(event))
 					{
-						fireWhileHolding(event, defender, blocking, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
 					}
 					continue;
 
@@ -524,7 +525,7 @@ public class ShieldRegistry
 					
 					for(Enchantment enchantment : getEnchantments(event))
 					{
-						fireWhileHolding(event, defender, blocking, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
 					}
 					continue;
 

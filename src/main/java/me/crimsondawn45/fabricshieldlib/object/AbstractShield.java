@@ -98,6 +98,16 @@ public abstract class AbstractShield extends Item
 	{
 		return this.cooldownTicks;
 	}
+
+	/**
+	 * setCooldownTicks
+	 * 
+	 * @param cooldownTicks How many tick the shield goes into cooldown for after being disabled.
+	 */
+	public void setCooldownTicks(int cooldownTicks)
+	{
+		this.cooldownTicks = cooldownTicks;
+	}
 	
 	@Override
 	public UseAction getUseAction(ItemStack stack)

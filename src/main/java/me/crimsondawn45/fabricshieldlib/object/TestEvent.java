@@ -20,14 +20,8 @@ public class TestEvent extends ShieldEvent
     }
 
     @Override
-    public void whileBlocking(LivingEntity defender, int level, Hand hand, ItemStack shield)
+    public void whileHolding(LivingEntity defender, int level, Hand hand, ItemStack shield)
     {
-        defender.setFireTicks(40);
-    }
-
-    @Override
-    public void whileHolding(LivingEntity defender, boolean blocking, int level, Hand hand, ItemStack shield)
-    {
-        defender.setGlowing(blocking);
+        defender.setGlowing(defender.isBlocking());
     }
 }

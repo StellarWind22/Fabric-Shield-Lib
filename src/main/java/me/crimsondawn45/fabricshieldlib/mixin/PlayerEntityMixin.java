@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,6 +25,11 @@ public class PlayerEntityMixin
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		ItemStack activeItem = player.getActiveItem();
+
+		if(ShieldRegistry.hasEvent(activeItem))
+		{
+			ShieldRegistry.fireOnDisable(player, player.getActiveHand(), activeItem, ShieldRegistry.getEvents(activeItem));
+		}
 		
 		if(amount >= 3.0F && activeItem.getItem() instanceof AbstractShield)
 		{

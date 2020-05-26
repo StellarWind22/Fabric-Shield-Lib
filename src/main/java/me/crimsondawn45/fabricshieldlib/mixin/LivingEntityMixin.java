@@ -41,24 +41,17 @@ public class LivingEntityMixin
 	{
 		LivingEntity entity = (LivingEntity)(Object)this;
 
-		ItemStack activeItem = entity.getActiveItem();
 		ItemStack mainItem = entity.getMainHandStack();
 		ItemStack offhandItem = entity.getOffHandStack();
 		
 		//Holding Ticks ShieldItem
 		if(ShieldRegistry.hasEvent(mainItem))
 		{
-			ShieldRegistry.fireWhileHolding(entity, entity.isBlocking(), Hand.MAIN_HAND, mainItem, ShieldRegistry.getEvents(mainItem));
+			ShieldRegistry.fireWhileHolding(entity, Hand.MAIN_HAND, mainItem, ShieldRegistry.getEvents(mainItem));
 		}
 		else if(ShieldRegistry.hasEvent(offhandItem))
 		{
-			ShieldRegistry.fireWhileHolding(entity, entity.isBlocking(), Hand.OFF_HAND, offhandItem, ShieldRegistry.getEvents(offhandItem));
-		}
-		
-		//Blocking Ticks
-		if(entity.isBlocking())
-		{
-			ShieldRegistry.fireWhileBlocking(entity, entity.getActiveHand(), activeItem, ShieldRegistry.getEvents(activeItem));
+			ShieldRegistry.fireWhileHolding(entity, Hand.OFF_HAND, offhandItem, ShieldRegistry.getEvents(offhandItem));
 		}
 	}
 }
