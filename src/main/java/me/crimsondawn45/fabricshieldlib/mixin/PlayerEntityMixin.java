@@ -25,11 +25,6 @@ public class PlayerEntityMixin
 	{
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		ItemStack activeItem = player.getActiveItem();
-
-		if(ShieldRegistry.hasEvent(activeItem))
-		{
-			ShieldRegistry.fireOnDisable(player, player.getActiveHand(), activeItem, ShieldRegistry.getEvents(activeItem));
-		}
 		
 		if(amount >= 3.0F && activeItem.getItem() instanceof AbstractShield)
 		{
@@ -54,9 +49,21 @@ public class PlayerEntityMixin
 			}
 		}
 	}
+
+	@Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
+	private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo)
+	{
+		PlayerEntity player = (PlayerEntity) (Object) this;
+		ItemStack shield = player.getActiveItem();
+
+		if(ShieldRegistry.hasEvent(shield))
+		{
+			ShieldRegistry.fireOnDisable(player, player.getActiveHand(), shield, ShieldRegistry.getEvents(shield));
+		}
+	}
 	
 	@Inject(at = @At(value = "TAIL"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
-	private void disableShield(boolean sprinting, CallbackInfo callBackInfo)
+	private void disableShieldTail(boolean sprinting, CallbackInfo callBackInfo)
 	{	
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		Item shield = player.getActiveItem().getItem();
