@@ -3,6 +3,7 @@ package me.crimsondawn45.fabricshieldlib.object;
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
@@ -17,6 +18,12 @@ public class TestEvent extends ShieldEvent
     public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield)
     {
         defender.kill();
+    }
+
+    @Override
+    public void onDisable(PlayerEntity defender, int level, Hand hand, ItemStack shield)
+    {
+        defender.setFireTicks(40);    
     }
 
     @Override
