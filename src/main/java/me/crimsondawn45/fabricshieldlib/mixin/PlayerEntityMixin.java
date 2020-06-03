@@ -26,7 +26,7 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		ItemStack activeItem = player.getActiveItem();
 		
-		if(amount >= 3.0F && activeItem.getItem() instanceof AbstractShield)
+		if(amount >= 3.0F && ShieldRegistry.containsShield(activeItem.getItem()))
 		{
 			int i = 1 + MathHelper.floor(amount);
 			Hand activeHand = player.getActiveHand();
@@ -68,7 +68,7 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		Item shield = player.getActiveItem().getItem();
 		
-		if(shield instanceof AbstractShield)
+		if(ShieldRegistry.containsShield(shield))
 		{
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
 		
