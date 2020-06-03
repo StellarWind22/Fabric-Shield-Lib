@@ -26,7 +26,7 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		ItemStack activeItem = player.getActiveItem();
 		
-		if(amount >= 3.0F && ShieldRegistry.containsShield(activeItem.getItem()))
+		if(amount >= 3.0F && ShieldRegistry.isShield(activeItem.getItem()))
 		{
 			int i = 1 + MathHelper.floor(amount);
 			Hand activeHand = player.getActiveHand();
@@ -68,22 +68,20 @@ public class PlayerEntityMixin
 		PlayerEntity player = (PlayerEntity) (Object) this;
 		Item shield = player.getActiveItem().getItem();
 		
-		if(ShieldRegistry.containsShield(shield))
+		if(ShieldRegistry.isShield(shield))
 		{
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
-		
 			if (sprinting)
 			{
-				f += 0.75F;
-			}
-			
+        		f += 0.75F;
+      		}
+
 			if (player.getRandom().nextFloat() < f)
 			{
-				player.getItemCooldownManager().set(shield, ((AbstractShield) shield).getCooldownTicks());
-				
-				player.clearActiveItem();
-				player.world.sendEntityStatus(player, (byte)30);
-			}
+         		player.getItemCooldownManager().set(shield, ((AbstractShield) shield).getCooldownTicks());
+         		player.clearActiveItem();
+         		player.world.sendEntityStatus(player, (byte)30);
+      		}
 		}
 	}
 }

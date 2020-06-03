@@ -4,84 +4,88 @@ import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.Tag;
 
-public final class ShieldEnchantment extends Enchantment
+public class ShieldEnchantment extends Enchantment
 {
-    private ItemListType listType;
-
     private Item acceptedItem;
     private Tag.Identified<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
+    private ItemListType itemListType;
 
     /**
-     * ShieldEnchantment
+     * Fabric Shield Enchanement
      * 
-     * Class for easily making shield enchantments.
-     * 
-     * @param rarity - Rarity of the enchantment.
-     * @param event - ShieldEvent for the enchantment.
-     * @param acceptedItem - Accepted item.
+     * @param weight       - Rarity of enchantment.
+     * @param acceptedItem - Item that enchantments can be applied to.
      */
-    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Item acceptedItem)
+    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item acceptedItem)
     {
-        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
-        this.listType = ItemListType.ITEM;
         this.acceptedItem = acceptedItem;
+        this.itemListType = ItemListType.ITEM;
 
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
     /**
-     * ShieldEnchantment
+     * Fabric Shield Enchanement
      * 
-     * Class for easily making shield enchantments.
-     * 
-     * @param rarity - Rarity of the enchantment.
-     * @param event - ShieldEvent for the enchantment.
-     * @param acceptedItemTag - Accepted item tag.
+     * @param weight          - Rarity of enchantment.
+     * @param acceptedItemTag - Items that enchantments can be applied to.
      */
-    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
+    public ShieldEnchantment(Rarity weight, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
     {
-        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
-        this.listType = ItemListType.TAG;
         this.acceptedItemTag = acceptedItemTag;
+        this.itemListType = ItemListType.TAG;
 
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
-    public ShieldEnchantment(Rarity rarity, ShieldEvent event, Item...acceptedItemArray)
+    /**
+     * Fabric Shield Enchanement
+     * 
+     * @param weight        - Rarity of enchantment.
+     * @param acceptedItems - Items that enchantments can be applied to.
+     */
+    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item... acceptedItemArray)
     {
-        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
-        this.listType = ItemListType.ARRAY;
         this.acceptedItemArray = acceptedItemArray;
+        this.itemListType = ItemListType.ARRAY;
 
         ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
-    public ShieldEnchantment(Rarity rarity, ShieldEvent event)
-    {
-        super(rarity, EnchantmentTarget.BREAKABLE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-
-        this.listType = ItemListType.REGISTRY;
-
+    /**
+     * Fabric Shield Enchantment
+     * 
+     * @param weight Rarity of the enchantment.
+     */
+    public ShieldEnchantment(Rarity weight, ShieldEvent event)
+	{
+		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		
+        this.itemListType = ItemListType.REGISTRY;
+        
         ShieldRegistry.registerEnchantmentEvent(this, event);
-    }
-
-    @Override
+	}
+	
+	@Override
 	public boolean isAcceptableItem(ItemStack item)
 	{
-		switch(this.listType)
+		switch(this.itemListType)
 		{
-            case ARRAY:
-            
+			case ARRAY:
 				for(Item entry : this.acceptedItemArray)
 				{
 					if(entry == item.getItem())
@@ -92,19 +96,31 @@ public final class ShieldEnchantment extends Enchantment
 				return false;
 
 			case ITEM:	return this.acceptedItem == item.getItem();
-            case TAG:	return this.acceptedItemTag.contains(item.getItem());
-            case REGISTRY:
-
-                for(Item entry : ShieldRegistry.getAllShields())
-                {
-                    if(entry == item.getItem())
-                    {
-                        return true;
-                    }
-                }
-                return false;
+			case TAG:	return this.acceptedItemTag.contains(item.getItem());
+			
+			case REGISTRY:
+				for(Item entry : ShieldRegistry.getAllShields())
+				{
+					if(entry == item.getItem())
+					{
+						return true;
+					}
+				}
+				return false;
 			
 			default:	return false;
 		}
+	}
+	
+	/**
+	 * hasEnchantment
+	 * 
+	 * @param item - Item to look for this enchantment on.
+	 * 
+	 * @return Whether or not the item has this enchantment.
+	 */
+	public boolean hasEnchantment(ItemStack item)
+	{
+		return EnchantmentHelper.getLevel(this, item) > 0;
 	}
 }

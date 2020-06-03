@@ -539,4 +539,9 @@ public class ShieldRegistry
 	{
 		return EnchantmentHelper.getLevel(enchantment, stack) > 0;
 	}
+
+	public static boolean isShield(Item item)
+	{
+		return item instanceof AbstractShield;
+	}
 }
