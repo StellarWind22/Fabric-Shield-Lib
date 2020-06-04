@@ -542,6 +542,8 @@ public class ShieldRegistry
 
 	public static boolean isShield(Item item)
 	{
+		System.out.println("isShield Ran!, returned: \"" + Boolean.toString(item instanceof AbstractShield) + "\".");
+
 		return item instanceof AbstractShield;
 	}
 }

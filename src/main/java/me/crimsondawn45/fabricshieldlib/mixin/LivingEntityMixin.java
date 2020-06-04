@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
@@ -28,10 +29,28 @@ public class LivingEntityMixin
 			
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source))
 			{
+				//Fire Events
 				if(ShieldRegistry.hasEvent(activeItem))
 				{
 					ShieldRegistry.fireOnBlockDamage(entity, source, amount, entity.getActiveHand(), activeItem, ShieldRegistry.getEvents(activeItem));
 				}
+
+				//Handle Shield
+				((LivingEntityAccessor)entity).invokeDamageShield(amount);
+				amount = 0.0F;
+
+				if (!source.isProjectile())
+				{
+					Entity sourceEntity = source.getSource();
+					
+					if (sourceEntity instanceof LivingEntity)
+					{
+					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
+					}
+				}
+
+				//Return?
+				//callbackInfo.setReturnValue(true);
 			}
 		}
 	}
@@ -44,12 +63,11 @@ public class LivingEntityMixin
 		ItemStack mainItem = entity.getMainHandStack();
 		ItemStack offhandItem = entity.getOffHandStack();
 		
-		//Holding Ticks ShieldItem
 		if(ShieldRegistry.hasEvent(mainItem))
 		{
 			ShieldRegistry.fireWhileHolding(entity, Hand.MAIN_HAND, mainItem, ShieldRegistry.getEvents(mainItem));
 		}
-		else if(ShieldRegistry.hasEvent(offhandItem))
+		if(ShieldRegistry.hasEvent(offhandItem))
 		{
 			ShieldRegistry.fireWhileHolding(entity, Hand.OFF_HAND, offhandItem, ShieldRegistry.getEvents(offhandItem));
 		}

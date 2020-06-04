@@ -10,6 +10,7 @@ import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
 import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -28,10 +29,12 @@ public class PlayerEntityMixin
 		
 		if(amount >= 3.0F && ShieldRegistry.isShield(activeItem.getItem()))
 		{
+			System.out.println("Passed if check on \"damageShield()\".");
+
 			int i = 1 + MathHelper.floor(amount);
 			Hand activeHand = player.getActiveHand();
 			
-			activeItem.damage(i, player, ((playerEntity) -> {playerEntity.sendToolBreakStatus(activeHand);}));
+			activeItem.damage(i, (LivingEntity)player, ((playerEntity) -> { playerEntity.sendToolBreakStatus(activeHand);}));
 			
 			if(activeItem.isEmpty())
 			{
@@ -70,6 +73,8 @@ public class PlayerEntityMixin
 		
 		if(ShieldRegistry.isShield(shield))
 		{
+			System.out.println("Passed if check on \"disableShieldTail()\".");
+
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
 			if (sprinting)
 			{
