@@ -2,8 +2,8 @@ package me.crimsondawn45.fabricshieldlib.object;
 
 import me.crimsondawn45.fabricshieldlib.util.ItemListType;
 import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -36,8 +36,9 @@ public abstract class AbstractShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
-		
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
@@ -58,8 +59,9 @@ public abstract class AbstractShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
-		
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
@@ -80,8 +82,9 @@ public abstract class AbstractShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		ModelPredicateProviderRegistry.get(this, new Identifier("blocking"));
-		
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
