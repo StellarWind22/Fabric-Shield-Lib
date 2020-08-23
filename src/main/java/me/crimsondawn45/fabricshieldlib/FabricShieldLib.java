@@ -27,7 +27,7 @@ public class FabricShieldLib implements ModInitializer
 		ShieldRegistry.register(Items.SHIELD);
 		logger.info("Fabric Shield Lib Successfully Initialized!");
 
-		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "basic_shield"), new BasicShield(new Item.Settings(), 100, 377, ItemTags.PLANKS));
+		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_shield"), new BasicShield(new Item.Settings(), 100, 377, ItemTags.PLANKS));
 		Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "test_enchantment"), new ShieldEnchantment(Rarity.COMMON, new TestEvent()));
 
 		ShieldRegistry.registerItemEvent(Items.SHIELD, new TestEvent());
