@@ -34,6 +34,7 @@ public class TestEvent extends ShieldEvent
     {
         defender.setGlowing(defender.isBlocking());
 
-        if(ShieldRegistry.isShield(shield.getItem())) System.out.println("This is a shield!");
+		// Uncomment if you want spam.
+        // if(ShieldRegistry.isShield(shield.getItem())) System.out.println("This is a shield!");
     }
 }
