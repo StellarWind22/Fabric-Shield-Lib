@@ -1,9 +1,10 @@
 package me.crimsondawn45.fabricshieldlib.util;
 
-import java.util.AbstractMap;
-import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
@@ -24,8 +25,8 @@ public class ShieldRegistry
 	private static final List<AbstractShield> fabricShields = new ArrayList<AbstractShield>();
 
 	//Shield event stuff
-	private static final List<AbstractMap.SimpleImmutableEntry<Item, ShieldEvent>> itemEvents = new ArrayList<>();
-	private static final List<AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent>> enchantmentEvents = new ArrayList<>();
+	private static final HashMap<Item, Set<ShieldEvent>> itemEvents = new HashMap<Item, Set<ShieldEvent>>();
+	private static final HashMap<Enchantment, Set<ShieldEvent>> enchantmentEvents = new HashMap<Enchantment, Set<ShieldEvent>>();
 
 	/**
 	 * registerShield
@@ -113,7 +114,12 @@ public class ShieldRegistry
 			event.setType(ShieldEventType.BOTH);
 		}
 
-		itemEvents.add(new AbstractMap.SimpleImmutableEntry<Item, ShieldEvent>(shield, event));
+		if (itemEvents.containsKey(shield)) {
+			itemEvents.get(shield).add(event);
+		} else {
+			itemEvents.put(shield, new HashSet<ShieldEvent>());
+			itemEvents.get(shield).add(event);
+		}
 	}
 
 	/**
@@ -135,7 +141,12 @@ public class ShieldRegistry
 			event.setType(ShieldEventType.BOTH);
 		}
 
-		enchantmentEvents.add(new AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent>(enchantment, event));
+		if(enchantmentEvents.containsKey(enchantment)) {
+			enchantmentEvents.get(enchantment).add(event);
+		} else {
+			enchantmentEvents.put(enchantment, new HashSet<ShieldEvent>());
+			enchantmentEvents.get(enchantment).add(event);
+		}
 	}
 
 	/**
@@ -147,14 +158,7 @@ public class ShieldRegistry
 	 */
 	public static boolean hasEvent(Item shield)
 	{
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield)
-			{
-				return true;
-			}
-		}
-		return false;
+		return itemEvents.containsKey(shield);
 	}
 
 	/**
@@ -166,14 +170,7 @@ public class ShieldRegistry
 	 */
 	public static boolean hasEvent(Enchantment enchantment)
 	{
-		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getKey() == enchantment)
-			{
-				return true;
-			}
-		}
-		return false;
+		return enchantmentEvents.containsKey(enchantment);
 	}
 
 	/**
@@ -190,9 +187,9 @@ public class ShieldRegistry
 			return true;
 		}
 		
-		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
+		for(Enchantment entry : enchantmentEvents.keySet())
 		{
-			if(hasEnchantment(entry.getKey(), shield))
+			if(hasEnchantment(entry, shield))
 			{
 				return true;
 			}
@@ -209,14 +206,16 @@ public class ShieldRegistry
 	 */
 	public static boolean hasOnBlockDamage(Item shield)
 	{
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield && entry.getValue().usesOnBlockDamage())
-			{
-				return true;
+		if(itemEvents.containsKey(shield)) {
+			for(ShieldEvent entry : itemEvents.get(shield)) {
+				if(entry.usesOnBlockDamage()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -228,14 +227,16 @@ public class ShieldRegistry
 	 */
 	public static boolean hasOnBlockDamage(Enchantment enchantment)
 	{
-		for(SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getKey() == enchantment && entry.getValue().usesOnBlockDamage())
-			{
-				return true;
+		if(enchantmentEvents.containsKey(enchantment)) {
+			for(ShieldEvent entry : enchantmentEvents.get(enchantment)) {
+				if(entry.usesOnBlockDamage()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -247,14 +248,16 @@ public class ShieldRegistry
 	 */
 	public static boolean hasOnDisable(Item shield)
 	{
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield && entry.getValue().usesOnDisable())
-			{
-				return true;
+		if(itemEvents.containsKey(shield)) {
+			for(ShieldEvent entry : itemEvents.get(shield)) {
+				if(entry.usesOnDisable()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -266,14 +269,16 @@ public class ShieldRegistry
 	 */
 	public static boolean hasOnDisable(Enchantment enchantment)
 	{
-		for(SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getKey() == enchantment && entry.getValue().usesOnDisable())
-			{
-				return true;
+		if(enchantmentEvents.containsKey(enchantment)) {
+			for(ShieldEvent entry : enchantmentEvents.get(enchantment)) {
+				if(entry.usesOnDisable()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -285,14 +290,16 @@ public class ShieldRegistry
 	 */
 	public static boolean hasWhileHolding(Item shield)
 	{
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield && entry.getValue().usesWhileHolding())
-			{
-				return true;
+		if(itemEvents.containsKey(shield)) {
+			for(ShieldEvent entry : itemEvents.get(shield)) {
+				if(entry.usesWhileHolding()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -304,111 +311,37 @@ public class ShieldRegistry
 	 */
 	public static boolean hasWhileHolding(Enchantment enchantment)
 	{
-		for(SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getKey() == enchantment && entry.getValue().usesWhileHolding())
-			{
-				return true;
+		if(enchantmentEvents.containsKey(enchantment)) {
+			for(ShieldEvent entry : enchantmentEvents.get(enchantment)) {
+				if(entry.usesWhileHolding()) {
+					return true;
+				}
 			}
+			return false;
+		} else {
+			return false;
 		}
-		return false;
-	}
-
-	public static ShieldEvent[] getEvents(Item shield)
-	{
-		List<ShieldEvent> temp = new ArrayList<ShieldEvent>();
-
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield)
-			{
-				temp.add(entry.getValue());
-			}
-		}
-
-		ShieldEvent[] result = new ShieldEvent[temp.size()];
-		result = temp.toArray(result);
-
-		return result;
 	}
 
 	public static ShieldEvent[] getEvents(Enchantment enchantment)
 	{
-		List<ShieldEvent> temp = new ArrayList<ShieldEvent>();
-
-		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getKey() == enchantment)
-			{
-				temp.add(entry.getValue());
-			}
-		}
-
-		ShieldEvent[] result = new ShieldEvent[temp.size()];
-		result = temp.toArray(result);
-
-		return result;
-	}
-
-	public static ShieldEvent[] getEvents(ItemStack shield)
-	{
-		List<ShieldEvent> temp = new ArrayList<ShieldEvent>();
-
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getKey() == shield.getItem())
-			{
-				temp.add(entry.getValue());
-			}
-		}
-
-		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(hasEnchantment(entry.getKey(), shield))
-			{
-				temp.add(entry.getValue());
-			}
-		}
-
-		ShieldEvent[] result = new ShieldEvent[temp.size()];
-		result = temp.toArray(result);
-
-		return result;
-	}
-
-	public static Item[] getItems(ShieldEvent event)
-	{
-		List<Item> temp = new ArrayList<Item>();
-
-		for(AbstractMap.SimpleImmutableEntry<Item, ShieldEvent> entry : itemEvents)
-		{
-			if(entry.getValue() == event)
-			{
-				temp.add(entry.getKey());
-			}
-		}
-
-		Item[] result = new Item[temp.size()];
-		result = temp.toArray(result);
-
+		ShieldEvent[] result = new ShieldEvent[enchantmentEvents.get(enchantment).size()];
+		result = enchantmentEvents.get(enchantment).toArray(result);
 		return result;
 	}
 
 	public static Enchantment[] getEnchantments(ShieldEvent event)
 	{
-		List<Enchantment> temp = new ArrayList<Enchantment>();
-
-		for(AbstractMap.SimpleImmutableEntry<Enchantment, ShieldEvent> entry : enchantmentEvents)
-		{
-			if(entry.getValue() == event)
-			{
-				temp.add(entry.getKey());
+		ArrayList<Enchantment> temp = new ArrayList<Enchantment>();
+		
+		for(Enchantment entry : enchantmentEvents.keySet()) {
+			if(enchantmentEvents.get(entry).contains(event)) {
+				temp.add(entry);
 			}
 		}
-
+		
 		Enchantment[] result = new Enchantment[temp.size()];
 		result = temp.toArray(result);
-
 		return result;
 	}
 
@@ -545,5 +478,11 @@ public class ShieldRegistry
 		System.out.println("isShield Ran!, returned: \"" + Boolean.toString(item instanceof AbstractShield) + "\".");
 
 		return item instanceof AbstractShield;
+	}
+
+	public static ShieldEvent[] getEvents(ItemStack shield) {
+		ShieldEvent[] result = new ShieldEvent[itemEvents.get(shield.getItem()).size()];
+		result = itemEvents.get(shield.getItem()).toArray(result);
+		return result;
 	}
 }

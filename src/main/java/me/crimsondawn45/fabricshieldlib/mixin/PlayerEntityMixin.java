@@ -71,8 +71,6 @@ public class PlayerEntityMixin
 		
 		if(ShieldRegistry.isShield(shield))
 		{
-			System.out.println("Passed if check on \"disableShieldTail()\".");
-
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
 			if (sprinting)
 			{
