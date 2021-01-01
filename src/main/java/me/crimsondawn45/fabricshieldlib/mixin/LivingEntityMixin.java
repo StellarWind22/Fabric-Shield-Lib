@@ -48,9 +48,6 @@ public class LivingEntityMixin
 					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
-
-				//Return?
-				//callbackInfo.setReturnValue(true);
 			}
 		}
 	}

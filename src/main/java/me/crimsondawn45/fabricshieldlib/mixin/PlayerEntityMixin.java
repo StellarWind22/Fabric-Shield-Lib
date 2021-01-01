@@ -29,8 +29,6 @@ public class PlayerEntityMixin
 		
 		if(amount >= 3.0F && ShieldRegistry.isShield(activeItem.getItem()))
 		{
-			System.out.println("Passed if check on \"damageShield()\".");
-
 			int i = 1 + MathHelper.floor(amount);
 			Hand activeHand = player.getActiveHand();
 			

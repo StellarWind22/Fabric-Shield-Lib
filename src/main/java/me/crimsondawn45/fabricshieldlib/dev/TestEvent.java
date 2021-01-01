@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.object;
+package me.crimsondawn45.fabricshieldlib.dev;
 
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.entity.LivingEntity;
