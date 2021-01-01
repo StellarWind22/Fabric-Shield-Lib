@@ -1,6 +1,5 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -33,8 +32,5 @@ public class TestEvent extends ShieldEvent
     public void whileHolding(LivingEntity defender, int level, Hand hand, ItemStack shield)
     {
         defender.setGlowing(defender.isBlocking());
-
-		// Uncomment if you want spam.
-        // if(ShieldRegistry.isShield(shield.getItem())) System.out.println("This is a shield!");
     }
 }
