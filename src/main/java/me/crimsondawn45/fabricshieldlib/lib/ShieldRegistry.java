@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.api;
+package me.crimsondawn45.fabricshieldlib.lib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
-import me.crimsondawn45.fabricshieldlib.api.event.ShieldEventType;
-import me.crimsondawn45.fabricshieldlib.api.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEventType;
+import me.crimsondawn45.fabricshieldlib.lib.object.AbstractShield;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;

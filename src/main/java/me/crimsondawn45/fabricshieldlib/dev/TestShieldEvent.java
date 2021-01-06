@@ -1,7 +1,7 @@
 package me.crimsondawn45.fabricshieldlib.dev;
 
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
-import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;

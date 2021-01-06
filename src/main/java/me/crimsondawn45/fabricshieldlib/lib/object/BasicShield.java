@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.api.object;
+package me.crimsondawn45.fabricshieldlib.lib.object;
 
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag.Identified;

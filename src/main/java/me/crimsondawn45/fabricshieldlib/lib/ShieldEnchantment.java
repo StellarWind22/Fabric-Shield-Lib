@@ -1,6 +1,6 @@
-package me.crimsondawn45.fabricshieldlib.api;
+package me.crimsondawn45.fabricshieldlib.lib;
 
-import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentTarget;

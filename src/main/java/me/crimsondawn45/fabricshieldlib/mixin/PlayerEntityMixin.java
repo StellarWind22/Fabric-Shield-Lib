@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.api.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
+import me.crimsondawn45.fabricshieldlib.lib.object.AbstractShield;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;

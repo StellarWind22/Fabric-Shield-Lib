@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.api;
+package me.crimsondawn45.fabricshieldlib.lib;
 
 public enum ItemListType
 {

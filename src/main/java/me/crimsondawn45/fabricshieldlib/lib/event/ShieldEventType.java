@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.api.event;
+package me.crimsondawn45.fabricshieldlib.lib.event;
 
 public enum ShieldEventType
 {
