@@ -8,8 +8,6 @@ import net.minecraft.util.Hand;
 
 public abstract class ShieldEvent
 {
-	private ShieldEventType type = ShieldEventType.UNSET;
-
     private boolean usesOnBlockDamage;
     private boolean usesOnDisable;
 	private boolean usesWhileHolding;
@@ -72,15 +70,5 @@ public abstract class ShieldEvent
     public boolean usesWhileHolding()
     {
         return this.usesWhileHolding;
-	}
-	
-	public void setType(ShieldEventType type)
-	{
-		this.type = type;
-	}
-
-	public ShieldEventType getType()
-	{
-		return this.type;
 	}
 }

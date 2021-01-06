@@ -7,7 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.lib.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -48,10 +49,23 @@ public class PlayerEntityMixin
 	@Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo) {
 		PlayerEntity player = (PlayerEntity) (Object) this;
-		ItemStack shield = player.getActiveItem();
-
-		if(ShieldRegistry.hasEvent(shield)) {
-			ShieldRegistry.fireOnDisable(player, player.getActiveHand(), shield, ShieldRegistry.getEvents(shield));
+		ItemStack activeItem = player.getActiveItem();
+		
+		/*
+		 * Handle onDisable Events
+		 */
+		if(ShieldRegistry.isFabricShield(activeItem.getItem())) {
+			FabricShield shield = (FabricShield) activeItem.getItem();
+			if(shield.hasEvent()) {
+				if(shield.getEvent().usesOnDisable()) {
+					shield.getEvent().onDisable(player, 0, player.getActiveHand(), activeItem);;
+				}
+			}
+		}
+		for(ShieldEnchantment entry : ShieldRegistry.getAllShieldEnchantments()) {
+			if(entry.hasEnchantment(activeItem) && entry.hasEvent()) {
+				entry.getEvent().onDisable(player, EnchantmentHelper.getLevel(entry, activeItem), player.getActiveHand(), activeItem);
+			}
 		}
 	}
 	
@@ -67,7 +81,7 @@ public class PlayerEntityMixin
       		}
 
 			if (player.getRandom().nextFloat() < f) {
-         		player.getItemCooldownManager().set(shield, ((AbstractShield)shield).getCooldownTicks());
+         		player.getItemCooldownManager().set(shield, ((FabricShield)shield).getCooldownTicks());
          		player.clearActiveItem();
          		player.world.sendEntityStatus(player, (byte)30);
       		}

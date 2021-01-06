@@ -1,5 +1,7 @@
-package me.crimsondawn45.fabricshieldlib.lib;
+package me.crimsondawn45.fabricshieldlib.lib.object;
 
+import me.crimsondawn45.fabricshieldlib.lib.ItemListType;
+import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -7,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.tag.Tag;
 
 public class ShieldEnchantment extends Enchantment
@@ -15,6 +18,7 @@ public class ShieldEnchantment extends Enchantment
     private Tag.Identified<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
     private ItemListType itemListType;
+    private ShieldEvent event;
 
     /**
      * Fabric Shield Enchantment
@@ -29,7 +33,8 @@ public class ShieldEnchantment extends Enchantment
         this.acceptedItem = acceptedItem;
         this.itemListType = ItemListType.ITEM;
 
-        //ShieldRegistry.registerEnchantmentEvent(this, event);
+        this.event = event;
+        ShieldRegistry.register(this);
     }
 
     /**
@@ -45,7 +50,8 @@ public class ShieldEnchantment extends Enchantment
         this.acceptedItemTag = acceptedItemTag;
         this.itemListType = ItemListType.TAG;
 
-        ShieldRegistry.registerEnchantmentEvent(this, event);
+        this.event = event;
+        ShieldRegistry.register(this);
     }
 
     /**
@@ -61,7 +67,8 @@ public class ShieldEnchantment extends Enchantment
         this.acceptedItemArray = acceptedItemArray;
         this.itemListType = ItemListType.ARRAY;
 
-        ShieldRegistry.registerEnchantmentEvent(this, event);
+        this.event = event;
+        ShieldRegistry.register(this);
     }
 
     /**
@@ -75,7 +82,8 @@ public class ShieldEnchantment extends Enchantment
 		
         this.itemListType = ItemListType.REGISTRY;
         
-        ShieldRegistry.registerEnchantmentEvent(this, event);
+        this.event = event;
+        ShieldRegistry.register(this);
 	}
 	
 	@Override
@@ -97,9 +105,9 @@ public class ShieldEnchantment extends Enchantment
 			case TAG:	return this.acceptedItemTag.contains(item.getItem());
 			
 			case REGISTRY:
-				for(Item entry : ShieldRegistry.getAllShields())
+				for(Item entry : ShieldRegistry.getAllFabricShields())
 				{
-					if(entry == item.getItem())
+					if(entry == item.getItem() || item.getItem() == Items.SHIELD)
 					{
 						return true;
 					}
@@ -120,5 +128,13 @@ public class ShieldEnchantment extends Enchantment
 	public boolean hasEnchantment(ItemStack item)
 	{
 		return EnchantmentHelper.getLevel(this, item) > 0;
+	}
+	
+	public boolean hasEvent() {
+		return this.event != null;
+	}
+	
+	public ShieldEvent getEvent() {
+		return this.event;
 	}
 }

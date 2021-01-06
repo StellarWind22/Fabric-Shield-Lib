@@ -2,6 +2,7 @@ package me.crimsondawn45.fabricshieldlib.lib.object;
 
 import me.crimsondawn45.fabricshieldlib.lib.ItemListType;
 import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
+import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,13 +16,14 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
-public abstract class AbstractShield extends Item
+public class FabricShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
 	private Tag.Identified<Item> repairItemTag;
 	private Item[] repairItemArray;
 	private ItemListType itemListType;
+	private ShieldEvent event;
 	
 	/**
 	 * Fabric Shield Item
@@ -31,7 +33,7 @@ public abstract class AbstractShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public AbstractShield(Settings settings, int cooldownTicks, int durability, Item repairItem)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Item repairItem)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -54,7 +56,7 @@ public abstract class AbstractShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public AbstractShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -77,7 +79,7 @@ public abstract class AbstractShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public AbstractShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
 	{
 		super(settings.maxDamage(durability));
 		
@@ -165,5 +167,13 @@ public abstract class AbstractShield extends Item
 	public int getEnchantability()
 	{
 		return 9;
+	}
+	
+	public boolean hasEvent() {
+		return this.event != null;
+	}
+	
+	public ShieldEvent getEvent() {
+		return this.event;
 	}
 }
