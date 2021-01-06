@@ -371,99 +371,105 @@ public class ShieldRegistry
 
 	public static void fireOnBlockDamage(LivingEntity defender, DamageSource source, float amount, Hand hand, ItemStack shield, ShieldEvent...events)
 	{
-		for(ShieldEvent event : events)
-		{
-			switch(event.getType())
+		if(events != null) {
+			for(ShieldEvent event : events)
 			{
-				case ITEM:
+				switch(event.getType())
+				{
+					case ITEM:
 
-					fireOnBlockDamage(event, defender, source, amount, 0, hand, shield);
-					continue;
+						fireOnBlockDamage(event, defender, source, amount, 0, hand, shield);
+						continue;
 
-				case ENCHANTMENT:
+					case ENCHANTMENT:
 
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				case BOTH:
-					
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+					case BOTH:
+						
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireOnBlockDamage(event, defender, source, amount, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				default:
-					continue;
+					default:
+						continue;
+				}
 			}
 		}
 	}
 
 	public static void fireOnDisable(PlayerEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
 	{
-		for(ShieldEvent event : events)
-		{
-			switch(event.getType())
+		if(events != null) {
+			for(ShieldEvent event : events)
 			{
-				case ITEM:
+				switch(event.getType())
+				{
+					case ITEM:
 
-					fireOnDisable(event, defender, 0, hand, shield);
-					continue;
+						fireOnDisable(event, defender, 0, hand, shield);
+						continue;
 
-				case ENCHANTMENT:
+					case ENCHANTMENT:
 
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				case BOTH:
-					
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+					case BOTH:
+						
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireOnDisable(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				default:
-					continue;
+					default:
+						continue;
+				}
 			}
 		}
 	}
 
 	public static void fireWhileHolding(LivingEntity defender, Hand hand, ItemStack shield, ShieldEvent...events)
 	{
-		for(ShieldEvent event : events)
-		{
-			switch(event.getType())
+		if(events != null) {
+			for(ShieldEvent event : events)
 			{
-				case ITEM:
+				switch(event.getType())
+				{
+					case ITEM:
 
-					fireWhileHolding(event, defender, 0, hand, shield);
-					continue;
+						fireWhileHolding(event, defender, 0, hand, shield);
+						continue;
 
-				case ENCHANTMENT:
+					case ENCHANTMENT:
 
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				case BOTH:
-					
-					for(Enchantment enchantment : getEnchantments(event))
-					{
-						fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
-					}
-					continue;
+					case BOTH:
+						
+						for(Enchantment enchantment : getEnchantments(event))
+						{
+							fireWhileHolding(event, defender, EnchantmentHelper.getLevel(enchantment, shield), hand, shield);
+						}
+						continue;
 
-				default:
-					continue;
+					default:
+						continue;
+				}
 			}
 		}
 	}
@@ -481,8 +487,12 @@ public class ShieldRegistry
 	}
 
 	public static ShieldEvent[] getEvents(ItemStack shield) {
-		ShieldEvent[] result = new ShieldEvent[itemEvents.get(shield.getItem()).size()];
-		result = itemEvents.get(shield.getItem()).toArray(result);
-		return result;
+		if(itemEvents.containsKey(shield.getItem())) {
+			ShieldEvent[] result = new ShieldEvent[itemEvents.get(shield.getItem()).size()];
+			result = itemEvents.get(shield.getItem()).toArray(result);
+			return result;
+		} else {
+			return null;
+		}
 	}
 }

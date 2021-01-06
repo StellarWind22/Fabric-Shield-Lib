@@ -26,7 +26,7 @@ public abstract class ShieldEvent
 	 * 
 	 * runs when the shield successfully blocks damage from an attacker.
 	 * 
-	 * @param defender - Entity that is holding thie shield.
+	 * @param defender - Entity that is holding the shield.
 	 * @param source - Source of the damage blocked.
 	 * @param amount - Amount of damage blocked.
 	 * @param level - Level of enchantment(will be 0 if it is not an enchantment)
@@ -40,7 +40,7 @@ public abstract class ShieldEvent
 	 * 
 	 * runs when the shield is disabled with an axe.
 	 * 
-	 * @param defender - Entity that is holding thie shield.
+	 * @param defender - Entity that is holding the shield.
 	 * @param level - Level of enchantment(will be 0 if it is not an enchantment)
 	 * @param hand - Hand holding the shield
 	 * @param shield - The ItemStack containing the shield
@@ -52,7 +52,7 @@ public abstract class ShieldEvent
 	 * 
 	 * runs every tick the shield is held.
 	 * 
-	 * @param defender - Entity that is holding thie shield.
+	 * @param defender - Entity that is holding the shield.
 	 * @param level - Level of enchantment(will be 0 if it is not an enchantment)
 	 * @param hand - Hand holding the shield
 	 * @param shield - The ItemStack containing the shield
