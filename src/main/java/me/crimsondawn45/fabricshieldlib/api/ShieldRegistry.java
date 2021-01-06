@@ -8,7 +8,7 @@ import java.util.Set;
 
 import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
 import me.crimsondawn45.fabricshieldlib.api.event.ShieldEventType;
-import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.api.object.AbstractShield;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;

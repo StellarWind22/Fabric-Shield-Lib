@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.object;
+package me.crimsondawn45.fabricshieldlib.api.object;
 
 import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;

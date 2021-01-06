@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
+import me.crimsondawn45.fabricshieldlib.api.object.AbstractShield;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -67,7 +67,7 @@ public class PlayerEntityMixin
       		}
 
 			if (player.getRandom().nextFloat() < f) {
-         		player.getItemCooldownManager().set(shield, ((AbstractShield) shield).getCooldownTicks());
+         		player.getItemCooldownManager().set(shield, ((AbstractShield)shield).getCooldownTicks());
          		player.clearActiveItem();
          		player.world.sendEntityStatus(player, (byte)30);
       		}

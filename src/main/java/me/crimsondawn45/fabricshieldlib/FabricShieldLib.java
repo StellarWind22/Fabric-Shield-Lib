@@ -3,10 +3,10 @@ package me.crimsondawn45.fabricshieldlib;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import me.crimsondawn45.fabricshieldlib.api.ShieldEnchantment;
 import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
+import me.crimsondawn45.fabricshieldlib.api.object.BasicShield;
 import me.crimsondawn45.fabricshieldlib.dev.TestShieldEvent;
-import me.crimsondawn45.fabricshieldlib.object.BasicShield;
-import me.crimsondawn45.fabricshieldlib.object.ShieldEnchantment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment.Rarity;
