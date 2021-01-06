@@ -19,10 +19,10 @@ public class ShieldEnchantment extends Enchantment
     private ItemListType itemListType;
 
     /**
-     * Fabric Shield Enchanement
+     * Fabric Shield Enchantment
      * 
      * @param weight       - Rarity of enchantment.
-     * @param acceptedItem - Item that enchantments can be applied to.
+     * @param acceptedItem - Item that enchantment can be applied to.
      */
     public ShieldEnchantment(Rarity weight, ShieldEvent event, Item acceptedItem)
     {
@@ -31,14 +31,14 @@ public class ShieldEnchantment extends Enchantment
         this.acceptedItem = acceptedItem;
         this.itemListType = ItemListType.ITEM;
 
-        ShieldRegistry.registerEnchantmentEvent(this, event);
+        //ShieldRegistry.registerEnchantmentEvent(this, event);
     }
 
     /**
-     * Fabric Shield Enchanement
+     * Fabric Shield Enchantment
      * 
      * @param weight          - Rarity of enchantment.
-     * @param acceptedItemTag - Items that enchantments can be applied to.
+     * @param acceptedItemTag - Items that enchantment can be applied to.
      */
     public ShieldEnchantment(Rarity weight, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
     {
@@ -51,10 +51,10 @@ public class ShieldEnchantment extends Enchantment
     }
 
     /**
-     * Fabric Shield Enchanement
+     * Fabric Shield Enchantment
      * 
      * @param weight        - Rarity of enchantment.
-     * @param acceptedItems - Items that enchantments can be applied to.
+     * @param acceptedItems - Items that enchantment can be applied to.
      */
     public ShieldEnchantment(Rarity weight, ShieldEvent event, Item... acceptedItemArray)
     {
