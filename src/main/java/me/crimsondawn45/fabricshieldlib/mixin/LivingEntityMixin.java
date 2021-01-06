@@ -27,7 +27,7 @@ public class LivingEntityMixin
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
 		
-		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.getHealth() <= 0.0F || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))))
+		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))))
 		{
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source)) {
 				
@@ -61,12 +61,6 @@ public class LivingEntityMixin
 					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
-				
-				/*
-				 * Return true because this inject completely replaces vanilla shield code and if it doesn't return true
-				 * it will run all onBlockDamage events twice and damage the shield twice!
-				 */
-				callbackInfo.setReturnValue(true);
 			}
 		}
 	}
