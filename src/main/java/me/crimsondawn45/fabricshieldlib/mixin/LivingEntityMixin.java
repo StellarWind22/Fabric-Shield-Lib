@@ -61,6 +61,12 @@ public class LivingEntityMixin
 					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
+				
+				/*
+				 * Return true because this inject completely replaces vanilla shield code and if it doesn't return true
+				 * it will run all onBlockDamage events twice and damage the shield twice!
+				 */
+				callbackInfo.setReturnValue(true);
 			}
 		}
 	}
