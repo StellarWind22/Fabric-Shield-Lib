@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.util.event;
+package me.crimsondawn45.fabricshieldlib.api.event;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

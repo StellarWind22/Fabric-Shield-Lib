@@ -1,7 +1,7 @@
 package me.crimsondawn45.fabricshieldlib.dev;
 
 import me.crimsondawn45.fabricshieldlib.FabricShieldLib;
-import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,15 +18,13 @@ public class TestShieldEvent extends ShieldEvent {
 	@Override
 	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield){
 		if(defender instanceof PlayerEntity) {
-			FabricShieldLib.logger.debug("onBlockDamage ran!!");
+			FabricShieldLib.debugMsg("onBlockDamage ran!!");
 		}
 	}
 	
 	@Override
 	public void onDisable(PlayerEntity defender, int level, Hand hand, ItemStack shield){
-		if(defender instanceof PlayerEntity) {
-			FabricShieldLib.logger.debug("onDisable ran!");
-		}
+		FabricShieldLib.debugMsg("onDisable ran!");
 	}
 	
 	@Override
@@ -36,7 +34,7 @@ public class TestShieldEvent extends ShieldEvent {
 			
 			//Require sneaking to reduce spam
 			if(player.isSneaking()) {
-				FabricShieldLib.logger.debug("whileHolding ran and you are sneaking!");
+				FabricShieldLib.debugMsg("whileHolding ran and you are sneaking!");
 			}
 		}
 	}

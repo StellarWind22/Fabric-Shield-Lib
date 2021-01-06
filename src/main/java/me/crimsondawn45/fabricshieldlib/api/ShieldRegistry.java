@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.util;
+package me.crimsondawn45.fabricshieldlib.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.api.event.ShieldEventType;
 import me.crimsondawn45.fabricshieldlib.object.AbstractShield;
-import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
-import me.crimsondawn45.fabricshieldlib.util.event.ShieldEventType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -158,7 +158,7 @@ public class ShieldRegistry
 	 */
 	public static boolean hasEvent(Item shield)
 	{
-		return itemEvents.containsKey(shield);
+		return itemEvents.get(shield) != null;
 	}
 
 	/**
@@ -479,13 +479,6 @@ public class ShieldRegistry
 		return EnchantmentHelper.getLevel(enchantment, stack) > 0;
 	}
 
-	public static boolean isShield(Item item)
-	{
-		System.out.println("isShield Ran!, returned: \"" + Boolean.toString(item instanceof AbstractShield) + "\".");
-
-		return item instanceof AbstractShield;
-	}
-
 	public static ShieldEvent[] getEvents(ItemStack shield) {
 		if(itemEvents.containsKey(shield.getItem())) {
 			ShieldEvent[] result = new ShieldEvent[itemEvents.get(shield.getItem()).size()];
@@ -494,5 +487,9 @@ public class ShieldRegistry
 		} else {
 			return null;
 		}
+	}
+	
+	public static boolean isFabricShield(Item shield) {
+		return shield instanceof AbstractShield;
 	}
 }

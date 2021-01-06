@@ -1,7 +1,7 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.util.event.ShieldEvent;
+import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
+import me.crimsondawn45.fabricshieldlib.api.event.ShieldEvent;
 import net.minecraft.item.Item;
 import net.minecraft.tag.Tag.Identified;
 

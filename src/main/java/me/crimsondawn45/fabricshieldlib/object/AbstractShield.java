@@ -1,7 +1,7 @@
 package me.crimsondawn45.fabricshieldlib.object;
 
-import me.crimsondawn45.fabricshieldlib.util.ItemListType;
-import me.crimsondawn45.fabricshieldlib.util.ShieldRegistry;
+import me.crimsondawn45.fabricshieldlib.api.ItemListType;
+import me.crimsondawn45.fabricshieldlib.api.ShieldRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
