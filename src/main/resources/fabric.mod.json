@@ -5,10 +5,10 @@
   "name": "Fabric Shield Lib",
   "description": "Library that makes it easy to add shields with fabric without conflictions!",
   "authors": [
-    "CrimsonDawn45",
-    "Spaceman"
+    "CrimsonDawn45"
   ],
   "contributors": [
+    "Spaceman",
     "Draylar",
     "nlxdodge",
     "ggtylerr"

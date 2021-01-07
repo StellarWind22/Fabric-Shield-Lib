@@ -45,6 +45,7 @@ public class PlayerEntityMixin
 	               player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.random.nextFloat() * 0.4F);
 	            }
 			}
+			
 		}
 	}
 
@@ -74,16 +75,18 @@ public class PlayerEntityMixin
 	@Inject(at = @At(value = "TAIL"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void disableShieldTail(boolean sprinting, CallbackInfo callBackInfo) {	
 		PlayerEntity player = (PlayerEntity) (Object) this;
-		Item shield = player.getActiveItem().getItem();
+		Item activeItem = player.getActiveItem().getItem();
 		
-		if(ShieldRegistry.isFabricShield(shield)) {
+		if(ShieldRegistry.isFabricShield(activeItem)) {
+			FabricShield shield = (FabricShield) activeItem;
+			
 			float f = 0.25F + (float)EnchantmentHelper.getEfficiency(player) * 0.05F;
 			if (sprinting) {
         		f += 0.75F;
       		}
 
 			if (player.getRandom().nextFloat() < f) {
-         		player.getItemCooldownManager().set(shield, ((FabricShield)shield).getCooldownTicks());
+         		player.getItemCooldownManager().set(shield, shield.getCooldownTicks());;
          		player.clearActiveItem();
          		player.world.sendEntityStatus(player, (byte)30);
       		}
