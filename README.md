@@ -1,9 +1,7 @@
 # Fabric Shield Lib
 Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions or having to write your own mixins.
 
-- - - -
-
-# Importing
+## Importing
 this library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### gradle.properties
@@ -34,5 +32,5 @@ repositories {
 
 - - - -
 
-# Documentation?
+## Documentation?
 head over to the [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) it's a template repo that shows how to implement custom shields, shield enchantments, and how the dependency should be setup in the build.gradle.
