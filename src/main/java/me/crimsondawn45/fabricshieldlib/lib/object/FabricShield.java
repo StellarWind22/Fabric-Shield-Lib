@@ -95,6 +95,82 @@ public class FabricShield extends Item
 	}
 	
 	/**
+	 * Fabric Shield Item
+	 * 
+	 * @param settings - Item settings.
+	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
+	 * @param durability - How much damage the shield can handle before it breaks.
+	 * @param event - Shield event to be registered to the shield item.
+	 * @param repairItem - Item that can be used to repair the shield.
+	 */
+	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item repairItem)
+	{
+		super(settings.maxDamage(durability));
+		
+		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});		
+		this.cooldownTicks = cooldownTicks;
+		this.repairItem = repairItem;
+		this.itemListType = ItemListType.ITEM;
+		this.event = event;
+		
+		ShieldRegistry.register(this);
+	}
+	
+	/**
+	 * Fabric Shield Item
+	 * 
+	 * @param settings - Item settings
+	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
+	 * @param durability - How much damage the shield can handle before it breaks.
+	 * @param event - Shield event to be registered to the shield item.
+	 * @param repairItemTag - Item that can be used to repair the shield.
+	 */
+	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Tag.Identified<Item> repairItemTag)
+	{
+		super(settings.maxDamage(durability));
+		
+		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});
+		this.cooldownTicks = cooldownTicks;
+		this.repairItemTag = repairItemTag;
+		this.itemListType = ItemListType.TAG;
+		this.event = event;
+		
+		ShieldRegistry.register(this);
+	}
+	
+	/**
+	 * Fabric Shield Item
+	 * 
+	 * @param settings - Item settings
+	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
+	 * @param durability - How much damage the shield can handle before it breaks.
+	 * @param event - Shield event to be registered to the shield item.
+	 * @param repairItemTag - Item that can be used to repair the shield.
+	 */
+	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item...repairItems)
+	{
+		super(settings.maxDamage(durability));
+		
+		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
+			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		});		
+		this.cooldownTicks = cooldownTicks;
+		this.repairItemArray = repairItems;
+		this.itemListType = ItemListType.ARRAY;
+		this.event = event;
+		
+		ShieldRegistry.register(this);
+	}
+	
+	
+	/**
 	 * getCoolDownTicks
 	 * 
 	 * @return How many ticks the shield goes into cooldown for after being disabled.
