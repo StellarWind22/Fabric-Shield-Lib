@@ -3,7 +3,6 @@ package me.crimsondawn45.fabricshieldlib.lib.object;
 import me.crimsondawn45.fabricshieldlib.lib.ItemListType;
 import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
@@ -20,7 +19,7 @@ public class FabricShield extends Item
 {
 	private int cooldownTicks;
 	private Item repairItem;
-	private Tag.Identified<Item> repairItemTag;
+	private Tag<Item> repairItemTag;
 	private Item[] repairItemArray;
 	private ItemListType itemListType;
 	private ShieldEvent event;
@@ -38,9 +37,9 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });	
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
@@ -56,14 +55,14 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
@@ -84,9 +83,9 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });	
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
@@ -108,9 +107,9 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
@@ -128,14 +127,14 @@ public class FabricShield extends Item
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Tag.Identified<Item> repairItemTag)
+	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Tag<Item> repairItemTag)
 	{
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
@@ -158,9 +157,9 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});		
+		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+	    });
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
