@@ -15,7 +15,7 @@ import net.minecraft.tag.Tag;
 public class ShieldEnchantment extends Enchantment
 {
     private Item acceptedItem;
-    private Tag.Identified<Item> acceptedItemTag;
+    private Tag<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
     private ItemListType itemListType;
     private ShieldEvent event;
@@ -26,7 +26,7 @@ public class ShieldEnchantment extends Enchantment
      * @param weight       - Rarity of enchantment.
      * @param acceptedItem - Item that enchantment can be applied to.
      */
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item acceptedItem)
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Item acceptedItem)
     {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
@@ -43,7 +43,7 @@ public class ShieldEnchantment extends Enchantment
      * @param weight          - Rarity of enchantment.
      * @param acceptedItemTag - Items that enchantment can be applied to.
      */
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Tag.Identified<Item> acceptedItemTag)
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Tag<Item> acceptedItemTag)
     {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
@@ -60,7 +60,7 @@ public class ShieldEnchantment extends Enchantment
      * @param weight        - Rarity of enchantment.
      * @param acceptedItems - Items that enchantment can be applied to.
      */
-    public ShieldEnchantment(Rarity weight, ShieldEvent event, Item... acceptedItemArray)
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Item... acceptedItemArray)
     {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
@@ -76,7 +76,7 @@ public class ShieldEnchantment extends Enchantment
      * 
      * @param weight Rarity of the enchantment.
      */
-    public ShieldEnchantment(Rarity weight, ShieldEvent event)
+    public ShieldEnchantment(Weight weight, ShieldEvent event)
 	{
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		

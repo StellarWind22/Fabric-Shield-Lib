@@ -9,7 +9,7 @@ import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.enchantment.Enchantment.Weight;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
@@ -34,7 +34,7 @@ public class FabricShieldLib implements ModInitializer {
 		debugMsg("###########################################################################################################");
 		if(FabricLoader.getInstance().isDevelopmentEnvironment()) {	
 			test_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_shield"), new FabricShield(new Item.Settings().group(ItemGroup.COMBAT), 20, 100, Items.OAK_PLANKS));			//Register Development Stuff
-			test_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "test_enchantment"), new ShieldEnchantment(Rarity.COMMON, new TestShieldEvent(true, true, true)));
+			test_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "test_enchantment"), new ShieldEnchantment(Weight.COMMON, new TestShieldEvent(true, true, true)));
 		}
 		debugMsg("test_shield        hasEvent: " + Boolean.toString(test_shield.hasEvent()));
 		debugMsg("test_enchantment   hasEvent: " + Boolean.toString(test_enchantment.hasEvent()));
