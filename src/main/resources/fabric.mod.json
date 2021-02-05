@@ -16,7 +16,8 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fabric-shield-lib",
-    "sources": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib"
+    "sources": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib",
+    "issues": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib/issues"
   },
   "license": "LGPL-2.1",
   "icon": "assets/fabricshieldlib/icon.png",
