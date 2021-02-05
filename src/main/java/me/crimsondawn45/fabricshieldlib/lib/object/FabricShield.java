@@ -38,9 +38,7 @@ public class FabricShield extends Item
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
-			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-		});		
+		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"), null);		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
