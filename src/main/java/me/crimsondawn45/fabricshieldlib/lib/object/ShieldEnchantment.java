@@ -12,8 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tag.Tag;
 
-public class ShieldEnchantment extends Enchantment
-{
+public class ShieldEnchantment extends Enchantment {
     private Item acceptedItem;
     private Tag.Identified<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
