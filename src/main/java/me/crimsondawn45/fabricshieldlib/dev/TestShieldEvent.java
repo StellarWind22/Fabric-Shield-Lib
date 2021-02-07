@@ -10,25 +10,24 @@ import net.minecraft.util.Hand;
 
 public class TestShieldEvent extends ShieldEvent {
 
-	public TestShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding)
-	{
+	public TestShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding) {
 		super(usesOnBlockDamage, usesOnDisable, usesWhileHolding);
 	}
 	
 	@Override
-	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield){
+	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield) {
 		if(defender instanceof PlayerEntity) {
 			FabricShieldLib.debugMsg("onBlockDamage ran!!");
 		}
 	}
 	
 	@Override
-	public void onDisable(PlayerEntity defender, int level, Hand hand, ItemStack shield){
+	public void onDisable(PlayerEntity defender, int level, Hand hand, ItemStack shield) {
 		FabricShieldLib.debugMsg("onDisable ran!");
 	}
 	
 	@Override
-	public void whileHolding(LivingEntity defender, int level, Hand hand, ItemStack shield){
+	public void whileHolding(LivingEntity defender, int level, Hand hand, ItemStack shield) {
 		if(defender instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) defender;
 			

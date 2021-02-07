@@ -8,8 +8,7 @@ import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 
-public class ShieldRegistry
-{
+public class ShieldRegistry {
 	//Shield item stuff
 	private static final Set<FabricShield> shields = new HashSet<FabricShield>();
 	private static final Set<ShieldEnchantment> enchantments = new HashSet<ShieldEnchantment>();
