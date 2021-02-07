@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 public class FabricShield extends Item
 {
 	private int cooldownTicks;
+	private int enchantibility;
 	private Item repairItem;
 	private Tag.Identified<Item> repairItemTag;
 	private Item[] repairItemArray;
@@ -33,17 +34,18 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Item repairItem)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Item repairItem) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		
 		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
 			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		});		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -56,17 +58,18 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Tag.Identified<Item> repairItemTag)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Tag.Identified<Item> repairItemTag) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+		
 		FabricModelPredicateProviderRegistry.register(this, new Identifier("blocking"),(itemStack, clientWorld, livingEntity) -> {
 			return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		});
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -79,8 +82,7 @@ public class FabricShield extends Item
 	 * @param durability - How much damage the shield can handle before it breaks.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, Item...repairItems)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Item...repairItems) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -90,6 +92,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -103,8 +106,7 @@ public class FabricShield extends Item
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item repairItem)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Item repairItem) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -114,6 +116,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -128,8 +131,7 @@ public class FabricShield extends Item
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Tag.Identified<Item> repairItemTag)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Tag.Identified<Item> repairItemTag) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -139,6 +141,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -153,8 +156,7 @@ public class FabricShield extends Item
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, ShieldEvent event, Item...repairItems)
-	{
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Item...repairItems) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -164,6 +166,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -175,8 +178,7 @@ public class FabricShield extends Item
 	 * 
 	 * @return How many ticks the shield goes into cooldown for after being disabled.
 	 */
-	public int getCooldownTicks()
-	{
+	public int getCooldownTicks() {
 		return this.cooldownTicks;
 	}
 
@@ -185,50 +187,40 @@ public class FabricShield extends Item
 	 * 
 	 * @param cooldownTicks How many tick the shield goes into cooldown for after being disabled.
 	 */
-	public void setCooldownTicks(int cooldownTicks)
-	{
+	public void setCooldownTicks(int cooldownTicks) {
 		this.cooldownTicks = cooldownTicks;
 	}
 	
 	@Override
-	public UseAction getUseAction(ItemStack stack)
-	{
+	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.BLOCK;
     }
 
 	@Override
-	public int getMaxUseTime(ItemStack stack)
-	{
+	public int getMaxUseTime(ItemStack stack) {
 		return 72000;
 	}
 	
 	@Override
-	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand)
-	{
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
       return TypedActionResult.consume(itemStack);
 	}
 	
 	@Override
-	public boolean canRepair(ItemStack stack, ItemStack ingredient)
-	{
-		switch(this.itemListType)
-		{
+	public boolean canRepair(ItemStack stack, ItemStack ingredient) {
+		switch(this.itemListType) {
 			case ITEM:	return this.repairItem == ingredient.getItem();
 			case ARRAY:
-				
-				for(Item entry : this.repairItemArray)
-				{
-					if(entry == ingredient.getItem())
-					{
+				for(Item entry : this.repairItemArray) {
+					if(entry == ingredient.getItem()) {
 						return true;
 					}
 				}
 				return false;
 				
 			case TAG:	return this.repairItemTag.contains(ingredient.getItem());
-			
 			default:	return false;
 		}
     }
@@ -242,7 +234,7 @@ public class FabricShield extends Item
 	@Override
 	public int getEnchantability()
 	{
-		return 9;
+		return this.enchantibility;
 	}
 	
 	public boolean hasEvent() {

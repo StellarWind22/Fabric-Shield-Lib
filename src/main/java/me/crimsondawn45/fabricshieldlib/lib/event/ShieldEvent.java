@@ -6,14 +6,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
-public abstract class ShieldEvent
-{
+public abstract class ShieldEvent {
     private boolean usesOnBlockDamage;
     private boolean usesOnDisable;
 	private boolean usesWhileHolding;
 	
-	public ShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding)
-    {
+	public ShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding) {
         this.usesOnBlockDamage = usesOnBlockDamage;
         this.usesOnDisable = usesOnDisable;
         this.usesWhileHolding = usesWhileHolding;
@@ -57,18 +55,15 @@ public abstract class ShieldEvent
 	 */
 	public void whileHolding(LivingEntity defender, int level, Hand hand, ItemStack shield){}
 
-    public boolean usesOnBlockDamage()
-    {
+    public boolean usesOnBlockDamage() {
         return this.usesOnBlockDamage;
 	}
 	
-	public boolean usesOnDisable()
-	{
+	public boolean usesOnDisable() {
 		return this.usesOnDisable;
 	}
 
-    public boolean usesWhileHolding()
-    {
+    public boolean usesWhileHolding() {
         return this.usesWhileHolding;
 	}
 }

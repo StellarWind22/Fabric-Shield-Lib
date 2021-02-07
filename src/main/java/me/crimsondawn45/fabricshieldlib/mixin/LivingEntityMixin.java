@@ -19,16 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin
-{	
+public class LivingEntityMixin {	
 	@Inject(at = @At(value = "HEAD"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD)
-	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
-	{
+	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
 		
-		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))))
-		{
+		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source)) {
 				
 				/*
@@ -66,8 +63,7 @@ public class LivingEntityMixin
 	}
 	
 	@Inject(at = @At(value = "HEAD"), method = "tick()V", locals = LocalCapture.CAPTURE_FAILHARD)
-	private void tick(CallbackInfo callbackInfo)
-	{
+	private void tick(CallbackInfo callbackInfo) {
 		LivingEntity entity = (LivingEntity)(Object)this;
 
 		ItemStack mainItem = entity.getMainHandStack();
