@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public class FabricShield extends Item {
 	private int cooldownTicks;
-	private int enchantibility;
+	private int enchantability;
 	private Item repairItem;
 	private Tag.Identified<Item> repairItemTag;
 	private Item[] repairItemArray;
@@ -31,11 +31,11 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings.
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Item repairItem) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, Item repairItem) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -47,7 +47,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		
 		ShieldRegistry.register(this);
 	}
@@ -57,11 +57,11 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Tag.Identified<Item> repairItemTag) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, Tag.Identified<Item> repairItemTag) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -73,7 +73,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		
 		ShieldRegistry.register(this);
 	}
@@ -83,11 +83,11 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, Item...repairItems) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, Item...repairItems) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -99,7 +99,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		
 		ShieldRegistry.register(this);
 	}
@@ -109,12 +109,12 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings.
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItem - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Item repairItem) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, ShieldEvent event, Item repairItem) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -126,7 +126,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -137,12 +137,12 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Tag.Identified<Item> repairItemTag) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, ShieldEvent event, Tag.Identified<Item> repairItemTag) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -154,7 +154,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -165,12 +165,12 @@ public class FabricShield extends Item {
 	 * 
 	 * @param settings - Item settings
 	 * @param cooldownTicks - How many ticks the shield will be disabled for when hit by an axe.
-	 * @param durability - How much damage the shield can handle before it breaks.
-	 * @param enchantibility - How easily the shield gets good enchantments 9 is the same as an iron tool
+	 * @param durability - How much damage the shield can handle before it breaks, vanilla shield's durability is 336.
+	 * @param enchantability - How easily the shield gets good enchantments 9 is the same as an iron tool
 	 * @param event - Shield event to be registered to the shield item.
 	 * @param repairItemTag - Item that can be used to repair the shield.
 	 */
-	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantibility, ShieldEvent event, Item...repairItems) {
+	public FabricShield(Settings settings, int cooldownTicks, int durability, int enchantability, ShieldEvent event, Item...repairItems) {
 		super(settings.maxDamage(durability));
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
@@ -182,7 +182,7 @@ public class FabricShield extends Item {
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
-		this.enchantibility = enchantibility;
+		this.enchantability = enchantability;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -248,7 +248,7 @@ public class FabricShield extends Item {
 	
 	@Override
 	public int getEnchantability() {
-		return this.enchantibility;
+		return this.enchantability;
 	}
 	
 	public boolean hasEvent() {
