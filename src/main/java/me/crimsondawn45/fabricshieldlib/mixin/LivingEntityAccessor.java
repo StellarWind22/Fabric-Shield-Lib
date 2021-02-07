@@ -9,8 +9,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 
 @Mixin(LivingEntity.class)
-public interface LivingEntityAccessor
-{	
+public interface LivingEntityAccessor {
 	@Accessor
 	void setActiveItemStack(ItemStack stack);
 	

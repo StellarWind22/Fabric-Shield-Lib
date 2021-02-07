@@ -12,8 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tag.Tag;
 
-public class ShieldEnchantment extends Enchantment
-{
+public class ShieldEnchantment extends Enchantment {
     private Item acceptedItem;
     private Tag<Item> acceptedItemTag;
     private Item[] acceptedItemArray;
@@ -23,11 +22,11 @@ public class ShieldEnchantment extends Enchantment
     /**
      * Fabric Shield Enchantment
      * 
-     * @param weight       - Rarity of enchantment.
+     * @param weight - Rarity of enchantment.
+     * @param event - ShieldEvent to be fired for this enchantment
      * @param acceptedItem - Item that enchantment can be applied to.
      */
-    public ShieldEnchantment(Weight weight, ShieldEvent event, Item acceptedItem)
-    {
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Item acceptedItem) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
         this.acceptedItem = acceptedItem;
@@ -40,11 +39,11 @@ public class ShieldEnchantment extends Enchantment
     /**
      * Fabric Shield Enchantment
      * 
-     * @param weight          - Rarity of enchantment.
+     * @param weight - Rarity of enchantment.
+     * @param event - ShieldEvent to be fired for this enchantment
      * @param acceptedItemTag - Items that enchantment can be applied to.
      */
-    public ShieldEnchantment(Weight weight, ShieldEvent event, Tag<Item> acceptedItemTag)
-    {
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Tag<Item> acceptedItemTag) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
         this.acceptedItemTag = acceptedItemTag;
@@ -57,11 +56,11 @@ public class ShieldEnchantment extends Enchantment
     /**
      * Fabric Shield Enchantment
      * 
-     * @param weight        - Rarity of enchantment.
+     * @param weight - Rarity of enchantment.
+     * @param event - ShieldEvent to be fired for this enchantment
      * @param acceptedItems - Items that enchantment can be applied to.
      */
-    public ShieldEnchantment(Weight weight, ShieldEvent event, Item... acceptedItemArray)
-    {
+    public ShieldEnchantment(Weight weight, ShieldEvent event, Item... acceptedItemArray) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
 
         this.acceptedItemArray = acceptedItemArray;
@@ -74,10 +73,10 @@ public class ShieldEnchantment extends Enchantment
     /**
      * Fabric Shield Enchantment
      * 
-     * @param weight Rarity of the enchantment.
+     * @param weight - Rarity of the enchantment.
+     * @param event - ShieldEvent to be fired for this enchantment
      */
-    public ShieldEnchantment(Weight weight, ShieldEvent event)
-	{
+    public ShieldEnchantment(Weight weight, ShieldEvent event) {
 		super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
 		
         this.itemListType = ItemListType.REGISTRY;
@@ -87,15 +86,11 @@ public class ShieldEnchantment extends Enchantment
 	}
 	
 	@Override
-	public boolean isAcceptableItem(ItemStack item)
-	{
-		switch(this.itemListType)
-		{
+	public boolean isAcceptableItem(ItemStack item) {
+		switch(this.itemListType) {
 			case ARRAY:
-				for(Item entry : this.acceptedItemArray)
-				{
-					if(entry == item.getItem())
-					{
+				for(Item entry : this.acceptedItemArray) {
+					if(entry == item.getItem()) {
 						return true;
 					}
 				}
@@ -103,17 +98,14 @@ public class ShieldEnchantment extends Enchantment
 
 			case ITEM:	return this.acceptedItem == item.getItem();
 			case TAG:	return this.acceptedItemTag.contains(item.getItem());
-			
 			case REGISTRY:
-				for(Item entry : ShieldRegistry.getAllFabricShields())
-				{
-					if(entry == item.getItem() || item.getItem() == Items.SHIELD)
-					{
+				for(Item entry : ShieldRegistry.getAllFabricShields()) {
+					if(entry == item.getItem() || item.getItem() == Items.SHIELD) {
 						return true;
 					}
 				}
 				return false;
-			
+				
 			default:	return false;
 		}
 	}
@@ -122,11 +114,9 @@ public class ShieldEnchantment extends Enchantment
 	 * hasEnchantment
 	 * 
 	 * @param item - Item to look for this enchantment on.
-	 * 
 	 * @return Whether or not the item has this enchantment.
 	 */
-	public boolean hasEnchantment(ItemStack item)
-	{
+	public boolean hasEnchantment(ItemStack item) {
 		return EnchantmentHelper.getLevel(this, item) > 0;
 	}
 	

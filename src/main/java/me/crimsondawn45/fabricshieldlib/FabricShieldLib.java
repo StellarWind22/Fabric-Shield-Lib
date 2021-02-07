@@ -33,7 +33,7 @@ public class FabricShieldLib implements ModInitializer {
 		debugMsg("#  WARNING: Fabric Shield Lib is running in dev mode! test_shield and test_enchantment will be ingame!!!  #");
 		debugMsg("###########################################################################################################");
 		if(FabricLoader.getInstance().isDevelopmentEnvironment()) {	
-			test_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_shield"), new FabricShield(new Item.Settings().group(ItemGroup.COMBAT), 20, 100, Items.OAK_PLANKS));			//Register Development Stuff
+			test_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_shield"), new FabricShield(new Item.Settings().group(ItemGroup.COMBAT), 20, 100, 9, Items.OAK_PLANKS));			//Register Development Stuff
 			test_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "test_enchantment"), new ShieldEnchantment(Weight.COMMON, new TestShieldEvent(true, true, true)));
 		}
 		debugMsg("test_shield        hasEvent: " + Boolean.toString(test_shield.hasEvent()));

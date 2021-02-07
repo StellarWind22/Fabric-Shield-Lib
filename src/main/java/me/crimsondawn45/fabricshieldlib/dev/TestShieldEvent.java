@@ -10,8 +10,7 @@ import net.minecraft.util.Hand;
 
 public class TestShieldEvent extends ShieldEvent {
 
-	public TestShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding)
-	{
+	public TestShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding) {
 		super(usesOnBlockDamage, usesOnDisable, usesWhileHolding);
 	}
 	
