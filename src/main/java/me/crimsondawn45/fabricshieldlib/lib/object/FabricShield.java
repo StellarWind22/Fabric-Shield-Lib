@@ -48,6 +48,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -71,6 +72,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -94,6 +96,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
+		this.enchantibility = enchantibility;
 		
 		ShieldRegistry.register(this);
 	}
@@ -118,6 +121,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
 		this.itemListType = ItemListType.ITEM;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -143,6 +147,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
 		this.itemListType = ItemListType.TAG;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
@@ -168,6 +173,7 @@ public class FabricShield extends Item
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
 		this.itemListType = ItemListType.ARRAY;
+		this.enchantibility = enchantibility;
 		this.event = event;
 		
 		ShieldRegistry.register(this);
