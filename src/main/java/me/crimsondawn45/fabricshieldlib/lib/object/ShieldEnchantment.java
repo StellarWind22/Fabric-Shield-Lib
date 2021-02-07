@@ -105,6 +105,7 @@ public class ShieldEnchantment extends Enchantment {
 					}
 				}
 				return false;
+				
 			default:	return false;
 		}
 	}

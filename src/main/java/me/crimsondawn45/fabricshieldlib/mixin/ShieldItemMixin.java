@@ -8,20 +8,18 @@ import net.minecraft.item.ShieldItem;
 
 @Mixin(ShieldItem.class)
 public class ShieldItemMixin extends Item {
-	public ShieldItemMixin(Settings settings)
-	{
+	
+	public ShieldItemMixin(Settings settings) {
 		super(settings);
 	}
 
 	@Override
-	public boolean isEnchantable(ItemStack item)
-	{
+	public boolean isEnchantable(ItemStack item) {
 		return !item.hasEnchantments();
 	}
 	
 	@Override
-	public int getEnchantability()
-	{
+	public int getEnchantability() {
 		return 9;
 	}
 }
