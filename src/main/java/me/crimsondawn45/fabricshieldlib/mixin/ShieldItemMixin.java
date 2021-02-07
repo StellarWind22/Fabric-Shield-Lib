@@ -7,8 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 
 @Mixin(ShieldItem.class)
-public class ShieldItemMixin extends Item
-{
+public class ShieldItemMixin extends Item {
 	public ShieldItemMixin(Settings settings)
 	{
 		super(settings);
