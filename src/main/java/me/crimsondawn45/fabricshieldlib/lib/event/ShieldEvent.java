@@ -11,6 +11,13 @@ public abstract class ShieldEvent {
     private boolean usesOnDisable;
 	private boolean usesWhileHolding;
 	
+	/**
+	 * Shield Event - contains the methods to be fired for a shield or shield enchantment with special effects.
+	 * 
+	 * @param usesOnBlockDamage - Whether or not the event will use the onBlockDamage method
+	 * @param usesOnDisable - Whether or not the event will use the onDisable method
+	 * @param usesWhileHolding - Whether or not the event will use the whileHolding method
+	 */
 	public ShieldEvent(boolean usesOnBlockDamage, boolean usesOnDisable, boolean usesWhileHolding) {
         this.usesOnBlockDamage = usesOnBlockDamage;
         this.usesOnDisable = usesOnDisable;
@@ -18,9 +25,7 @@ public abstract class ShieldEvent {
 	}
 
     /**
-	 * onBlockDamage
-	 * 
-	 * runs when the shield successfully blocks damage from an attacker.
+	 * onBlockDamage - runs when the shield successfully blocks damage from an attacker.
 	 * 
 	 * @param defender - Entity that is holding the shield.
 	 * @param source - Source of the damage blocked.
@@ -32,9 +37,7 @@ public abstract class ShieldEvent {
 	public void onBlockDamage(LivingEntity defender, DamageSource source, float amount, int level, Hand hand, ItemStack shield){}
 
 	/**
-	 * onDisable
-	 * 
-	 * runs when the shield is disabled with an axe.
+	 * onDisable - runs when the shield is disabled with an axe.
 	 * 
 	 * @param defender - Entity that is holding the shield.
 	 * @param level - Level of enchantment(will be 0 if it is not an enchantment)
@@ -44,9 +47,7 @@ public abstract class ShieldEvent {
 	public void onDisable(PlayerEntity defender, int level, Hand hand, ItemStack shield){}
 	
 	/**
-	 * whileHolding
-	 * 
-	 * runs every tick the shield is held.
+	 * whileHolding - runs every tick the shield is being held in either hand.
 	 * 
 	 * @param defender - Entity that is holding the shield.
 	 * @param level - Level of enchantment(will be 0 if it is not an enchantment)
