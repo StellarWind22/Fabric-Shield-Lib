@@ -3,6 +3,8 @@ package me.crimsondawn45.fabricshieldlib.lib.object;
 import me.crimsondawn45.fabricshieldlib.lib.ItemListType;
 import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
 import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
@@ -38,9 +40,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
-	         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
-	    });
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			this.addPropertyGetter(new Identifier("blocking"), (stack, world, entity) -> {
+		         return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+		    });
+		}
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
