@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
-    @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(at = @At(value = "TAIL"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void damageShield(float amount, CallbackInfo callBackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItem = player.getActiveItem();
