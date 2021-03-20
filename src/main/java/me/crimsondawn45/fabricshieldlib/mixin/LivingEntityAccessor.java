@@ -10,15 +10,13 @@ import net.minecraft.item.ItemStack;
 
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessor {	
-	@Accessor
-	void setActiveItemStack(ItemStack stack);
 	
 	@Invoker
-	boolean invokeBlockedByShield(DamageSource source);
+	boolean fabricshieldlib$invokeBlockedByShield(DamageSource source);
 
 	@Invoker
-	void invokeDamageShield(float amount);
+	void fabricshieldlib$invokeDamageShield(float amount);
 
 	@Invoker
-	void invokeTakeShieldHit(LivingEntity attacker);
+	void fabricshieldlib$invokeTakeShieldHit(LivingEntity attacker);
 }

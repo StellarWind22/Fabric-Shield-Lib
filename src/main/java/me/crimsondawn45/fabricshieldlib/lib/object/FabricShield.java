@@ -70,9 +70,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-	         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-	    });
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
@@ -96,9 +98,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-	         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-	    });		
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}	
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
@@ -123,9 +127,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-	         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-	    });	
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItem = repairItem;
@@ -151,9 +157,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-	         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-	    });
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemTag = repairItemTag;
@@ -179,9 +187,11 @@ public class FabricShield extends Item {
 		
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 		
-		FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-	         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-	    });
+		if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
 		
 		this.cooldownTicks = cooldownTicks;
 		this.repairItemArray = repairItems;
