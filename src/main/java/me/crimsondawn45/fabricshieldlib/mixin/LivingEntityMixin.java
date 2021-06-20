@@ -26,7 +26,7 @@ public class LivingEntityMixin {
 		ItemStack activeItem = entity.getActiveItem();
 		
 		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
-			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
+			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source)) {
 				
 				/*
 				 * Handle onBlockDamage Events
@@ -35,7 +35,7 @@ public class LivingEntityMixin {
 					FabricShield shield = (FabricShield) activeItem.getItem();
 					if(shield.hasEvent()) {
 						if(shield.getEvent().usesOnBlockDamage()) {
-							shield.getEvent().onBlockDamage(entity, source, amount, 0, entity.getActiveHand(), activeItem);;
+							shield.getEvent().onBlockDamage(entity, source, amount, 0, entity.getActiveHand(), activeItem);
 						}
 					}
 				}
@@ -48,14 +48,14 @@ public class LivingEntityMixin {
 				}
 
 				//Handle Shield
-				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
+				((LivingEntityAccessor)entity).invokeDamageShield(amount);
 				amount = 0.0F;
 
 				if (!source.isProjectile()) {
 					Entity sourceEntity = source.getSource();
 					
 					if (sourceEntity instanceof LivingEntity) {
-					   ((LivingEntityAccessor)entity).fabricshieldlib$invokeTakeShieldHit((LivingEntity)sourceEntity);
+					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
 			}
