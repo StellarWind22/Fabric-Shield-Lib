@@ -12,11 +12,11 @@ import net.minecraft.item.ItemStack;
 public interface LivingEntityAccessor {	
 	
 	@Invoker
-	boolean fabricshieldlib$invokeBlockedByShield(DamageSource source);
+	boolean invokeBlockedByShield(DamageSource source);
 
 	@Invoker
-	void fabricshieldlib$invokeDamageShield(float amount);
+	void invokeDamageShield(float amount);
 
 	@Invoker
-	void fabricshieldlib$invokeTakeShieldHit(LivingEntity attacker);
+	void invokeTakeShieldHit(LivingEntity attacker);
 }
