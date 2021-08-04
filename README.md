@@ -1,5 +1,5 @@
 # THIS LIBRARY IS NO LONGER BEING MAINTAINED BY CrimsonDawn45!
-I have repeatedly burnt myself out on Minecrat trying to maintain this library. I originally enjoyed working on this project but maintaining it has become a chore, and has made me afraid of checking my own github account bc I know people might see my activity on other things while I'm not working on this. The current update 1.3.6 is unreleased and my current pc isn't really set up for Java development so it will remain that way. I am sorry if you used my library for something important, but honestly I can't stand Minecraft anymore and I don't know why I have been trying to force myself to update this & feel as if I have some kind of important commitment to this project.
+He has repeatedly burnt himself out on Minecrat trying to maintain this library. He originally enjoyed working on this project but maintaining it had become a chore, and had made him afraid of checking his own github account bc he knows people might see his activity on other things while he is not working on this.
 
 So now I am maintaining the mod.
 
