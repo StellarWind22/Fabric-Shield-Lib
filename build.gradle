@@ -52,20 +52,18 @@ jar {
 
 // configure the maven publication
 publishing {
-	repositories {
-		maven {
-			name = "GitHubPackages"
-			url = uri("https://maven.pkg.github.com/hackcoder1000/fabricshieldlib")
-			credentials {
-				username = property('gpr.username')
-				password = property('gpr.token')
+	publications {
+		mavenJava(MavenPublication) {
+			// add all the jars that should be included when publishing to maven
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
 			}
 		}
 	}
-	publications {
-		gpr(MavenPublication) {
-			from(components.java)
-			artifact sourcesJar
-		}
+
+	repositories {
 	}
 }
