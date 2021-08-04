@@ -1,12 +1,12 @@
-package me.crimsondawn45.fabricshieldlib;
+package net.legiblesleet827.fabricshieldlib;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import me.crimsondawn45.fabricshieldlib.dev.TestShieldEvent;
-import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
+import net.legiblesleet827.fabricshieldlib.dev.TestShieldEvent;
+import net.legiblesleet827.fabricshieldlib.lib.ShieldRegistry;
+import net.legiblesleet827.fabricshieldlib.lib.object.FabricShield;
+import net.legiblesleet827.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment.Rarity;

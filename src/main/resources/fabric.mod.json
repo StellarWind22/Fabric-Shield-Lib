@@ -12,7 +12,8 @@
     "Draylar",
     "NLxDodge",
     "ggtylerr",
-    "How-Bout-No"
+    "How-Bout-No",
+    "LegibleSleet827"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fabric-shield-lib",
@@ -24,7 +25,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.crimsondawn45.fabricshieldlib.FabricShieldLib"
+      "net.legiblesleet827.fabricshieldlib.FabricShieldLib"
     ]
   },
   "mixins": [

@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.mixin;
+package net.legiblesleet827.fabricshieldlib.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -7,9 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
+import net.legiblesleet827.fabricshieldlib.lib.ShieldRegistry;
+import net.legiblesleet827.fabricshieldlib.lib.object.FabricShield;
+import net.legiblesleet827.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

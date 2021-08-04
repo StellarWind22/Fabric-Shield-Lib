@@ -1,8 +1,8 @@
-package me.crimsondawn45.fabricshieldlib.lib.object;
+package net.legiblesleet827.fabricshieldlib.lib.object;
 
-import me.crimsondawn45.fabricshieldlib.lib.ItemListType;
-import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.lib.event.ShieldEvent;
+import net.legiblesleet827.fabricshieldlib.lib.ItemListType;
+import net.legiblesleet827.fabricshieldlib.lib.ShieldRegistry;
+import net.legiblesleet827.fabricshieldlib.lib.event.ShieldEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;

@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.lib;
+package net.legiblesleet827.fabricshieldlib.lib;
 
 public enum ItemListType {
 	ITEM,

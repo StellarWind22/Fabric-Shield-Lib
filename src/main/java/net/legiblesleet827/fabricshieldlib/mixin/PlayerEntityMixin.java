@@ -1,8 +1,8 @@
-package me.crimsondawn45.fabricshieldlib.mixin;
+package net.legiblesleet827.fabricshieldlib.mixin;
 
-import me.crimsondawn45.fabricshieldlib.lib.ShieldRegistry;
-import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
+import net.legiblesleet827.fabricshieldlib.lib.ShieldRegistry;
+import net.legiblesleet827.fabricshieldlib.lib.object.FabricShield;
+import net.legiblesleet827.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;

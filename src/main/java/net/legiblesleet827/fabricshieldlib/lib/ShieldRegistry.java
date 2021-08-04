@@ -1,10 +1,10 @@
-package me.crimsondawn45.fabricshieldlib.lib;
+package net.legiblesleet827.fabricshieldlib.lib;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import me.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import me.crimsondawn45.fabricshieldlib.lib.object.ShieldEnchantment;
+import net.legiblesleet827.fabricshieldlib.lib.object.FabricShield;
+import net.legiblesleet827.fabricshieldlib.lib.object.ShieldEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 

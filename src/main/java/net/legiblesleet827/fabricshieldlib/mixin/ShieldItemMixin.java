@@ -1,4 +1,4 @@
-package me.crimsondawn45.fabricshieldlib.mixin;
+package net.legiblesleet827.fabricshieldlib.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 
