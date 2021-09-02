@@ -27,7 +27,7 @@ public class LivingEntityMixin {
 		ItemStack activeItem = entity.getActiveItem();
 		
 		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
-			if (amount > 0.0F && ((LivingEntityAccessor)entity).invokeBlockedByShield(source)) {
+			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 				
 				/*
 				 * TODO: make sure ActionResult.FAIL results in this event being cancelled, should behave like the attack went through the shield.
@@ -39,14 +39,14 @@ public class LivingEntityMixin {
                 }
 
 				//Handle Shield
-				((LivingEntityAccessor)entity).invokeDamageShield(amount);
+				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
 				amount = 0.0F;
 
 				if (!source.isProjectile()) {
 					Entity sourceEntity = source.getSource();
 					
 					if (sourceEntity instanceof LivingEntity) {
-					   ((LivingEntityAccessor)entity).invokeTakeShieldHit((LivingEntity)sourceEntity);
+					   ((LivingEntityAccessor)entity).fabricshieldlib$invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
 			}

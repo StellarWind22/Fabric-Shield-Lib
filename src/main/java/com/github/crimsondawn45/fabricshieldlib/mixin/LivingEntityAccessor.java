@@ -17,17 +17,17 @@ public interface LivingEntityAccessor {
 	 * @return if it was blocked.
 	 */
     @Invoker
-	boolean invokeBlockedByShield(DamageSource source);
+	boolean fabricshieldlib$invokeBlockedByShield(DamageSource source);
 
 	/**
 	 * @param amount amount of damage the shield blocked.
 	 */
 	@Invoker
-	void invokeDamageShield(float amount);
+	void fabricshieldlib$invokeDamageShield(float amount);
 
 	/**
 	 * @param attacker entity attacking the entity blocking.
 	 */
 	@Invoker
-	void invokeTakeShieldHit(LivingEntity attacker);
+	void fabricshieldlib$invokeTakeShieldHit(LivingEntity attacker);
 }
