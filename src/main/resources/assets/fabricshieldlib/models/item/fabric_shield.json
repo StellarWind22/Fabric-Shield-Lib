@@ -108,7 +108,7 @@
             "predicate": {
                 "blocking": 1
             },
-            "model": "item/fabric_shield_blocking"
+            "model": "fabricshieldlib:item/fabric_shield_blocking"
         }
     ]
 }
