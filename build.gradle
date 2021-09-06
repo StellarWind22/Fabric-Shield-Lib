@@ -10,13 +10,7 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-}
+repositories {}
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -50,14 +44,14 @@ jar {
 	}
 }
 
-publishing {
+publishing { //TODO: get this working. Right now using "gradlew publish" doesn't work
     repositories {
         maven {
-            name = "GitHubPackages"
+            name = "Fabric-Shield-Lib"
             url = uri("https://maven.pkg.github.com/CrimsonDawn45/Fabric-Shield-Lib")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+                username = project.findProperty("gpr.user") ?: System.getenv("GITUSER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITKEY")
             }
         }
     }

@@ -1,6 +1,7 @@
 {
 	"textures": {
-		"shield": "fabricshieldlib:item/fabric_shield"
+		"shield": "fabricshieldlib:item/fabric_shield",
+		"particle": "#shield"
 	},
 	"gui-light":"front",
 	"elements": [{
@@ -33,7 +34,6 @@
 				}
 			}
 		},
-
 		{
 			"from": [5, 8, 5],
 			"to": [7, 14, 11],
@@ -61,7 +61,6 @@
 			}
 		}
 	],
-
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [0, 90, 0],
@@ -103,5 +102,13 @@
 			"translation": [0.00, 3.00, 0.00],
 			"scale": [0.25, 0.25, 0.25]
 		}
-	}
+	},
+	"overrides": [
+        {
+            "predicate": {
+                "blocking": 1
+            },
+            "model": "item/fabric_shield_blocking"
+        }
+    ]
 }

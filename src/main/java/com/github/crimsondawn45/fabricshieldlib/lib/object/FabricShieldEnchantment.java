@@ -26,7 +26,7 @@ public class FabricShieldEnchantment extends Enchantment {
 
     /**
      * @param stack item stack.
-     * @return if item stack has this enchantment.
+     * @return if item has this enchantment.
      */
     public boolean hasEnchantment(ItemStack stack) {
         return EnchantmentHelper.getLevel(this, stack) > 0;
