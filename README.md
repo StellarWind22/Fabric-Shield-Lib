@@ -1,10 +1,10 @@
-[![](https://jitpack.io/v/CringeStar/Fabric-Shield-Lib.svg)](https://jitpack.io/#CringeStar/Fabric-Shield-Lib)
+[![](https://jitpack.io/v/CrimsonDawn45/Fabric-Shield-Lib.svg)](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 # Fabric Shield Lib
 Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions or having to write your own mixins.
 
 ## Importing
-library is distributed via [jitpack.io](https://jitpack.io/#CringeStar/Fabric-Shield-Lib)
+library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### gradle.properties
 ```properties
@@ -13,7 +13,7 @@ fabric_shield_lib_version=1.4.0
 
 #### **build.gradle** under dependencies
 ```gradle
-modImplementation "com.github.CringeStar:Fabric-Shield-Lib:${project.fabric_shield_lib_version}-${project.minecraft_version}"
+modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:${project.fabric_shield_lib_version}-${project.minecraft_version}"
 ```
 
 #### **build.gradle** under repositories near the end of the file.
