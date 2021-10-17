@@ -60,11 +60,6 @@ public class FabricShieldLib implements ModInitializer {
      * Will be made by user (dev code)
      */
     public static final EntityModelLayer fabric_shield_model_layer = new EntityModelLayer(new Identifier(MOD_ID, "fabric_shield"),"main");
-
-    /**
-     * Makes fabric shield
-     */
-    public static ShieldEntityModel modelFabricShield;
     /**
      * Test shield enchantment.
      */

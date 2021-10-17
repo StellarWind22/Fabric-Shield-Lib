@@ -26,7 +26,7 @@ public class RendererMixin {
     /**
      * This whole mixin is dev code and will be made by the player
      */
-
+    public static ShieldEntityModel modelFabricShield;
     private static final SpriteIdentifier FABRIC_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base"));
     private static final SpriteIdentifier FABRIC_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base_nopattern"));
 
@@ -38,7 +38,7 @@ public class RendererMixin {
 
     @Inject(method = "reload", at = @At("HEAD"))
     private void setModelFabricShield(CallbackInfo ci){
-        FabricShieldLib.modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_shield_model_layer));
+        modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_shield_model_layer));
     }
 
 
@@ -47,7 +47,7 @@ public class RendererMixin {
     private void mainRender(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             if (stack.isOf(FabricShieldLib.fabric_shield)) {
-            FabricShieldItem.renderBanner(stack, matrices, vertexConsumers, light, overlay, FabricShieldLib.modelFabricShield, FABRIC_SHIELD_BASE, FABRIC_SHIELD_BASE_NO_PATTERN);
+                FabricShieldItem.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_SHIELD_BASE, FABRIC_SHIELD_BASE_NO_PATTERN);
             }
         }
     }
