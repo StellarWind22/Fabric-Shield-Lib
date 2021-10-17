@@ -1,6 +1,5 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEntityModel;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
