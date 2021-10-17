@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings("ALL")
 @Mixin (BuiltinModelItemRenderer.class)
 public class RendererMixin {
+
     /**
      * This whole mixin is dev code and will be made by the player
      */
@@ -39,7 +40,9 @@ public class RendererMixin {
 
     @Inject(method = "reload", at = @At("HEAD"))
     private void setModelFabricShield(CallbackInfo ci){
-        modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_shield_model_layer));
+        if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_shield_model_layer));
+        }
     }
 
 
@@ -52,6 +55,5 @@ public class RendererMixin {
             }
         }
     }
-
 }
 
