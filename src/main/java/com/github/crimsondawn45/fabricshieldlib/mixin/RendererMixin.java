@@ -26,7 +26,7 @@ public class RendererMixin {
     /**
      * This whole mixin is dev code and will be made by the player
      */
-    public static ShieldEntityModel modelFabricShield;
+    private static ShieldEntityModel modelFabricShield;
     private static final SpriteIdentifier FABRIC_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base"));
     private static final SpriteIdentifier FABRIC_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base_nopattern"));
 
