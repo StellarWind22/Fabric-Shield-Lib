@@ -1,10 +1,21 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.mojang.datafixers.util.Pair;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.entity.BannerBlockEntity;
+import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
+import net.minecraft.client.render.entity.model.ShieldEntityModel;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
@@ -23,6 +34,29 @@ public class FabricShieldItem extends Item implements FabricShield {
     private ItemStack[] repairItems;
     private int enchantability;
     private boolean supportsBanners;
+
+    /**
+     * Used to simplify the mixin on the user end to make their shield render banner
+     *
+     * Uses params from the mixin method, and the model and sprite identifiers made by the player
+     */
+
+    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
+        boolean bl = stack.getSubNbt("BlockEntityTag") != null;
+        matrices.push();
+        matrices.scale(1.0F, -1.0F, -1.0F);
+        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
+        model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        if (bl) {
+            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricShieldItem.getColor(stack), BannerBlockEntity.getPatternListTag(stack));
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+        } else {
+            model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        }
+
+        matrices.pop();
+    }
 
 
     public String getTranslationKey(ItemStack stack) {

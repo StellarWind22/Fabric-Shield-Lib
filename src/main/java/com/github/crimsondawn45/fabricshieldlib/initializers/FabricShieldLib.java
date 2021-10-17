@@ -3,9 +3,12 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
@@ -20,10 +23,6 @@ import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,8 +56,15 @@ public class FabricShieldLib implements ModInitializer {
     public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
 
+    /**
+     * Will be made by user (dev code)
+     */
     public static final EntityModelLayer fabric_shield_model_layer = new EntityModelLayer(new Identifier(MOD_ID, "fabric_shield"),"main");
 
+    /**
+     * Makes fabric shield
+     */
+    public static ShieldEntityModel modelFabricShield;
     /**
      * Test shield enchantment.
      */
