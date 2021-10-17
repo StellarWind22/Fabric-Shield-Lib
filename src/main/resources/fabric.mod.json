@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricshieldlib",
+  "version": "${version}",
+
+  "name": "Fabric Shield Lib",
+  "description": "Library that makes it easy to add shields with fabric without conflictions!",
+  "authors": [
+    "CrimsonDawn45"
+  ],
+  "contrubutors":[
+    "LegibleSleet827",
+    "Jamalam360",
+    "NLxDodge",
+    "Spaceman",
+    "How-Bout-No",
+    "Draylar",
+    "ggtylerr"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/fabric-shield-lib",
+    "sources": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib",
+    "issues": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib/issues"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.github.crimsondawn45.fabricshieldlib.FabricShieldLib"
+    ]
+  },
+  "mixins": [
+    "fabricshieldlib.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  }
+}
