@@ -8,8 +8,7 @@ library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric
 
 #### gradle.properties
 ```properties
-#version 1.4.0-pre1 has not been published yet as it is still missing banner support.
-fabric_shield_lib_version=1.4.0-pre1
+fabric_shield_lib_version=1.4.0
 ```
 
 #### **build.gradle** under dependencies

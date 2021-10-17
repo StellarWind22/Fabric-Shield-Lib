@@ -10,6 +10,7 @@
   ],
   "contrubutors":[
     "LegibleSleet827",
+    "CringeStar_Boi",
     "Jamalam360",
     "NLxDodge",
     "Spaceman",
@@ -24,12 +25,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/fabricshieldlib/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.crimsondawn45.fabricshieldlib.FabricShieldLib"
+      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib"
+    ],
+    "client": [
+      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
+
     ]
   },
   "mixins": [

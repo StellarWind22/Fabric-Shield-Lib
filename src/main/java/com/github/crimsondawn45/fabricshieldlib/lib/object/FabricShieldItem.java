@@ -1,37 +1,87 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.mojang.datafixers.util.Pair;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.entity.BannerBlockEntity;
+import net.minecraft.block.entity.BannerPattern;
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
+import net.minecraft.client.render.entity.model.ShieldEntityModel;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.item.*;
+import net.minecraft.text.Text;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
- * Premade class for quickly making custom shields
+ * Pre-made class for quickly making custom shields
  */
 public class FabricShieldItem extends Item implements FabricShield {
 
     private int cooldownTicks;
     private ItemStack[] repairItems;
     private int enchantability;
+    private boolean supportsBanners;
 
+    /**
+     * Used to simplify the mixin on the user end to make their shield render banner
+     *
+     * Uses params from the mixin method, and the model and sprite identifiers made by the player
+     */
+
+    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
+        boolean bl = stack.getSubNbt("BlockEntityTag") != null;
+        matrices.push();
+        matrices.scale(1.0F, -1.0F, -1.0F);
+        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
+        model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        if (bl) {
+            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricShieldItem.getColor(stack), BannerBlockEntity.getPatternListTag(stack));
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+        } else {
+            model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        }
+
+        matrices.pop();
+    }
+
+
+    public String getTranslationKey(ItemStack stack) {
+        if (stack.getSubNbt("BlockEntityTag") != null) {
+            String var10000 = this.getTranslationKey();
+            return var10000 + "." + getColor(stack).getName();
+        } else {
+            return super.getTranslationKey(stack);
+        }
+    }
+
+    public static DyeColor getColor(ItemStack stack) {
+        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
+    }
+
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        BannerItem.appendBannerTooltip(stack, tooltip);
+    }
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItem item for repairing shield.
+     * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem, boolean supportsBanners) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -39,7 +89,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -50,14 +100,16 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         this.repairItems = repairItems;
 		this.enchantability = enchantability;
+        this.supportsBanners = supportsBanners;
     }
 
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param material tool material.
+     * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material, boolean supportsBanners) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material
 
         //Register dispenser equip behavior
@@ -65,7 +117,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(Items.SHIELD, new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -73,6 +125,7 @@ public class FabricShieldItem extends Item implements FabricShield {
         this.cooldownTicks = cooldownTicks;
         this.repairItems = material.getRepairIngredient().getMatchingStacks();
         this.enchantability = material.getEnchantability();
+        this.supportsBanners = supportsBanners;
     }
 
     @Override
@@ -115,5 +168,10 @@ public class FabricShieldItem extends Item implements FabricShield {
     @Override
     public int getEnchantability() {
         return this.enchantability;
+    }
+
+    //Checks if the shield will support banners, only used internally
+    public boolean doesSupportBanners() {
+        return supportsBanners;
     }
 }

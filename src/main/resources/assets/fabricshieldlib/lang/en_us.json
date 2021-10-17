@@ -1,4 +1,22 @@
 {
     "item.fabricshieldlib.fabric_shield":"Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.red": "Red Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.orange": "Orange Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.yellow": "Yellow Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.lime": "Lime Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.green": "Green Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.light_blue": "Light Blue Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.cyan": "Cyan Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.blue": "Blue Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.purple": "Purple Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.magenta": "Magenta Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.pink": "Pink Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.brown": "Brown Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.white": "White Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.light_gray": "Light Gray Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.gray": "Gray Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.dark_gray": "Dark Gray Fabric Shield",
+    "item.fabricshieldlib.fabric_shield.black": "Black Fabric Shield",
+    "item.fabricshieldlib.fabric_shield_no_banner":"Fabric Shield Without Banner Support",
     "enchantment.fabricshieldlib.shield_enchantment": "Shield Enchantment"
 }
