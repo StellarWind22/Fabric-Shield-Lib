@@ -10,6 +10,7 @@
   ],
   "contrubutors":[
     "LegibleSleet827",
+    "CringeStar_Boi",
     "Jamalam360",
     "NLxDodge",
     "Spaceman",
@@ -29,7 +30,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.crimsondawn45.fabricshieldlib.FabricShieldLib"
+      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib"
+    ],
+    "client": [
+      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
+
     ]
   },
   "mixins": [

@@ -29,35 +29,31 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-
-	// Minecraft 1.17 (21w19a) upwards uses Java 16.
-	it.options.release = 16
 }
 
-java {
-	withSourcesJar()
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = "sources"
+	from sourceSets.main.allSource
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+	from "LICENSE"
 }
 
-publishing { //TODO: get this working. Right now using "gradlew publish" doesn't work
-    repositories {
-        maven {
-            name = "Fabric-Shield-Lib"
-            url = uri("https://maven.pkg.github.com/CrimsonDawn45/Fabric-Shield-Lib")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GITUSER")
-                password = project.findProperty("gpr.key") ?: System.getenv("GITKEY")
-            }
-        }
-    }
-    publications {
-        gpr(MavenPublication) {
-            from(components.java)
-        }
-    }
+// configure the maven publication
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			// add all the jars that should be included when publishing to maven
+			artifact(remapJar) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
+
+	repositories {
+	}
 }
