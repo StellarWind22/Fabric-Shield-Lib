@@ -23,7 +23,6 @@ public class FabricShieldItem extends Item implements FabricShield {
     private int cooldownTicks;
     private ItemStack[] repairItems;
     private int enchantability;
-    private boolean supportsBanners;
 
     /**
      * @param settings item settings.
@@ -32,7 +31,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param repairItem item for repairing shield.
      * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem, boolean supportsBanners) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -51,7 +50,6 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         this.repairItems = repairItems;
 		this.enchantability = enchantability;
-        this.supportsBanners = supportsBanners;
     }
 
     /**
@@ -60,7 +58,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param material tool material.
      * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material, boolean supportsBanners) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material
 
         //Register dispenser equip behavior
@@ -76,7 +74,6 @@ public class FabricShieldItem extends Item implements FabricShield {
         this.cooldownTicks = cooldownTicks;
         this.repairItems = material.getRepairIngredient().getMatchingStacks();
         this.enchantability = material.getEnchantability();
-        this.supportsBanners = supportsBanners;
     }
 
     @Override
@@ -123,6 +120,6 @@ public class FabricShieldItem extends Item implements FabricShield {
 
     @Override
     public boolean supportsBanner() {
-        return this.supportsBanners;
+        return false;
     }
 }
