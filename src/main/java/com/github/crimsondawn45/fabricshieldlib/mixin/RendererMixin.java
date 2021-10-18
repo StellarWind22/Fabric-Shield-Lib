@@ -2,6 +2,8 @@ package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 
 import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
@@ -20,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("ALL")
 @Mixin (BuiltinModelItemRenderer.class)
 public class RendererMixin {
 
@@ -40,7 +41,7 @@ public class RendererMixin {
     @Inject(method = "reload", at = @At("HEAD"))
     private void setModelFabricShield(CallbackInfo ci){
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_banner_shield_model_layer));
+            modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLibClient.fabric_banner_shield_model_layer));
         }
     }
 
@@ -50,7 +51,7 @@ public class RendererMixin {
     private void mainRender(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             if (stack.isOf(FabricShieldLib.fabric_banner_shield)) {
-                FabricShieldLib.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
+                FabricShieldLibClient.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
             }
         }
     }
