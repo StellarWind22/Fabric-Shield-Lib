@@ -73,7 +73,7 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Will be made by user (dev code)
      */
-    public static final EntityModelLayer fabric_shield_model_layer = new EntityModelLayer(new Identifier(MOD_ID, "fabric_shield"),"main");
+    public static final EntityModelLayer fabric_shield_model_layer;
     /**
      * Test shield enchantment.
      */
@@ -112,7 +112,7 @@ public class FabricShieldLib implements ModInitializer {
     @Override
     public void onInitialize() {
         logger.info("Fabric Shield Lib Initialized!");
-        
+
         /*
          * Dev environment code.
          */
@@ -125,7 +125,7 @@ public class FabricShieldLib implements ModInitializer {
             fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS));
             fabric_shield_no_banner = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield_no_banner"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS));			//Register Development Stuff
             shield_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "shield_enchantment"), new FabricShieldEnchantment(Rarity.COMMON));
-
+            fabric_shield_model_layer = new EntityModelLayer(new Identifier(MOD_ID, "fabric_shield"),"main");
             /*
              * Test event: makes any shield with new enchantment reflect 1/3rd of damage back to attacker
              */
