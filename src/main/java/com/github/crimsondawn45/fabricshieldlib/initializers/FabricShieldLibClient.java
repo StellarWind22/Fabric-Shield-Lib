@@ -20,10 +20,10 @@ public class FabricShieldLibClient implements ClientModInitializer {
             /*
              * Registers sprite directories and model layer, will be done by player, dev code
              */
-            EntityModelLayerRegistry.registerModelLayer(FabricShieldLib.fabric_shield_model_layer, ShieldEntityModel::getTexturedModelData);
+            EntityModelLayerRegistry.registerModelLayer(FabricShieldLib.fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
             ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_shield_base"));
-                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_shield_base_nopattern"));
+                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
+                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
             });
         }
     }

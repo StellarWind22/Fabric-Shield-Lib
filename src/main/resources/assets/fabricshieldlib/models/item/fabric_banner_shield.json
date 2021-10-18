@@ -2,7 +2,7 @@
 	"parent": "builtin/entity",
 	"gui_light": "front",
 	"textures": {
-		"particle": "block/dark_oak_planks"
+		"particle": "fabricshieldlib:entity/fabric_banner_shield_nopattern"
 	},
 	"display": {
 		"thirdperson_righthand": {
@@ -46,7 +46,7 @@
 			"predicate": {
 				"blocking": 1
 			},
-			"model": "fabricshieldlib:item/fabric_shield_banner_support_blocking_template"
+			"model": "fabricshieldlib:item/fabric_banner_shield_blocking"
 		}
 	]
 }

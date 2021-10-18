@@ -28,8 +28,8 @@ public class RendererMixin {
      * This whole mixin is dev code and will be made by the player
      */
     private static ShieldEntityModel modelFabricShield;
-    private static final SpriteIdentifier FABRIC_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base"));
-    private static final SpriteIdentifier FABRIC_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_shield_base_nopattern"));
+    private static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_banner_shield_base"));
+    private static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_banner_shield_base_nopattern"));
 
 
     @Final
@@ -40,7 +40,7 @@ public class RendererMixin {
     @Inject(method = "reload", at = @At("HEAD"))
     private void setModelFabricShield(CallbackInfo ci){
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_shield_model_layer));
+            modelFabricShield = new ShieldEntityModel(this.entityModelLoader.getModelPart(FabricShieldLib.fabric_banner_shield_model_layer));
         }
     }
 
@@ -49,10 +49,9 @@ public class RendererMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void mainRender(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            if (stack.isOf(FabricShieldLib.fabric_shield)) {
-                FabricShieldLib.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_SHIELD_BASE, FABRIC_SHIELD_BASE_NO_PATTERN);
+            if (stack.isOf(FabricShieldLib.fabric_banner_shield)) {
+                FabricShieldLib.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
             }
         }
     }
 }
-
