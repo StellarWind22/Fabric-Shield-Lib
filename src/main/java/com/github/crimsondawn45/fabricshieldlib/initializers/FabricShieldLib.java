@@ -2,6 +2,7 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
@@ -42,7 +43,7 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Test shield item.
      */
-    public static FabricShieldItem fabric_shield;
+    public static FabricBannerShieldItem fabric_shield;
 
     /**
      * Test shield item that does not support banners
@@ -86,8 +87,8 @@ public class FabricShieldLib implements ModInitializer {
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
             //Register Custom Shield
-            fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, true));
-            fabric_shield_no_banner = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield_no_banner"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, false));			//Register Development Stuff
+            fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS));
+            fabric_shield_no_banner = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield_no_banner"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS));			//Register Development Stuff
             shield_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "shield_enchantment"), new FabricShieldEnchantment(Rarity.COMMON));
 
             /*

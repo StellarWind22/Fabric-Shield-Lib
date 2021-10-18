@@ -27,11 +27,49 @@ import java.util.List;
 /**
  * Pre-made class for quickly making custom shields
  */
-public class FabricShieldItem extends Item implements FabricShield {
+public class FabricBannerShieldItem extends Item implements FabricShield {
 
     private int cooldownTicks;
     private ItemStack[] repairItems;
     private int enchantability;
+    /**
+     * Used to simplify the mixin on the user end to make their shield render banner
+     *
+     * Uses params from the mixin method, and the model and sprite identifiers made by the player
+     */
+    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
+        boolean bl = stack.getSubNbt("BlockEntityTag") != null;
+        matrices.push();
+        matrices.scale(1.0F, -1.0F, -1.0F);
+        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
+        model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        if (bl) {
+            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListTag(stack));
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+        } else {
+            model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        }
+        matrices.pop();
+    }
+
+
+    public String getTranslationKey(ItemStack stack) {
+        if (stack.getSubNbt("BlockEntityTag") != null) {
+            String var10000 = this.getTranslationKey();
+            return var10000 + "." + getColor(stack).getName();
+        } else {
+            return super.getTranslationKey(stack);
+        }
+    }
+
+    public static DyeColor getColor(ItemStack stack) {
+        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
+    }
+
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        BannerItem.appendBannerTooltip(stack, tooltip);
+    }
 
     /**
      * @param settings item settings.
@@ -39,7 +77,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItem item for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -63,8 +101,9 @@ public class FabricShieldItem extends Item implements FabricShield {
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param material tool material.*/
-    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material) {
+     * @param material tool material.
+     */
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, ToolMaterial material) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material
 
         //Register dispenser equip behavior
@@ -85,6 +124,11 @@ public class FabricShieldItem extends Item implements FabricShield {
     @Override
     public int getCooldownTicks() {
         return this.cooldownTicks;
+    }
+
+    @Override
+    public boolean supportsBanner() {
+        return true;
     }
 
     @Override
@@ -122,11 +166,5 @@ public class FabricShieldItem extends Item implements FabricShield {
     @Override
     public int getEnchantability() {
         return this.enchantability;
-    }
-
-
-    @Override
-    public boolean supportsBanner() {
-        return false;
     }
 }
