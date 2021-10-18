@@ -35,4 +35,6 @@ repositories {
 - - - -
 
 ## Documentation?
-head over to the [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) it's a template repo that shows how to implement custom shields, shield enchantments, and how the dependency should be setup in the build.gradle.
+Tutorial available on on [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
+
+The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod.
