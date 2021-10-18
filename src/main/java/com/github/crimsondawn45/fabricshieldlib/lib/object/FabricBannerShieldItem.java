@@ -4,26 +4,42 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.item.*;
+import net.minecraft.text.Text;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Pre-made class for quickly making custom shields
  */
-public class FabricShieldItem extends Item implements FabricShield {
+public class FabricBannerShieldItem extends Item implements FabricShield {
 
     private int cooldownTicks;
     private ItemStack[] repairItems;
     private int enchantability;
     private boolean supportsBanners;
+
+    public String getTranslationKey(ItemStack stack) {
+        if (stack.getSubNbt("BlockEntityTag") != null) {
+            String var10000 = this.getTranslationKey();
+            return var10000 + "." + getColor(stack).getName();
+        } else {
+            return super.getTranslationKey(stack);
+        }
+    }
+
+    public static DyeColor getColor(ItemStack stack) {
+        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
+    }
+
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        BannerItem.appendBannerTooltip(stack, tooltip);
+    }
 
     /**
      * @param settings item settings.
@@ -32,7 +48,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param repairItem item for repairing shield.
      * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem, boolean supportsBanners) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem, boolean supportsBanners) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -60,7 +76,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param material tool material.
      * @param supportsBanners does the shield support banner rendering
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material, boolean supportsBanners) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, ToolMaterial material, boolean supportsBanners) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material
 
         //Register dispenser equip behavior
@@ -120,6 +136,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     public int getEnchantability() {
         return this.enchantability;
     }
+
 
     @Override
     public boolean supportsBanner() {
