@@ -33,7 +33,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
                     itemStack2 = itemStack3;
                 } else {
 
-                    if (!(itemStack3.getItem() instanceof FabricBannerShieldItem)) {
+                    if (!(itemStack3.getItem() instanceof FabricShieldItem)) {
                         return false;
                     }
 
@@ -63,8 +63,11 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
-                } else if (itemStack3.getItem() instanceof FabricBannerShieldItem) {
+                } else if (itemStack3.getItem() instanceof FabricShieldItem) {
+                    FabricShieldItem theShieldItem = ((FabricShieldItem) itemStack3.getItem());
+                    if (theShieldItem.supportsBanner()){
                         itemStack2 = itemStack3.copy();
+                    }
                 }
             }
         }

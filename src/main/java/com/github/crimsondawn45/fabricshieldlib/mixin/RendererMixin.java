@@ -2,7 +2,6 @@ package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 
 import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -52,7 +51,7 @@ public class RendererMixin {
     private void mainRender(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             if (stack.isOf(FabricShieldLib.fabric_shield)) {
-                FabricBannerShieldItem.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_SHIELD_BASE, FABRIC_SHIELD_BASE_NO_PATTERN);
+                FabricShieldItem.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_SHIELD_BASE, FABRIC_SHIELD_BASE_NO_PATTERN);
             }
         }
     }
