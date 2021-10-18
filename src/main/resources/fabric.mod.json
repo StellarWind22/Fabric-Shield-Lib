@@ -24,7 +24,7 @@
     "issues": "https://github.com/CrimsonDawn45/Fabric-Shield-Lib/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "LGPL-2.1",
   "icon": "assets/fabricshieldlib/icon.png",
 
   "environment": "*",

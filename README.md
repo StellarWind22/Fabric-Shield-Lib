@@ -1,14 +1,14 @@
 [![](https://jitpack.io/v/CrimsonDawn45/Fabric-Shield-Lib.svg)](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 # Fabric Shield Lib
-Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions or having to write your own mixins.
+Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions.
 
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### gradle.properties
 ```properties
-fabric_shield_lib_version=1.4.0
+fabric_shield_lib_version=1.4.1
 ```
 
 #### **build.gradle** under dependencies
