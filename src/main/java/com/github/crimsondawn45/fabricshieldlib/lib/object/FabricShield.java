@@ -10,4 +10,10 @@ public interface FabricShield {
      * @return how many ticks shield will be disabled for when it with axe.
      */
     public int getCooldownTicks();
+
+    /**
+     * If shield supports banners. Used for enabling banner crafting
+     * @return
+     */
+    public boolean supportsBanner();
 }

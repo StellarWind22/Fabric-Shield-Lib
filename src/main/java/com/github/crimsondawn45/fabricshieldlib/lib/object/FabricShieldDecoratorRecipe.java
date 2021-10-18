@@ -65,7 +65,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
                     itemStack = itemStack3;
                 } else if (itemStack3.getItem() instanceof FabricShieldItem) {
                     FabricShieldItem theShieldItem = ((FabricShieldItem) itemStack3.getItem());
-                    if (theShieldItem.doesSupportBanners()){
+                    if (theShieldItem.supportsBanner()){
                         itemStack2 = itemStack3.copy();
                     }
                 }

@@ -39,7 +39,6 @@ public class FabricShieldItem extends Item implements FabricShield {
      *
      * Uses params from the mixin method, and the model and sprite identifiers made by the player
      */
-
     public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
         boolean bl = stack.getSubNbt("BlockEntityTag") != null;
         matrices.push();
@@ -53,7 +52,6 @@ public class FabricShieldItem extends Item implements FabricShield {
         } else {
             model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
-
         matrices.pop();
     }
 
@@ -74,6 +72,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         BannerItem.appendBannerTooltip(stack, tooltip);
     }
+
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
@@ -170,8 +169,9 @@ public class FabricShieldItem extends Item implements FabricShield {
         return this.enchantability;
     }
 
-    //Checks if the shield will support banners, only used internally
-    public boolean doesSupportBanners() {
-        return supportsBanners;
+
+    @Override
+    public boolean supportsBanner() {
+        return this.supportsBanners;
     }
 }
