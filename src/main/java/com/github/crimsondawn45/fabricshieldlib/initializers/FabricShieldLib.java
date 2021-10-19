@@ -74,7 +74,7 @@ public class FabricShieldLib implements ModInitializer {
     @Override
     public void onInitialize() {
         logger.info("Fabric Shield Lib Initialized!");
-        
+
         /*
          * Dev environment code.
          */
