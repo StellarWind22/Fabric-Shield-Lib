@@ -7,10 +7,10 @@
     "LivingEntityAccessor",
     "LivingEntityMixin",
     "PlayerEntityMixin",
-    "ShieldItemMixin",
-    "RendererMixin"
+    "ShieldItemMixin"
   ],
   "client": [
+    "RendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
