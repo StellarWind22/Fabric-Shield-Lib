@@ -71,10 +71,6 @@ public class FabricShieldLib implements ModInitializer {
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
 
     /**
-     * Will be made by user (dev code)
-     */
-    public static final EntityModelLayer fabric_shield_model_layer = new EntityModelLayer(new Identifier(MOD_ID, "fabric_shield"),"main");
-    /**
      * Test shield enchantment.
      */
     public static FabricShieldEnchantment shield_enchantment;
@@ -112,7 +108,7 @@ public class FabricShieldLib implements ModInitializer {
     @Override
     public void onInitialize() {
         logger.info("Fabric Shield Lib Initialized!");
-        
+
         /*
          * Dev environment code.
          */
