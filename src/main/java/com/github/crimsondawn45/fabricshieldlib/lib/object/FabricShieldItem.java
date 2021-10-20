@@ -29,7 +29,6 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItem item for repairing shield.
-     * @param supportsBanners does the shield support banner rendering
      */
     public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
         super(settings);
@@ -56,7 +55,6 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param material tool material.
-     * @param supportsBanners does the shield support banner rendering
      */
     public FabricShieldItem(Settings settings, int cooldownTicks, ToolMaterial material) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material

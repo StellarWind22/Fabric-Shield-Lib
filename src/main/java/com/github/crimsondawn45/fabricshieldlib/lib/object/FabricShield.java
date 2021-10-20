@@ -9,11 +9,11 @@ public interface FabricShield {
      * Vanilla shield: 100 ticks.
      * @return how many ticks shield will be disabled for when it with axe.
      */
-    public int getCooldownTicks();
+    int getCooldownTicks();
 
     /**
      * If shield supports banners. Used for enabling banner crafting
-     * @return
+     * @return Whether a shield supports banners.
      */
-    public boolean supportsBanner();
+    boolean supportsBanner();
 }
