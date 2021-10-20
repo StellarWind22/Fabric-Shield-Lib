@@ -27,7 +27,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param enchantability enchantability of shield. Vanilla: 9
+     * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItem item for repairing shield.
      * @param supportsBanners does the shield support banner rendering
      */
