@@ -21,7 +21,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class FabricShieldLibClient implements ClientModInitializer {
 
     /**
