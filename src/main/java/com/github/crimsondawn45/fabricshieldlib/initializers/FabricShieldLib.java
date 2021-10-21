@@ -6,10 +6,6 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldIte
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -26,6 +22,8 @@ import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Main class for Fabric Shield Lib
