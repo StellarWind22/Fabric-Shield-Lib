@@ -25,6 +25,6 @@ public class ShieldItemMixin extends Item {
 	
 	@Override
 	public int getEnchantability() {
-		return 9;
+		return 14;
 	}
 }
