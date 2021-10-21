@@ -2,7 +2,7 @@
 	"parent": "builtin/entity",
 	"gui_light": "front",
 	"textures": {
-		"particle": "fabricshieldlib:entity/fabric_banner_shield_nopattern"
+		"particle": "fabricshieldlib:entity/fabric_banner_shield_base_nopattern"
 	},
 	"display": {
 		"thirdperson_righthand": {
