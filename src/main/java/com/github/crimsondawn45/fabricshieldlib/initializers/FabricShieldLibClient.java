@@ -1,25 +1,18 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-import java.util.List;
-
-import com.mojang.datafixers.util.Pair;
+import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.texture.TextureCache;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
 public class FabricShieldLibClient implements ClientModInitializer {
@@ -49,19 +42,30 @@ public class FabricShieldLibClient implements ClientModInitializer {
      *
      * Uses params from the mixin method, and the model and sprite identifiers made by the player
      */
-    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
-        boolean bl = stack.getSubTag("BlockEntityTag") != null;
-        matrices.push();
-        matrices.scale(1.0F, -1.0F, -1.0F);
-        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getArmorVertexConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), false, stack.hasEnchantmentGlint()));
-        model.method_23775().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        if (bl) {
-            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.method_24280(ShieldItem.getColor(stack), BannerBlockEntity.method_24281(stack));
-            BannerBlockEntityRenderer.method_23802(matrices, vertexConsumers, light, overlay, model.method_23774(), spriteIdentifier, false, list);
-        } else {
-            model.method_23774().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        }
-        matrices.pop();
+    public static void renderBanner(ItemStack stack, ShieldEntityModel modelShield, Identifier base, Identifier base_nopattern){
+        final BannerBlockEntity renderBanner = new BannerBlockEntity();
+
+        if (stack.getSubTag("BlockEntityTag") != null) {
+            renderBanner.readFrom(stack, ShieldItem.getColor(stack));
+            MinecraftClient.getInstance().getTextureManager().bindTexture(TextureCache.SHIELD.get(renderBanner.getPatternCacheKey(), renderBanner.getPatterns(), renderBanner.getPatternColors()));
+         } else {
+            MinecraftClient.getInstance().getTextureManager().bindTexture(base_nopattern);
+         }
+
+         GlStateManager.pushMatrix();
+         GlStateManager.scalef(1.0F, -1.0F, -1.0F);
+         modelShield.renderItem();
+         if (stack.hasEnchantmentGlint()) {
+            ShieldEntityModel var10001 = modelShield;
+            FabricShieldLibClient.renderEnchantmentGlint(var10001::renderItem);
+         }
+
+         GlStateManager.popMatrix();
+    }
+
+    private static void renderEnchantmentGlint(Runnable runnable) {
+        GlStateManager.color3f(0.5019608F, 0.2509804F, 0.8F);
+        MinecraftClient.getInstance().getTextureManager().bindTexture(ItemRenderer.ENCHANTMENT_GLINT_TEX);
+        ItemRenderer.renderGlint(MinecraftClient.getInstance().getTextureManager(), runnable, 1);
     }
 }

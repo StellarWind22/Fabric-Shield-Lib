@@ -8,6 +8,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -88,11 +89,11 @@ public class FabricShieldItem extends Item implements FabricShield {
 		return 72000;
 	}
 
-    @Override
+	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-      ItemStack itemStack = user.getStackInHand(hand);
-      user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+		ItemStack itemStack = user.getStackInHand(hand);
+	    user.setCurrentHand(hand);
+	    return new TypedActionResult<ItemStack>(ActionResult.SUCCESS, itemStack);
 	}
 
     @Override
