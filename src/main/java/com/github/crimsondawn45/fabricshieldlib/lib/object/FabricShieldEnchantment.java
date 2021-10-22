@@ -15,7 +15,7 @@ public class FabricShieldEnchantment extends Enchantment {
     /**
      * @param weight rarity of enchantment.
      */
-    public FabricShieldEnchantment(Rarity weight) {
+    public FabricShieldEnchantment(Weight weight) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
     }
 

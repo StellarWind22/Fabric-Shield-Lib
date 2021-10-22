@@ -24,7 +24,7 @@ public class LivingEntityMixin {
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
 		
-		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
+		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || !entity.isAlive() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 				
 				/*
