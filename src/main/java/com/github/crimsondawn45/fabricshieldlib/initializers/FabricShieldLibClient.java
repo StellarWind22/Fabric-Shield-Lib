@@ -1,6 +1,9 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import java.util.List;
+
 import com.mojang.datafixers.util.Pair;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -11,7 +14,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -20,9 +22,6 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
-
-@SuppressWarnings("deprecation")
 public class FabricShieldLibClient implements ClientModInitializer {
 
     /**
