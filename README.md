@@ -37,4 +37,4 @@ repositories {
 ## Documentation?
 Tutorial available on on [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
 
-The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod/tree/1.17) is a template repo you can use to quickly get started if your making a new mod.
+The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod/tree) is a template repo you can use to quickly get started if your making a new mod.
