@@ -71,6 +71,7 @@ public class PlayerEntityMixin {
 
         if(result == ActionResult.FAIL) {
             callbackInfo.cancel();
+            return;
         }
 
         if (activeItem instanceof FabricShield) {

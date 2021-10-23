@@ -34,6 +34,7 @@ public class LivingEntityMixin {
 
                 if(result == ActionResult.FAIL) {
                     callbackInfo.cancel();
+					return;
                 }
 
 				//Handle Shield

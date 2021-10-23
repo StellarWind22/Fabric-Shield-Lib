@@ -60,7 +60,8 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Test shield enchantment.
      */
-    public static FabricShieldEnchantment shield_enchantment;
+    public static FabricShieldEnchantment reflect_enchantment;
+    public static FabricShieldEnchantment curse_enchantment;
 
     static {
         //Registering Banner Recipe (Lib only)
@@ -86,14 +87,14 @@ public class FabricShieldLib implements ModInitializer {
             //Register Custom Shield
             fabric_banner_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
             fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));			//Register Development Stuff
-            shield_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "shield_enchantment"), new FabricShieldEnchantment(Rarity.COMMON));
+            reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(Rarity.COMMON));
 
             /*
              * Test event: makes any shield with new enchantment reflect 1/3rd of damage back to attacker
              */
             ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
 
-                if(shield_enchantment.hasEnchantment(shield)) {
+                if(reflect_enchantment.hasEnchantment(shield)) {
                     Entity attacker = source.getAttacker();
 
                     assert attacker != null;
@@ -107,11 +108,34 @@ public class FabricShieldLib implements ModInitializer {
                 return ActionResult.PASS;
             });
 
+            /**
+             * Makes any shield with curse enchantment unable to blocks.
+             */
+            ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
+
+                if(curse_enchantment.hasEnchantment(shield)) {
+                    logger.info("Canceled shield block event!");
+                    return ActionResult.FAIL;
+                }
+
+                return ActionResult.PASS;
+            });
+
             /*
              * Test Event: if your shield gets disabled give player speed
              */
             ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
                 defender.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 1, true, false));
+                return ActionResult.PASS;
+            });
+
+            /**
+             * Curse enchantment can't be disabled
+             */
+            ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
+                if(curse_enchantment.hasEnchantment(shield)) {
+                    return ActionResult.FAIL;
+                }
                 return ActionResult.PASS;
             });
         }
