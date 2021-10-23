@@ -12,16 +12,32 @@ import net.minecraft.item.ShieldItem;
  */
 public class FabricShieldEnchantment extends Enchantment {
 
+    private boolean isTreasure;
+
     /**
      * @param weight rarity of enchantment.
      */
     public FabricShieldEnchantment(Rarity weight) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        this.isTreasure = false;
+    }
+
+    /**
+     * 
+     */
+    public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
+        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        this.isTreasure = isTreasure;
     }
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
         return stack.getItem() instanceof FabricShield || stack.getItem() instanceof ShieldItem;
+    }
+
+    @Override
+    public boolean isTreasure() {
+        return this.isTreasure;
     }
 
     /**

@@ -88,6 +88,7 @@ public class FabricShieldLib implements ModInitializer {
             fabric_banner_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
             fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));			//Register Development Stuff
             reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(Rarity.COMMON));
+            curse_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "curse_enchantment"), new FabricShieldEnchantment(Rarity.RARE, true));
 
             /*
              * Test event: makes any shield with new enchantment reflect 1/3rd of damage back to attacker
