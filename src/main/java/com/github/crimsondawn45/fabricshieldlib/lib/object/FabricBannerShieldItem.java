@@ -180,7 +180,6 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
         return this.enchantability;
     }
 
-
     @Override
     public boolean supportsBanner() {
         return true;
