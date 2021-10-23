@@ -30,7 +30,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItem item for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItem) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -45,9 +45,15 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         this.cooldownTicks = cooldownTicks;
 
-        ItemStack[] repairItems = {new ItemStack(repairItem)};
+        ItemStack[] repairItemStacks = new ItemStack[repairItem.length];
 
-        this.repairItems = repairItems;
+        for (int i = 0; i < repairItem.length; i++)
+        {
+            repairItemStacks[i] = new ItemStack(repairItem[i]);
+        }
+
+
+        this.repairItems = repairItemStacks;
 		this.enchantability = enchantability;
     }
 
