@@ -30,6 +30,8 @@ public interface ShieldBlockCallback {
     });
 
     /**
+     * Note: event can't be cancelled because the LivingEntity.damage method is very monolithic, and cancelling it results in broken behavior.
+     * 
      * @param defender entity being attacked.
      * @param source source of the damage.
      * @param amount amount of damage.

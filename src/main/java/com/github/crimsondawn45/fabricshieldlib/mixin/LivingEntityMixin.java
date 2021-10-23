@@ -1,17 +1,18 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.ItemStack;
 
 /**
  * Mixin that allows custom shields to block damage.
@@ -27,16 +28,8 @@ public class LivingEntityMixin {
 		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 				
-				/*
-				 * TODO: make sure ActionResult.FAIL results in this event being cancelled, should behave like the attack went through the shield.
-				 */
-                ActionResult result = ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
-
-                if(result == ActionResult.FAIL) {
-                    callbackInfo.cancel();
-					return;
-                }
-
+                ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
+    
 				//Handle Shield
 				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
 				amount = 0.0F;
@@ -45,7 +38,7 @@ public class LivingEntityMixin {
 					Entity sourceEntity = source.getSource();
 					
 					if (sourceEntity instanceof LivingEntity) {
-					   ((LivingEntityAccessor)entity).fabricshieldlib$invokeTakeShieldHit((LivingEntity)sourceEntity);
+					((LivingEntityAccessor)entity).fabricshieldlib$invokeTakeShieldHit((LivingEntity)sourceEntity);
 					}
 				}
 			}

@@ -13,6 +13,7 @@ import net.minecraft.item.ShieldItem;
 public class FabricShieldEnchantment extends Enchantment {
 
     private boolean isTreasure;
+    private boolean isCurse;
 
     /**
      * @param weight rarity of enchantment.
@@ -20,14 +21,27 @@ public class FabricShieldEnchantment extends Enchantment {
     public FabricShieldEnchantment(Rarity weight) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = false;
+        this.isCurse = false;
     }
 
     /**
-     * 
+     * @param weight rarity of enchantment.
+     * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
+        this.isCurse = false;
+    }
+
+    /**
+     * @param weight rarity of enchantment.
+     * @param isTreasure if enchantment is a treasure enchantment.
+     */
+    public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
+        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        this.isTreasure = isTreasure;
+        this.isCurse = isCurse;
     }
 
     @Override
@@ -38,6 +52,11 @@ public class FabricShieldEnchantment extends Enchantment {
     @Override
     public boolean isTreasure() {
         return this.isTreasure;
+    }
+
+    @Override
+    public boolean isCursed() {
+        return this.isCurse;
     }
 
     /**

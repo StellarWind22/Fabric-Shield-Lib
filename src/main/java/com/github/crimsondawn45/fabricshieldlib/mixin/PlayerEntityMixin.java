@@ -9,7 +9,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -63,16 +62,7 @@ public class PlayerEntityMixin {
         ItemStack activeItemStack = player.getActiveItem();
         Item activeItem = activeItemStack.getItem();
 
-        /*
-         * TODO: figure out why shield disabled callback doesn't seem to be working all the time
-         * TODO: make ActionResult.FAIL actually stop the shield from being disabled
-         */
-        ActionResult result = ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), activeItemStack);
-
-        if(result == ActionResult.FAIL) {
-            callbackInfo.cancel();
-            return;
-        }
+        ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), activeItemStack);
 
         if (activeItem instanceof FabricShield) {
             FabricShield shield = (FabricShield) activeItem;
