@@ -9,6 +9,8 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -21,16 +23,22 @@ import net.minecraft.world.World;
 public class FabricShieldItem extends Item implements FabricShield {
 
     private int cooldownTicks;
-    private ItemStack[] repairItems;
     private int enchantability;
+
+    //Repair stuff
+    private Item[] repairItems;
+    private Tag<Item> repairTag;
+    private Ingredient repairIngredients;
+
+    private RepairItemType repairType;
 
     /**
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItem item for repairing shield.
+     * @param repairItem item(s) for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItem) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -44,17 +52,9 @@ public class FabricShieldItem extends Item implements FabricShield {
 		}
 
         this.cooldownTicks = cooldownTicks;
-
-        ItemStack[] repairItemStacks = new ItemStack[repairItem.length];
-
-        for (int i = 0; i < repairItem.length; i++)
-        {
-            repairItemStacks[i] = new ItemStack(repairItem[i]);
-        }
-
-
-        this.repairItems = repairItemStacks;
 		this.enchantability = enchantability;
+        this.repairType = RepairItemType.ARRAY;
+        this.repairItems = repairItems;
     }
 
     /**
@@ -76,8 +76,34 @@ public class FabricShieldItem extends Item implements FabricShield {
 		}
 
         this.cooldownTicks = cooldownTicks;
-        this.repairItems = material.getRepairIngredient().getMatchingStacks();
         this.enchantability = material.getEnchantability();
+        this.repairType = RepairItemType.INGREDIENT;
+        this.repairIngredients = material.getRepairIngredient();
+    }
+
+    /**
+     * @param settings item settings.
+     * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
+     * @param enchantability enchantability of shield. Vanilla: 14
+     * @param repairItemTag item tag for repairing shield
+     */
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
+        super(settings); //Make durability match material
+
+        //Register dispenser equip behavior
+        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+
+        //Register that item has a blocking model
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
+
+        this.cooldownTicks = cooldownTicks;
+        this.enchantability = enchantability;
+        this.repairType = RepairItemType.TAG;
+        this.repairTag = repairItemTag;
     }
 
     @Override
@@ -104,12 +130,19 @@ public class FabricShieldItem extends Item implements FabricShield {
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        for (ItemStack itemStack : repairItems) {
-            if(itemStack.getItem() == ingredient.getItem()) {
-                return true;
-            }
+        switch(this.repairType) {
+            case ARRAY:
+                for(Item item : this.repairItems) {
+                    if(item.equals(ingredient.getItem())) {
+                        return true;
+                    }
+                }
+                return false;
+            case TAG:           return this.repairTag.contains(ingredient.getItem());
+            case INGREDIENT:    return this.repairIngredients.test(ingredient);
+            default:
+                return false;
         }
-        return false;
     }
 
     @Override
