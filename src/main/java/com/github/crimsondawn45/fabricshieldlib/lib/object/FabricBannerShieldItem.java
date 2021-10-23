@@ -54,7 +54,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -78,7 +78,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -103,7 +103,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -115,7 +115,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public String getTranslationKey(ItemStack stack) {
-        if (stack.getSubNbt("BlockEntityTag") != null) {
+        if (stack.getSubTag("BlockEntityTag") != null) {
             String var10000 = this.getTranslationKey();
             return var10000 + "." + getColor(stack).getName();
         } else {
@@ -124,7 +124,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public static DyeColor getColor(ItemStack stack) {
-        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
+        return DyeColor.byId(stack.getOrCreateSubTag("BlockEntityTag").getInt("Base"));
     }
 
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

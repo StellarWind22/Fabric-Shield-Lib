@@ -42,7 +42,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
                         return false;
                     }
 
-                    if (itemStack3.getSubNbt("BlockEntityTag") != null) {
+                    if (itemStack3.getSubTag("BlockEntityTag") != null) {
                         return false;
                     }
 
@@ -74,10 +74,10 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         }
 
         if (!itemStack2.isEmpty()) {
-            NbtCompound nbtCompound = itemStack.getSubNbt("BlockEntityTag");
+            NbtCompound nbtCompound = itemStack.getSubTag("BlockEntityTag");
             NbtCompound nbtCompound2 = nbtCompound == null ? new NbtCompound() : nbtCompound.copy();
             nbtCompound2.putInt("Base", ((BannerItem) itemStack.getItem()).getColor().getId());
-            itemStack2.setSubNbt("BlockEntityTag", nbtCompound2);
+            itemStack2.putSubTag("BlockEntityTag", nbtCompound2);
         }
         return itemStack2;
     }
