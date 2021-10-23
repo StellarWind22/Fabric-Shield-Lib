@@ -6,17 +6,9 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +29,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItem item for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item repairItem) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItem) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -52,9 +44,16 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         this.cooldownTicks = cooldownTicks;
 
-        ItemStack[] repairItems = {new ItemStack(repairItem)};
 
-        this.repairItems = repairItems;
+        ItemStack[] repairItemStacks = new ItemStack[repairItem.length];
+
+        for (int i = 0; i < repairItem.length; i++)
+        {
+            repairItemStacks[i] = new ItemStack(repairItem[i]);
+        }
+
+
+        this.repairItems = repairItemStacks;
 		this.enchantability = enchantability;
     }
 
