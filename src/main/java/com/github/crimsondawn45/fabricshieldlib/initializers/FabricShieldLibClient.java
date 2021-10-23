@@ -37,7 +37,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
             /*
              * Registers sprite directories and model layer, will be done by player, dev code
              */
-            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((atlasTexture, registry) -> {
                 registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
                 registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
             });
@@ -54,13 +54,13 @@ public class FabricShieldLibClient implements ClientModInitializer {
         matrices.push();
         matrices.scale(1.0F, -1.0F, -1.0F);
         SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
-        model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getArmorVertexConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), false, stack.hasEnchantmentGlint()));
+        model.method_23775().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         if (bl) {
-            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.method_24280(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListTag(stack));
-            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.method_24280(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.method_24281(stack));
+            BannerBlockEntityRenderer.method_23802(matrices, vertexConsumers, light, overlay, model.method_23774(), spriteIdentifier, false, list);
         } else {
-            model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            model.method_23774().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
         matrices.pop();
     }
