@@ -5,7 +5,7 @@ import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.util.Identifier;
@@ -26,8 +26,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for(int i = 0; i < craftingInventory.size(); ++i) {
-            ItemStack itemStack3 = craftingInventory.getStack(i);
+        for(int i = 0; i < craftingInventory.getInvSize(); ++i) {
+            ItemStack itemStack3 = craftingInventory.getInvStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     if (!itemStack2.isEmpty()) {
@@ -62,8 +62,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingInventory.size(); ++i) {
-            ItemStack itemStack3 = craftingInventory.getStack(i);
+        for (int i = 0; i < craftingInventory.getInvSize(); ++i) {
+            ItemStack itemStack3 = craftingInventory.getInvStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
@@ -77,8 +77,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         }
 
         if (!itemStack2.isEmpty()) {
-            NbtCompound nbtCompound = itemStack.getSubTag("BlockEntityTag");
-            NbtCompound nbtCompound2 = nbtCompound == null ? new NbtCompound() : nbtCompound.copy();
+            CompoundTag nbtCompound = itemStack.getSubTag("BlockEntityTag");
+            CompoundTag nbtCompound2 = nbtCompound == null ? new CompoundTag() : nbtCompound.copy();
             nbtCompound2.putInt("Base", ((BannerItem) itemStack.getItem()).getColor().getId());
             itemStack2.putSubTag("BlockEntityTag", nbtCompound2);
         }

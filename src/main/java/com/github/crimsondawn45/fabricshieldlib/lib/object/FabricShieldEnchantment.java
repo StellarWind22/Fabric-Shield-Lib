@@ -18,7 +18,7 @@ public class FabricShieldEnchantment extends Enchantment {
     /**
      * @param weight rarity of enchantment.
      */
-    public FabricShieldEnchantment(Rarity weight) {
+    public FabricShieldEnchantment(Weight weight) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = false;
         this.isCurse = false;
@@ -28,7 +28,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param weight rarity of enchantment.
      * @param isTreasure if enchantment is a treasure enchantment.
      */
-    public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
+    public FabricShieldEnchantment(Weight weight, boolean isTreasure) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = false;
@@ -38,7 +38,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param weight rarity of enchantment.
      * @param isTreasure if enchantment is a treasure enchantment.
      */
-    public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
+    public FabricShieldEnchantment(Weight weight, boolean isTreasure, boolean isCurse) {
         super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = isCurse;
