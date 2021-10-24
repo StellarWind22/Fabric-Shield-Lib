@@ -11,6 +11,9 @@ import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+/**
+ * Handles banner crafting for modded shield's that support banners.
+ */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
     public FabricShieldDecoratorRecipe(Identifier identifier) {

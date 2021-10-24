@@ -26,7 +26,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 /**
- * Pre-made class for quickly making custom shields
+ * Pre-made class for quickly making custom shields which support banners
  */
 public class FabricBannerShieldItem extends Item implements FabricShield {
 

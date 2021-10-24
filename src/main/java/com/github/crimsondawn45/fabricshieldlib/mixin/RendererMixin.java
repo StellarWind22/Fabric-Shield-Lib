@@ -23,6 +23,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+/**
+ * Handles rendering of shields with banners.
+ */
 @Mixin (BuiltinModelItemRenderer.class)
 public class RendererMixin {
 
