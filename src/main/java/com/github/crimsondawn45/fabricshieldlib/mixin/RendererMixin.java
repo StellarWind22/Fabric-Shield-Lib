@@ -33,7 +33,9 @@ public class RendererMixin {
      * This whole mixin is dev code and will be made by the player
      */
     private static ShieldEntityModel modelFabricShield;
+    @SuppressWarnings( "deprecation" )
     private static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_banner_shield_base"));
+    @SuppressWarnings( "deprecation" )
     private static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID,"entity/fabric_banner_shield_base_nopattern"));
 
 
