@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin (BuiltinModelItemRenderer.class)
 public class RendererMixin {
     final Identifier FABRIC_SHIELD_NOPATTERN = new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base_nopattern.png");
-    final TextureCache.Manager FABRIC_SHIELD_BANNER = new TextureCache.Manager("shield_", new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base.png"), "textures/entity/shield/");
+    final Identifier FABRIC_SHIELD_BANNER = new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base.png");
 
     @Inject(method = "render", at = @At("HEAD"))
     private void mainRender(ItemStack stack, CallbackInfo callbackInfo) {
