@@ -51,13 +51,12 @@ public class FabricShieldLibClient implements ClientModInitializer {
      * Uses the item being rendered, the identifier for the default shield texture provided by the user,
      * and the texture cache for the blank shield texture, also provided by the user
      */
-    public static void renderBanner(ItemStack stack, Identifier nopattern_texture){
+    public static void renderBanner(ItemStack stack, Identifier nopattern_texture, TextureCache.Manager banner_shield_texture){
         final ShieldEntityModel model = new ShieldEntityModel();
-        final TextureCache.Manager FABRIC_SHIELD_BANNER = new TextureCache.Manager("shield_", new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base.png"), "textures/entity/shield/");
         final BannerBlockEntity renderBanner = new BannerBlockEntity();
         if (stack.getSubTag("BlockEntityTag") != null) {
             renderBanner.readFrom(stack, ShieldItem.getColor(stack));
-            MinecraftClient.getInstance().getTextureManager().bindTexture(TextureCache.SHIELD.get(renderBanner.getPatternCacheKey(), renderBanner.getPatterns(), renderBanner.getPatternColors()));
+            MinecraftClient.getInstance().getTextureManager().bindTexture(banner_shield_texture.get(renderBanner.getPatternCacheKey(), renderBanner.getPatterns(), renderBanner.getPatternColors()));
         } else {
             MinecraftClient.getInstance().getTextureManager().bindTexture(nopattern_texture);
         }
