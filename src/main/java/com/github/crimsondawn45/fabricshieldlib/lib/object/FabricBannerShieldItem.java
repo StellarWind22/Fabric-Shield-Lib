@@ -1,28 +1,19 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Pre-made class for quickly making custom shields which support banners
@@ -43,7 +34,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItem item(s) for repairing shield.
+     * @param repairItems item(s) for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
@@ -149,7 +140,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+      return new TypedActionResult(ActionResult.SUCCESS, itemStack);
 	}
 
     @Override

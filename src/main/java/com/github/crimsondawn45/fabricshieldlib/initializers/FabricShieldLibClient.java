@@ -1,25 +1,17 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-import java.util.List;
-
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
-import com.mojang.datafixers.util.Pair;
-
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.texture.TextureCache;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.util.Identifier;
 
 public class FabricShieldLibClient implements ClientModInitializer {
@@ -47,24 +39,40 @@ public class FabricShieldLibClient implements ClientModInitializer {
         }
     }
 
+    private static void renderEnchantmentGlint(Runnable runnable) {
+        GlStateManager.color3f(0.5019608F, 0.2509804F, 0.8F);
+        MinecraftClient.getInstance().getTextureManager().bindTexture(ItemRenderer.ENCHANTMENT_GLINT_TEX);
+        ItemRenderer.renderGlint(MinecraftClient.getInstance().getTextureManager(), runnable, 1);
+    }
+
     /**
      * Used to simplify the mixin on the user end to make their shield render banner
      *
-     * Uses params from the mixin method, and the model and sprite identifiers made by the player
+     * Uses the item being rendered, the identifier for the default shield texture provided by the user,
+     * and the texture cache for the blank shield texture, also provided by the user
      */
-    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
-        boolean bl = stack.getSubTag("BlockEntityTag") != null;
-        matrices.push();
-        matrices.scale(1.0F, -1.0F, -1.0F);
-        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getArmorVertexConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), false, stack.hasEnchantmentGlint()));
-        model.method_23775().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        if (bl) {
-            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.method_24280(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.method_24281(stack));
-            BannerBlockEntityRenderer.method_23802(matrices, vertexConsumers, light, overlay, model.method_23774(), spriteIdentifier, false, list);
+    public static void renderBanner(ItemStack stack, Identifier nopattern_texture){
+        final ShieldEntityModel model = new ShieldEntityModel();
+        final TextureCache.Manager FABRIC_SHIELD_BANNER = new TextureCache.Manager("shield_", new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base.png"), "textures/entity/shield/");
+        final BannerBlockEntity renderBanner = new BannerBlockEntity();
+        if (stack.getSubTag("BlockEntityTag") != null) {
+            renderBanner.readFrom(stack, ShieldItem.getColor(stack));
+            MinecraftClient.getInstance().getTextureManager().bindTexture(TextureCache.SHIELD.get(renderBanner.getPatternCacheKey(), renderBanner.getPatterns(), renderBanner.getPatternColors()));
         } else {
-            model.method_23774().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            MinecraftClient.getInstance().getTextureManager().bindTexture(nopattern_texture);
         }
-        matrices.pop();
+
+        GlStateManager.pushMatrix();
+        GlStateManager.scalef(1.0F, -1.0F, -1.0F);
+        model.renderItem();
+        if (stack.hasEnchantmentGlint()) {
+
+            renderEnchantmentGlint(model::renderItem);
+
+        }
+
+        GlStateManager.popMatrix();
+
+
     }
 }

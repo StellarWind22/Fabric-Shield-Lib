@@ -10,10 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 /**
@@ -35,7 +32,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItem item(s) for repairing shield.
+     * @param repairItems item(s) for repairing shield.
      */
     public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
@@ -124,7 +121,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+        return new TypedActionResult(ActionResult.SUCCESS, itemStack);
 	}
 
     @Override
