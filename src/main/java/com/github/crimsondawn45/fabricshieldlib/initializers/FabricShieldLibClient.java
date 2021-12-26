@@ -1,5 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -11,7 +12,6 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.texture.TextureCache;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
 import net.minecraft.util.Identifier;
 
 public class FabricShieldLibClient implements ClientModInitializer {
@@ -53,9 +53,9 @@ public class FabricShieldLibClient implements ClientModInitializer {
     public static void renderBanner(ItemStack stack, Identifier nopattern_texture, Identifier banner_shield_texture){
         final ShieldEntityModel model = new ShieldEntityModel();
         final BannerBlockEntity renderBanner = new BannerBlockEntity();
-        final TextureCache.Manager banner_texture = new TextureCache.Manager("shield_", banner_shield_texture, "textures/entity/shield/");
+        final TextureCache.Manager banner_texture = new TextureCache.Manager("fabric_shield_", banner_shield_texture, "textures/entity/shield/");
         if (stack.getSubTag("BlockEntityTag") != null) {
-            renderBanner.readFrom(stack, ShieldItem.getColor(stack));
+            renderBanner.readFrom(stack, FabricBannerShieldItem.getColor(stack));
             MinecraftClient.getInstance().getTextureManager().bindTexture(banner_texture.get(renderBanner.getPatternCacheKey(), renderBanner.getPatterns(), renderBanner.getPatternColors()));
         } else {
             MinecraftClient.getInstance().getTextureManager().bindTexture(nopattern_texture);
