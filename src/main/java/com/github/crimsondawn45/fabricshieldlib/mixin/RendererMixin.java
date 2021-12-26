@@ -20,11 +20,12 @@ public class RendererMixin {
     final Identifier FABRIC_SHIELD_NOPATTERN = new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base_nopattern.png");
     final Identifier FABRIC_SHIELD_BANNER = new Identifier("fabricshieldlib","textures/entity/fabric_banner_shield_base.png");
 
-    @Inject(method = "render", at = @At("HEAD"))
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void mainRender(ItemStack stack, CallbackInfo callbackInfo) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             if (stack.getItem() == FabricShieldLib.fabric_banner_shield) {
                 FabricShieldLibClient.renderBanner(stack, FABRIC_SHIELD_NOPATTERN, FABRIC_SHIELD_BANNER);
+                callbackInfo.cancel();
             }
         }
     }
