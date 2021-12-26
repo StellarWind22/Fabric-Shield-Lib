@@ -16,7 +16,7 @@ public interface LivingEntityAccessor {
 	 * @param source source of the damage.
 	 * @return if it was blocked.
 	 */
-    @Invoker(value = "blockedByShield")
+    @Invoker(value = "method_6061")
 	boolean fabricshieldlib$invokeBlockedByShield(DamageSource source);
 
 	/**
