@@ -1,8 +1,8 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldBannerRendering;
 import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public class RendererMixin {
     private void mainRender(ItemStack stack, CallbackInfo callbackInfo) {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             if (stack.getItem() == FabricShieldLib.fabric_banner_shield) {
-                FabricShieldLibClient.renderBanner(stack, FABRIC_SHIELD_NOPATTERN, FABRIC_SHIELD_BANNER);
+                FabricShieldBannerRendering.render(stack, FABRIC_SHIELD_NOPATTERN, FABRIC_SHIELD_BANNER);
                 callbackInfo.cancel();
             }
         }

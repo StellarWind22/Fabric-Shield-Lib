@@ -2,7 +2,6 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
@@ -11,11 +10,7 @@ import net.minecraft.client.texture.TextureCache;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-public class FabricShieldLibClient implements ClientModInitializer {
-
-    @Override
-    public void onInitializeClient() {
-    }
+public class FabricShieldBannerRendering{
 
     /**
      * Used in renderBanner method internally
@@ -31,7 +26,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
      *
      * Uses the item being rendered, the identifiers for the default shield and the blank banner shield textures provided by the user
      */
-    public static void renderBanner(ItemStack stack, Identifier nopattern_texture, Identifier banner_shield_texture){
+    public static void render(ItemStack stack, Identifier nopattern_texture, Identifier banner_shield_texture){
         final ShieldEntityModel model = new ShieldEntityModel();
         final BannerBlockEntity renderBanner = new BannerBlockEntity();
         final TextureCache.Manager banner_texture = new TextureCache.Manager(banner_shield_texture.toString(), banner_shield_texture, "textures/entity/shield/");
