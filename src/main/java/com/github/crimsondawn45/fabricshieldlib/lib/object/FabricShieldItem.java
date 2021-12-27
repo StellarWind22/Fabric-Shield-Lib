@@ -1,7 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,10 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 /**
@@ -36,7 +32,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItem item(s) for repairing shield.
+     * @param repairItems item(s) for repairing shield.
      */
     public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
@@ -46,7 +42,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -70,7 +66,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -87,7 +83,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItemTag item tag for repairing shield
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag<Item> repairItemTag) {
         super(settings); //Make durability match material
 
         //Register dispenser equip behavior
@@ -95,7 +91,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -125,7 +121,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+        return new TypedActionResult(ActionResult.SUCCESS, itemStack);
 	}
 
     @Override

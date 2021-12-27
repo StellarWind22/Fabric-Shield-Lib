@@ -1,29 +1,19 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Pre-made class for quickly making custom shields which support banners
@@ -44,7 +34,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItem item(s) for repairing shield.
+     * @param repairItems item(s) for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
@@ -54,7 +44,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -78,7 +68,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -95,7 +85,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag item tag for repair shield.
      */
-    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag<Item> repairItemTag) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -103,7 +93,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            this.addPropertyGetter(new Identifier("blocking"), (itemStack, clientWorld, livingEntity) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -115,7 +105,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public String getTranslationKey(ItemStack stack) {
-        if (stack.getSubNbt("BlockEntityTag") != null) {
+        if (stack.getSubTag("BlockEntityTag") != null) {
             String var10000 = this.getTranslationKey();
             return var10000 + "." + getColor(stack).getName();
         } else {
@@ -124,7 +114,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public static DyeColor getColor(ItemStack stack) {
-        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
+        return DyeColor.byId(stack.getOrCreateSubTag("BlockEntityTag").getInt("Base"));
     }
 
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
@@ -150,7 +140,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
       ItemStack itemStack = user.getStackInHand(hand);
       user.setCurrentHand(hand);
-      return TypedActionResult.consume(itemStack);
+      return new TypedActionResult(ActionResult.SUCCESS, itemStack);
 	}
 
     @Override

@@ -6,13 +6,9 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldIte
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.enchantment.Enchantment.Rarity;
+import net.minecraft.enchantment.Enchantment.Weight;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -26,6 +22,8 @@ import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Main class for Fabric Shield Lib
@@ -86,7 +84,7 @@ public class FabricShieldLib implements ModInitializer {
             //Register Custom Shield
             fabric_banner_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
             fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));			//Register Development Stuff
-            reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(Rarity.COMMON, false, false));
+            reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(Weight.COMMON, false, false));
 
             /*
              * Test event: makes any shield with new enchantment reflect 1/3rd of damage back to attacker

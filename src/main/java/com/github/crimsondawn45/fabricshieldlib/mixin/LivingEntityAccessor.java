@@ -1,10 +1,9 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
 /**
  * Accessor for allowing other mixins to invoke important private methods.
@@ -16,7 +15,7 @@ public interface LivingEntityAccessor {
 	 * @param source source of the damage.
 	 * @return if it was blocked.
 	 */
-    @Invoker(value = "blockedByShield")
+    @Invoker(value = "method_6061")
 	boolean fabricshieldlib$invokeBlockedByShield(DamageSource source);
 
 	/**
