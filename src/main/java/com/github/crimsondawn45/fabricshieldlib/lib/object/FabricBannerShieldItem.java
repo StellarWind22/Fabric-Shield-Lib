@@ -138,10 +138,10 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
     @Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-      ItemStack itemStack = user.getStackInHand(hand);
-      user.setCurrentHand(hand);
-      return new TypedActionResult(ActionResult.SUCCESS, itemStack);
-	}
+        ItemStack itemStack = user.getStackInHand(hand);
+        user.setCurrentHand(hand);
+        return new TypedActionResult<ItemStack>(ActionResult.SUCCESS, itemStack);
+    }
 
     @Override
     public boolean canRepair(ItemStack stack, ItemStack ingredient) {
