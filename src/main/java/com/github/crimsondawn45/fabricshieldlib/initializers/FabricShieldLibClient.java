@@ -3,7 +3,6 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
@@ -14,15 +13,13 @@ import net.minecraft.util.Identifier;
 
 public class FabricShieldLibClient implements ClientModInitializer {
 
-    /**
-     * Will be made by user (dev code)
-     */
-    //public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(new Identifier(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
-    
     @Override
     public void onInitializeClient() {
     }
 
+    /**
+     * Used in renderBanner method internally
+     */
     private static void renderEnchantmentGlint(Runnable runnable) {
         GlStateManager.color3f(0.5019608F, 0.2509804F, 0.8F);
         MinecraftClient.getInstance().getTextureManager().bindTexture(ItemRenderer.ENCHANTMENT_GLINT_TEX);
