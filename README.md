@@ -13,7 +13,7 @@ fabric_shield_lib_version=1.4.5-1.18
 
 #### **build.gradle** under dependencies
 ```gradle
-modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:${project.fabric_shield_lib_version}"
+modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
 ```
 
 #### **build.gradle** under repositories near the end of the file.
