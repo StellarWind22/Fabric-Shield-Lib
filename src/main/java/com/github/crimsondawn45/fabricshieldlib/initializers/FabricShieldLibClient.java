@@ -24,17 +24,25 @@ import net.minecraft.util.Identifier;
 
 public class FabricShieldLibClient implements ClientModInitializer {
 
+    /**
+     * Will be made by user (dev code)
+     */
+    //public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(new Identifier(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
+    
     @Override
     public void onInitializeClient() {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code
             FabricShieldLib.logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Client side banner code ran!");
+
             /*
-             * Registers sprite directories, will be done by player, dev code
+             * Registers sprite directories and model layer, will be done by player, dev code
              */
+            //EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
             ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
                 registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
+                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
             });
         }
     }
