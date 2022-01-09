@@ -1,4 +1,7 @@
 {
+    "fabricshieldlib.shield_tooltip":"§7When disabled:",
+    "fabricshieldlib.cooldown":"Cooldown",
+    
     "item.fabricshieldlib.fabric_banner_shield":"Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.red": "Red Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.orange": "Orange Banner Shield",
@@ -18,6 +21,5 @@
     "item.fabricshieldlib.fabric_banner_shield.dark_gray": "Dark Gray Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.black": "Black Banner Shield",
     "item.fabricshieldlib.fabric_shield":"Json Fabric Shield",
-    "enchantment.fabricshieldlib.reflect_enchantment": "Reflection",
-    "enchantment.fabricshieldlib.curse_enchantment": "Curse Of Cancelled Events"
+    "enchantment.fabricshieldlib.reflect_enchantment": "Reflection"
 }

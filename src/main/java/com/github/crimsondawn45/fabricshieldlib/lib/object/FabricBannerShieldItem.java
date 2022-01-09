@@ -1,5 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +18,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
+import net.minecraft.tag.Tag.Identified;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -37,6 +40,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     private Item[] repairItems;
     private Tag<Item> repairTag;
     private Ingredient repairIngredients;
+    private Collection<Identified<Item>> repairTags;
 
     private RepairItemType repairType;
 
@@ -93,7 +97,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItemTag item tag for repair shield.
+     * @param repairItemTag item tag for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
         super(settings);
@@ -114,6 +118,31 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 		this.enchantability = enchantability;
     }
 
+    /**
+     * @param settings item settings.
+     * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
+     * @param enchantability enchantability of shield. Vanilla: 9
+     * @param repairItemTag list of item tags for repairing shield.
+     */
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag.Identified<Item>> repairItemTags) {
+        super(settings);
+
+        //Register dispenser equip behavior
+        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+
+        //Register that item has a blocking model
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
+
+        this.cooldownTicks = cooldownTicks;
+        this.repairType = RepairItemType.TAG_ARRAY;
+        this.repairTags = repairItemTags;
+		this.enchantability = enchantability;
+    }
+
     public String getTranslationKey(ItemStack stack) {
         if (stack.getSubNbt("BlockEntityTag") != null) {
             String var10000 = this.getTranslationKey();
@@ -128,7 +157,11 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        //Banner Tooltip
         BannerItem.appendBannerTooltip(stack, tooltip);
+
+        //Cooldown Tooltip
+        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip"));
     }
 
     @Override
@@ -165,6 +198,12 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
                 return false;
             case TAG:           return this.repairTag.contains(ingredient.getItem());
             case INGREDIENT:    return this.repairIngredients.test(ingredient);
+            case TAG_ARRAY:
+                for(Tag<Item> tag : this.repairTags) {
+                    if(tag.contains(ingredient.getItem())) {
+                        return true;
+                    }
+                }
             default:
                 return false;
         }

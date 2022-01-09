@@ -1,5 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import java.util.Collection;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
+import net.minecraft.tag.Tag.Identified;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -29,6 +32,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     private Item[] repairItems;
     private Tag<Item> repairTag;
     private Ingredient repairIngredients;
+    private Collection<Identified<Item>> repairTags;
 
     private RepairItemType repairType;
 
@@ -106,6 +110,31 @@ public class FabricShieldItem extends Item implements FabricShield {
         this.repairTag = repairItemTag;
     }
 
+    /**
+     * @param settings item settings.
+     * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
+     * @param enchantability enchantability of shield. Vanilla: 9
+     * @param repairItemTag list of item tags for repairing shield.
+     */
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag.Identified<Item>> repairItemTags) {
+        super(settings);
+
+        //Register dispenser equip behavior
+        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+
+        //Register that item has a blocking model
+        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+		    });
+		}
+
+        this.cooldownTicks = cooldownTicks;
+        this.repairType = RepairItemType.TAG_ARRAY;
+        this.repairTags = repairItemTags;
+		this.enchantability = enchantability;
+    }
+
     @Override
     public int getCooldownTicks() {
         return this.cooldownTicks;
@@ -140,6 +169,12 @@ public class FabricShieldItem extends Item implements FabricShield {
                 return false;
             case TAG:           return this.repairTag.contains(ingredient.getItem());
             case INGREDIENT:    return this.repairIngredients.test(ingredient);
+            case TAG_ARRAY:
+                for(Tag<Item> tag : this.repairTags) {
+                    if(tag.contains(ingredient.getItem())) {
+                        return true;
+                    }
+                }
             default:
                 return false;
         }
