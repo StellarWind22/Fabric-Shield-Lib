@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
 
 /**
- * Makes vanilla shield enchantable with an enchantability of 9.
+ * Makes vanilla shield enchantable with an enchantability of 14.
  */
 @Mixin(ShieldItem.class)
 public class ShieldItemMixin extends Item {
