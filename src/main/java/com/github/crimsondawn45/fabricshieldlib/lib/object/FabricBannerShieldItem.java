@@ -161,7 +161,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
         BannerItem.appendBannerTooltip(stack, tooltip);
 
         //Cooldown Tooltip
-        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip"));
+        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip", new TranslatableText("fabricshieldlib.shield_stat_color").append(String.valueOf(this.getCooldownTicks())).append(new TranslatableText("fabricshieldlib.cooldown"))));
     }
 
     @Override

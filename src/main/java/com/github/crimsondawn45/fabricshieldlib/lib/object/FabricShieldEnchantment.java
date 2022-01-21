@@ -1,11 +1,11 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.enchantment.FabricShieldLibTarget;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShieldItem;
 
 /**
  * Enchantment that works on fabric shields and vanilla shield(Needs events to do anything).
@@ -19,7 +19,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param weight rarity of enchantment.
      */
     public FabricShieldEnchantment(Rarity weight) {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = false;
         this.isCurse = false;
     }
@@ -29,7 +29,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = false;
     }
@@ -39,14 +39,9 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
-        super(weight, EnchantmentTarget.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = isCurse;
-    }
-
-    @Override
-    public boolean isAcceptableItem(ItemStack stack) {
-        return stack.getItem() instanceof FabricShield || stack.getItem() instanceof ShieldItem;
     }
 
     @Override

@@ -1,6 +1,7 @@
 {
     "fabricshieldlib.shield_tooltip":"§7When disabled:",
-    "fabricshieldlib.cooldown":"Cooldown",
+    "fabricshieldlib.shield_stat_color":"§2",
+    "fabricshieldlib.cooldown":"Cooldown§r",
     
     "item.fabricshieldlib.fabric_banner_shield":"Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.red": "Red Banner Shield",
