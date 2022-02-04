@@ -20,7 +20,6 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -159,9 +158,6 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         //Banner Tooltip
         BannerItem.appendBannerTooltip(stack, tooltip);
-
-        //Cooldown Tooltip
-        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip", new TranslatableText("fabricshieldlib.shield_stat_color").append(String.valueOf(this.getCooldownTicks())).append(new TranslatableText("fabricshieldlib.cooldown"))));
     }
 
     @Override
