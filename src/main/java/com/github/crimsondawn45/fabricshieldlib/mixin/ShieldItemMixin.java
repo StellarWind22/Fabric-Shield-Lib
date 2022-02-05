@@ -32,7 +32,6 @@ public class ShieldItemMixin extends Item {
 
 	@Override
 	public boolean isEnchantable(ItemStack item) {
-
 		if(FabricShieldLib.config.allow_vanilla_shield_enchanting) {
 			return !item.hasEnchantments();
 		} else {
@@ -42,12 +41,10 @@ public class ShieldItemMixin extends Item {
 	
 	@Override
 	public int getEnchantability() {
-		
 		return FabricShieldLib.config.vanilla_shield_enchatability;
 	}
-
+	
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		super.appendTooltip(stack, world, tooltip, context);
         tooltip.add(new LiteralText(""));
         tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip.start").formatted(Formatting.GRAY));
         tooltip.add(new LiteralText(" 5s ").formatted(Formatting.DARK_GREEN).append(new TranslatableText("fabricshieldlib.shield_tooltip.end")));
