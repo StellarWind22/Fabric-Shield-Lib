@@ -1,5 +1,6 @@
 {   
     "title.fabricshieldlib.config": "Fabric Shield Lib Config",
+    "text.autoconfig.fabricshieldlib.option.enable_tooltips":"Enable shield tooltips",
     "text.autoconfig.fabricshieldlib.option.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
     "text.autoconfig.fabricshieldlib.option.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
     "fabricshieldlib.shield_tooltip.start":"When Disabled:",
