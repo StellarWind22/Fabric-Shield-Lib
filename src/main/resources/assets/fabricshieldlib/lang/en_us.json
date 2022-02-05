@@ -1,4 +1,6 @@
 {   
+    "title.fabricshieldlib.config": "Fabric Shield Lib Config",
+
     "item.fabricshieldlib.fabric_banner_shield":"Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.red": "Red Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.orange": "Orange Banner Shield",

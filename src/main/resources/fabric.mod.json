@@ -39,6 +39,9 @@
     ],
     "mm:early_risers":[
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibEarlyRiser"
+    ],
+    "modmenu":[
+      "com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibModMenuIntegration"
     ]
   },
   "mixins": [
@@ -51,5 +54,10 @@
     "minecraft": "1.18.x",
     "java": ">=17",
     "mm":">=2.3"
+  },
+  "custom":{
+    "fabricshieldlib":{
+      "badges":["library"]
+    }
   }
 }

@@ -12,6 +12,7 @@ group = project.maven_group
 
 repositories {
 	maven { url = "https://jitpack.io" }
+	maven { url "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -20,10 +21,18 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	modImplementation "io.github.prospector:modmenu:${project.mod_menu_version}"	//Needed for ModMenu integration
+
+	//Config
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+	//Fabric ASM
 	modImplementation("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}") {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
-	include("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}")
+	include("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}")	//Include so people don't have to manually install a mod with no modpage
 }
 
 processResources {

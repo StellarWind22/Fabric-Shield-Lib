@@ -1,5 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
@@ -10,6 +11,8 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment.Rarity;
@@ -40,6 +43,10 @@ public class FabricShieldLib implements ModInitializer {
      * Fabric Shield Lib's logger.
      */
     public static final Logger logger = LogManager.getLogger(MOD_ID);
+    /**
+     * Fabric Shield Lib's config file
+     */
+    public static FabricShieldLibConfig config;
 
     /**
      * Test shield item.
@@ -73,6 +80,14 @@ public class FabricShieldLib implements ModInitializer {
 
     @Override
     public void onInitialize() {
+
+        /**
+         * Register Config
+         */
+        AutoConfig.register(FabricShieldLibConfig.class, GsonConfigSerializer::new);
+        config = AutoConfig.getConfigHolder(FabricShieldLibConfig.class).getConfig();   //Read config data
+
+
         logger.info("Fabric Shield Lib Initialized!");
 
         /*
