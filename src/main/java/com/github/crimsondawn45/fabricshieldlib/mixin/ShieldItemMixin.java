@@ -1,5 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
+
 import org.spongepowered.asm.mixin.Mixin;
 
 import net.minecraft.item.Item;
@@ -21,11 +23,17 @@ public class ShieldItemMixin extends Item {
 
 	@Override
 	public boolean isEnchantable(ItemStack item) {
-		return !item.hasEnchantments();
+
+		if(FabricShieldLib.config.allow_vanilla_shield_enchanting) {
+			return !item.hasEnchantments();
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
 	public int getEnchantability() {
-		return 14;
+		
+		return FabricShieldLib.config.vanilla_shield_enchatability;
 	}
 }

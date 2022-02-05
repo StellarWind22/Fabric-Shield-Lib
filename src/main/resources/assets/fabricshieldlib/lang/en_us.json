@@ -1,6 +1,7 @@
 {   
     "title.fabricshieldlib.config": "Fabric Shield Lib Config",
-
+    "text.autoconfig.fabricshieldlib.option.allow_vanilla_shield_enchanting":"Allow vanilla shield to be used in enchanting table",
+    "text.autoconfig.fabricshieldlib.option.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
     "item.fabricshieldlib.fabric_banner_shield":"Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.red": "Red Banner Shield",
     "item.fabricshieldlib.fabric_banner_shield.orange": "Orange Banner Shield",

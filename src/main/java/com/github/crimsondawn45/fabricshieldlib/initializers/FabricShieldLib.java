@@ -46,7 +46,7 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Fabric Shield Lib's config file
      */
-    public static FabricShieldLibConfig config;
+    public static FabricShieldLibConfig config = new FabricShieldLibConfig();
 
     /**
      * Test shield item.
@@ -86,9 +86,6 @@ public class FabricShieldLib implements ModInitializer {
          */
         AutoConfig.register(FabricShieldLibConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(FabricShieldLibConfig.class).getConfig();   //Read config data
-
-
-        logger.info("Fabric Shield Lib Initialized!");
 
         /*
          * Dev environment code.
@@ -130,5 +127,10 @@ public class FabricShieldLib implements ModInitializer {
                 return ActionResult.PASS;
             });
         }
+
+        /**
+         * Annouce done starting up
+         */
+        logger.info("Fabric Shield Lib Initialized!");
     }
 }
