@@ -57,7 +57,10 @@
   },
   "custom": {
     "modmenu": {
-      "badges": [ "library" ]
+      "badges": [ "library" ],
+      "parent": {
+        "id": "mm"
+      }
     }
   }
 }
