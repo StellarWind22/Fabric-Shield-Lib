@@ -12,7 +12,6 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
@@ -156,8 +155,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        //Banner Tooltip
-        BannerItem.appendBannerTooltip(stack, tooltip);
+       this.getCooldownTooltip(stack, tooltip, this.getCooldownTicks());
     }
 
     @Override
