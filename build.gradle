@@ -1,3 +1,15 @@
+buildscript {
+    dependencies {
+        classpath 'de.guntram.mcmod:crowdin-translate:1.3+1.17'
+    }
+    repositories {
+        maven {
+            name = 'CrowdinTranslate source'
+            url = "https://minecraft.guntram.de/maven/"
+        }
+    }
+}
+
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
@@ -6,6 +18,11 @@ plugins {
 loom {
 	accessWidenerPath = file("src/main/resources/fabricshieldlib.accesswidener")
 }
+
+apply plugin: 'de.guntram.mcmod.crowdin-translate'
+crowdintranslate.crowdinProjectName = 'fabric-shield-lib'
+crowdintranslate.minecraftProjectName = 'fabricshieldlib'
+crowdintranslate.verbose = false
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
@@ -16,8 +33,8 @@ group = project.maven_group
 
 repositories {
 	maven { url = "https://jitpack.io" }
-	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/" }
+	maven { url = "https://maven.shedaniel.me/" }
+	maven { url = "https://maven.terraformersmc.com/" }
 }
 
 dependencies {
@@ -79,4 +96,8 @@ publishing {
 
 	repositories {
 	}
+}
+
+build {
+    dependsOn downloadTranslations
 }

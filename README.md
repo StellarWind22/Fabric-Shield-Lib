@@ -3,12 +3,14 @@
 # Fabric Shield Lib
 Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions.
 
+Want to help translate Fabric shield lib? head over to ![here](https://crowdin.com/project/fabric-shield-lib).
+
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### gradle.properties
 ```properties
-fabric_shield_lib_version=1.4.5-1.18
+fabric_shield_lib_version=1.5.0-1.18
 ```
 
 #### **build.gradle** under dependencies
