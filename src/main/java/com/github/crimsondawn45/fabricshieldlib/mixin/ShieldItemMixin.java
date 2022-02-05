@@ -42,7 +42,7 @@ public class ShieldItemMixin extends Item {
 	
 	@Override
 	public int getEnchantability() {
-		return FabricShieldLib.config.vanilla_shield_enchatability;
+		return FabricShieldLib.config.vanilla_shield_enchantability;
 	}
 	
 	@Override

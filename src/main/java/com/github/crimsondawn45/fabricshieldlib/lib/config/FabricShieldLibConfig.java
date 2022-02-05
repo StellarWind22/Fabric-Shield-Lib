@@ -10,5 +10,5 @@ public class FabricShieldLibConfig implements ConfigData {
     
     public boolean allow_vanilla_shield_enchanting = true;
     @Comment("15 = Wood || 5 = Stone || 14 = Iron || 10 = Diamond || 22 = Gold")
-    public int vanilla_shield_enchatability = 14;
+    public int vanilla_shield_enchantability = 14;
 }
