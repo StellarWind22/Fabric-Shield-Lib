@@ -55,9 +55,9 @@
     "java": ">=17",
     "mm":">=2.3"
   },
-  "custom":{
-    "fabricshieldlib":{
-      "badges":["library"]
+  "custom": {
+    "modmenu": {
+      "badges": [ "library" ]
     }
   }
 }
