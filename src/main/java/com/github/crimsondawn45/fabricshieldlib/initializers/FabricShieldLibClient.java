@@ -153,7 +153,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
          * Add disabled cooldown tooltip
          */
         tooltip.add(new LiteralText(""));
-        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip.start").formatted(Formatting.GRAY));
+        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip.start").append(new LiteralText(":")).formatted(Formatting.GRAY));
 
         /**
          * All of this is so if there is a .0 instead of there being a need for a 
