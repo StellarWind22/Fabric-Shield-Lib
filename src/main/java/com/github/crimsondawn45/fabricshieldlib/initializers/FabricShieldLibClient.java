@@ -25,6 +25,7 @@ import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -53,6 +54,10 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
                 FabricShield shield = (FabricShield) stack.getItem();
                 getCooldownTooltip(stack, context,tooltip, shield.getCooldownTicks());
+            }
+
+            if(stack.getItem().equals(Items.SHIELD)) {
+                getCooldownTooltip(stack, context,tooltip, 100);
             }
         });
 
@@ -93,6 +98,9 @@ public class FabricShieldLibClient implements ClientModInitializer {
         matrices.pop();
     }
 
+    /**
+     * Shield tooltip thing
+     */
     public static List<Text> getCooldownTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, int cooldownTicks) {
 
         List<Text> advanced = new ArrayList<Text>();
