@@ -3,7 +3,7 @@
 # Fabric Shield Lib
 Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions.
 
-### Translations
+## Translations
 Translations are handled using the Crowdlin gradle plugin.
 
 Want to help translate Fabric shield lib? head over to [here](https://crowdin.com/project/fabric-shield-lib).
