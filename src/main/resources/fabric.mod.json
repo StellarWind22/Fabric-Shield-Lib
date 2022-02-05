@@ -53,7 +53,8 @@
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17",
-    "mm":">=2.3"
+    "mm":">=2.3",
+    "cloth-config":">=6.1.50"
   },
   "custom": {
     "modmenu": {
