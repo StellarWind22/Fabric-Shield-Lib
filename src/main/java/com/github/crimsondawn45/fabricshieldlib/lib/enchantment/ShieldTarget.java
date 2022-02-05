@@ -10,6 +10,16 @@ public class ShieldTarget extends EnchantmentTargetMixin {
 
     @Override
     public boolean isAcceptableItem(Item item) {
-        return item instanceof FabricShield || item.equals(Items.SHIELD);
+
+        if(item.equals(Items.SHIELD)) {
+            return true;
+        }
+
+        if(item instanceof FabricShield) {
+            FabricShield shield = (FabricShield) item;
+            return shield.acceptsShieldEnchantments();
+        }
+
+        return false;
     }
 }

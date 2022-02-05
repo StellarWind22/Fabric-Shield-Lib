@@ -16,4 +16,12 @@ public interface FabricShield {
      * @return Whether a shield supports banners.
      */
     boolean supportsBanner();
+
+    /**
+     * If library will allow this shield to have shield enchantments on it.
+     * @return
+     */
+    default boolean acceptsShieldEnchantments() {
+        return true;
+    }
 }
