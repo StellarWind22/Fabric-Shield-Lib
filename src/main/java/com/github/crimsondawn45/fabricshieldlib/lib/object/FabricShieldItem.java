@@ -1,14 +1,11 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import java.util.Collection;
-import java.util.List;
 
-import blue.endless.jankson.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -17,7 +14,6 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
 import net.minecraft.tag.Tag.Identified;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -182,10 +178,6 @@ public class FabricShieldItem extends Item implements FabricShield {
             default:
                 return false;
         }
-    }
-    
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        this.getCooldownTooltip(stack, tooltip, this.getCooldownTicks());
     }
 
     @Override

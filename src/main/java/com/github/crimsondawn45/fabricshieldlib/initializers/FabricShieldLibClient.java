@@ -3,9 +3,11 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import java.util.List;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -34,6 +36,20 @@ public class FabricShieldLibClient implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
+
+        /**
+         * Register tooltip callback this is the same as mixing into the end of:
+         * ItemStack.getTooltip()
+         */
+        ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
+
+            if(stack.getItem() instanceof FabricShield) {
+
+                FabricShield shield = (FabricShield) stack.getItem();
+                shield.getCooldownTooltip(stack, context, tooltip, shield.getCooldownTicks());
+            }
+        });
+
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code

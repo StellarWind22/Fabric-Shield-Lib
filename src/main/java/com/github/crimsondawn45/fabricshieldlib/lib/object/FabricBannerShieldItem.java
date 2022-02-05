@@ -157,7 +157,6 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         BannerItem.appendBannerTooltip(stack, tooltip);
-        this.getCooldownTooltip(stack, tooltip, this.getCooldownTicks());
     }
 
     @Override
