@@ -6,7 +6,7 @@ Library for easily adding new shields, shield enchantments, and enabling you to 
 ## Translations
 Translations are handled using the Crowdlin gradle plugin.
 
-Want to help translate Fabric shield lib? head over to [here](https://crowdin.com/project/fabric-shield-lib).
+Want to help translate Fabric shield lib? head over to [here](https://crwd.in/fabric-shield-lib).
 
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
