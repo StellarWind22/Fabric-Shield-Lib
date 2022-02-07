@@ -54,7 +54,7 @@
     "minecraft": "1.17.x",
     "java": ">=16",
     "mm":">=2.3",
-    "cloth-config":">=5.2.47"
+    "cloth-config2":">=5.2.47"
   },
   "custom": {
     "modmenu": {

@@ -4,14 +4,14 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.github.crimsondawn45.fabricshieldlib.mixin.EnchantmentTargetMixin;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.item.ShieldItem;
 
 public class ShieldTarget extends EnchantmentTargetMixin {
 
     @Override
     public boolean isAcceptableItem(Item item) {
 
-        if(item.equals(Items.SHIELD)) {
+        if(item instanceof ShieldItem) {
             return true;
         }
 

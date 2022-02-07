@@ -11,7 +11,7 @@ buildscript {
 }
 
 plugins {
-	id 'fabric-loom' version '0.9-SNAPSHOT'
+	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -48,7 +48,8 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-	modCompileOnly ("com.terraformersmc:modmenu:${project.mod_menu_version}") {
+	//Mod menu
+	modCompileOnly modRuntimeOnly ("com.terraformersmc:modmenu:${project.mod_menu_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
