@@ -4,5 +4,6 @@
     "text.autoconfig.fabricshieldlib.option.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
     "text.autoconfig.fabricshieldlib.option.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
     "fabricshieldlib.shield_tooltip.start":"When Hit by Axe",
+    "fabricshieldlib.shield_tooltip.unit":"s",
     "fabricshieldlib.shield_tooltip.end":"Cooldown"
 }

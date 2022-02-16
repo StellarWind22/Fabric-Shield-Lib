@@ -175,7 +175,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
             }
         }
 
-        tooltip.add(new LiteralText(" " + cooldown +"s ").formatted(Formatting.DARK_GREEN).append(new TranslatableText("fabricshieldlib.shield_tooltip.end")));
+        tooltip.add(new LiteralText(" " + cooldown).formatted(Formatting.DARK_GREEN).append(new TranslatableText("fabricshieldlib.shield_tooltip.unit")).append(new LiteralText(" ")).append(new TranslatableText("fabricshieldlib.shield_tooltip.end")));
 
         /**
          * Append advanced info
