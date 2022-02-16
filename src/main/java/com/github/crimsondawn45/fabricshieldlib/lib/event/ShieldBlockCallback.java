@@ -18,8 +18,8 @@ public interface ShieldBlockCallback {
      */
     Event<ShieldBlockCallback> EVENT = EventFactory.createArrayBacked(ShieldBlockCallback.class,
     (listeners) -> (defender, source, amount, hand, shield) -> {
-        for(ShieldBlockCallback listner : listeners) {
-            ActionResult result = listner.block(defender, source, amount, hand, shield);
+        for(ShieldBlockCallback listener : listeners) {
+            ActionResult result = listener.block(defender, source, amount, hand, shield);
 
             if(result != ActionResult.PASS) {
                 return result;
