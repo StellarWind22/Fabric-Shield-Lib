@@ -93,7 +93,4 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     public RecipeSerializer<?> getSerializer() {
         return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
     }
-
-
 }
-
