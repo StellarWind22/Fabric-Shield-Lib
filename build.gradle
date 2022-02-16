@@ -35,6 +35,7 @@ repositories {
 	maven { url = "https://jitpack.io" }
 	maven { url = "https://maven.shedaniel.me/" }
 	maven { url = "https://maven.terraformersmc.com/" }
+	maven { url = "https://minecraft.guntram.de/maven/" }
 }
 
 dependencies {
@@ -58,6 +59,10 @@ dependencies {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
 	include("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}")
+
+	//Crowdlin
+	modImplementation "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
+    include "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
 }
 
 processResources {

@@ -44,6 +44,9 @@ public class FabricShieldLibClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+        //Crowdlin auto download up-to-date translations
+        CrowdinTranslate.downloadTranslations(FabricShieldLib.MOD_ID);
+
         /**
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
