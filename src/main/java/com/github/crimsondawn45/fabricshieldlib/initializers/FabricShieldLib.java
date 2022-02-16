@@ -8,8 +8,8 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecorator
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -42,7 +42,7 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Fabric Shield Lib's logger.
      */
-    public static final Logger logger = LogManager.getLogger(MOD_ID);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     /**
      * Fabric Shield Lib's config file
      */
@@ -93,7 +93,7 @@ public class FabricShieldLib implements ModInitializer {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code
-            logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
+            LOGGER.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
             //Register Custom Shield
             fabric_banner_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
@@ -131,6 +131,6 @@ public class FabricShieldLib implements ModInitializer {
         /**
          * Annouce done starting up
          */
-        logger.info("Fabric Shield Lib Initialized!");
+        LOGGER.info("Fabric Shield Lib Initialized!");
     }
 }

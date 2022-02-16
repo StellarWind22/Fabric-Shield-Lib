@@ -67,7 +67,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code
-            FabricShieldLib.logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Client side banner code ran!");
+            FabricShieldLib.LOGGER.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Client side banner code ran!");
 
             /*
              * Registers sprite directories and model layer, will be done by player, dev code
