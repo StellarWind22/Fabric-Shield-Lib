@@ -13,7 +13,7 @@ library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric
 
 #### gradle.properties
 ```properties
-fabric_shield_lib_version=1.5.0-1.18
+fabric_shield_lib_version=1.5.1-1.18
 ```
 
 #### **build.gradle** under dependencies
@@ -29,10 +29,10 @@ maven { url 'https://jitpack.io' }
 if this mod is your only dependency it should look something like this.
 ```gradle
 repositories {
-    allprojects {
-        repositories {
-            maven { url 'https://jitpack.io' }
-	}
+        allprojects {
+            repositories {
+                maven { url 'https://jitpack.io' }
+        }
     }
 }
 ```
