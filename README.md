@@ -11,19 +11,14 @@ Want to help translate Fabric shield lib? head over to [here](https://crwd.in/fa
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
-#### gradle.properties
+#### put this in gradle.properties
 ```properties
 fabric_shield_lib_version=1.5.1-1.18
 ```
 
-#### **build.gradle** under dependencies
+#### build.gradle under repositories just above dependencies
 ```gradle
-modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
-```
-
-#### **build.gradle** under repositories just above where Minecraft & Fabric API are being added.
-```gradle
-maven { url 'https://jitpack.io' }
+maven { url = 'https://jitpack.io' }
 ```
 
 if this mod is your only dependency it should look something like this.
@@ -37,6 +32,11 @@ dependencies {
         //Fabric Shield Lib
 	modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
 }
+```
+
+#### **build.gradle** under dependencies
+```gradle
+modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
 ```
 
 - - - -
