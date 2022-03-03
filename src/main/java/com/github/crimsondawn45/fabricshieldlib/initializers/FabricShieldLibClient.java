@@ -7,6 +7,7 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldIte
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
 
+import de.guntram.mcmod.crowdintranslate.CrowdinTranslate;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
@@ -43,6 +44,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
+
+        /**
+         * Try to grab crowdlin translations.
+         */
+        CrowdinTranslate.downloadTranslations(FabricShieldLib.MOD_ID);
 
         /**
          * Register tooltip callback this is the same as mixing into the end of:
