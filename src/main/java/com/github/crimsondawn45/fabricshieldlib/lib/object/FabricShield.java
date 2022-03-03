@@ -45,5 +45,5 @@ public interface FabricShield {
      * @param tooltip current tooltip
      * @param context context
      */
-    void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context);
+    default void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context) {};
 }

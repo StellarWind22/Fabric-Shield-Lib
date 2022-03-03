@@ -58,7 +58,7 @@ public class PlayerEntityMixin {
      * @param sprinting if player is sprinting
      * @param callbackInfo callback information
      */
-    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItemStack = player.getActiveItem();

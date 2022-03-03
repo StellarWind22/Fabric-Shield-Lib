@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
     
-    @Inject(at = @At(value = "HEAD"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(at = @At(value = "HEAD"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
@@ -28,6 +28,7 @@ public class LivingEntityMixin {
 		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 				
+				//Handle shield blocking
                 ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
     
 				//Handle Shield
