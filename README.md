@@ -21,19 +21,21 @@ fabric_shield_lib_version=1.5.1-1.18
 modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
 ```
 
-#### **build.gradle** under repositories near the end of the file.
+#### **build.gradle** under repositories just above where Minecraft & Fabric API are being added.
 ```gradle
 maven { url 'https://jitpack.io' }
 ```
 
 if this mod is your only dependency it should look something like this.
 ```gradle
-repositories {
-        allprojects {
-            repositories {
-                maven { url 'https://jitpack.io' }
-        }
-    }
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+        
+        //Fabric Shield Lib
+	modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_shield_lib_version}"
 }
 ```
 
@@ -42,4 +44,4 @@ repositories {
 ## Documentation?
 Tutorial available on on [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
 
-The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod.
+The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod. Although it isn't updated as frequently.
