@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -32,9 +32,9 @@ public class FabricShieldItem extends Item implements FabricShield {
 
     //Repair stuff
     private Item[] repairItems;
-    private Tag<Item> repairTag;
+    private TagKey<Item> repairTag;
     private Ingredient repairIngredients;
-    private Collection<Tag<Item>> repairTags;
+    private Collection<TagKey<Item>> repairTags;
 
     private RepairItemType repairType;
 
@@ -93,7 +93,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItemTag item tag for repairing shield
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag<Item> repairItemTag) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, TagKey<Item> repairItemTag) {
         super(settings); //Make durability match material
 
         //Register dispenser equip behavior
@@ -118,7 +118,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag list of item tags for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag<Item>> repairItemTags) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<TagKey<Item>> repairItemTags) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -172,11 +172,11 @@ public class FabricShieldItem extends Item implements FabricShield {
                     }
                 }
                 return false;
-            case TAG:           return this.repairTag.values().contains(ingredient.getItem());
+            case TAG:           return ingredient.isIn(this.repairTag);
             case INGREDIENT:    return this.repairIngredients.test(ingredient);
             case TAG_ARRAY:
-                for(Tag<Item> tag : this.repairTags) {
-                    if(tag.values().contains(ingredient.getItem())) {
+                for(TagKey<Item> tag : this.repairTags) {
+                    if(ingredient.isIn(tag)) {
                         return true;
                     }
                 }
