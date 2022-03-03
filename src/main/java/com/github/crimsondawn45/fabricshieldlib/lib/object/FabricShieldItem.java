@@ -1,11 +1,13 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import java.util.Collection;
+import java.util.List;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
@@ -13,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
-import net.minecraft.tag.Tag.Identified;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
@@ -32,7 +34,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     private Item[] repairItems;
     private Tag<Item> repairTag;
     private Ingredient repairIngredients;
-    private Collection<Identified<Item>> repairTags;
+    private Collection<Tag<Item>> repairTags;
 
     private RepairItemType repairType;
 
@@ -91,7 +93,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItemTag item tag for repairing shield
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag<Item> repairItemTag) {
         super(settings); //Make durability match material
 
         //Register dispenser equip behavior
@@ -116,7 +118,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag list of item tags for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag.Identified<Item>> repairItemTags) {
+    public FabricShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag<Item>> repairItemTags) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -134,6 +136,9 @@ public class FabricShieldItem extends Item implements FabricShield {
         this.repairTags = repairItemTags;
 		this.enchantability = enchantability;
     }
+
+    @Override
+    public void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context) {}
 
     @Override
     public int getCooldownTicks() {
@@ -167,11 +172,11 @@ public class FabricShieldItem extends Item implements FabricShield {
                     }
                 }
                 return false;
-            case TAG:           return this.repairTag.contains(ingredient.getItem());
+            case TAG:           return this.repairTag.values().contains(ingredient.getItem());
             case INGREDIENT:    return this.repairIngredients.test(ingredient);
             case TAG_ARRAY:
                 for(Tag<Item> tag : this.repairTags) {
-                    if(tag.contains(ingredient.getItem())) {
+                    if(tag.values().contains(ingredient.getItem())) {
                         return true;
                     }
                 }

@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.tag.Tag;
-import net.minecraft.tag.Tag.Identified;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
@@ -39,7 +38,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     private Item[] repairItems;
     private Tag<Item> repairTag;
     private Ingredient repairIngredients;
-    private Collection<Identified<Item>> repairTags;
+    private Collection<Tag<Item>> repairTags;
 
     private RepairItemType repairType;
 
@@ -98,7 +97,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag item tag for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag.Identified<Item> repairItemTag) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Tag<Item> repairItemTag) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -123,7 +122,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag list of item tags for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag.Identified<Item>> repairItemTags) {
+    public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<Tag<Item>> repairItemTags) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -144,8 +143,8 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
     public String getTranslationKey(ItemStack stack) {
         if (stack.getSubNbt("BlockEntityTag") != null) {
-            String var10000 = this.getTranslationKey();
-            return var10000 + "." + getColor(stack).getName();
+            String key = this.getTranslationKey();
+            return key + "." + getColor(stack).getName();
         } else {
             return super.getTranslationKey(stack);
         }
@@ -158,6 +157,9 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         BannerItem.appendBannerTooltip(stack, tooltip);
     }
+
+    @Override
+    public void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context) {}
 
     @Override
     public int getCooldownTicks() {
@@ -191,11 +193,11 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
                     }
                 }
                 return false;
-            case TAG:           return this.repairTag.contains(ingredient.getItem());
+            case TAG:           return this.repairTag.values().contains(ingredient.getItem());
             case INGREDIENT:    return this.repairIngredients.test(ingredient);
             case TAG_ARRAY:
                 for(Tag<Item> tag : this.repairTags) {
-                    if(tag.contains(ingredient.getItem())) {
+                    if(tag.values().contains(ingredient.getItem())) {
                         return true;
                     }
                 }

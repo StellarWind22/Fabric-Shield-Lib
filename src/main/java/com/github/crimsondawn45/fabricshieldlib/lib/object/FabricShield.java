@@ -1,5 +1,11 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import java.util.List;
+
+import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
+
 /**
  * used to identify which items should be treated as shields.
  */
@@ -19,9 +25,25 @@ public interface FabricShield {
 
     /**
      * If library will allow this shield to have shield enchantments on it.
-     * @return
      */
     default boolean acceptsShieldEnchantments() {
         return true;
     }
+
+    /**
+     * Whether or not the shield will have a tooltip showing cooldown
+     * when hit by an axe.
+     */
+    default boolean displayTooltip() {
+        return true;
+    }
+
+    /**
+     * Adds a tooltip immediately after the name & before the tooltip saying shield stats.
+     * @param stack shield's item stack
+     * @param world world
+     * @param tooltip current tooltip
+     * @param context context
+     */
+    void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context);
 }

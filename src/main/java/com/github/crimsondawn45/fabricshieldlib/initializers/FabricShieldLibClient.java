@@ -55,9 +55,17 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 if(stack.getItem() instanceof FabricShield) {
 
                     FabricShield shield = (FabricShield) stack.getItem();
-                    getCooldownTooltip(stack, context,tooltip, shield.getCooldownTicks());
+
+                    //Add any custom tooltips
+                    shield.appendShieldTooltip(stack, tooltip, context);
+
+                    //Add cooldown tooltip
+                    if(shield.displayTooltip()) {
+                        getCooldownTooltip(stack, context,tooltip, shield.getCooldownTicks());
+                    }
                 }
-    
+
+                //Display tooltip for vanilla shield
                 if(stack.getItem().equals(Items.SHIELD)) {
                     getCooldownTooltip(stack, context,tooltip, 100);
                 }
