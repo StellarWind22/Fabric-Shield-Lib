@@ -25,7 +25,7 @@ import net.minecraft.util.math.MathHelper;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
-    @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
     private void damageShield(float amount, CallbackInfo callBackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItem = player.getActiveItem();
@@ -58,7 +58,7 @@ public class PlayerEntityMixin {
      * @param sprinting if player is sprinting
      * @param callbackInfo callback information
      */
-    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
     private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItemStack = player.getActiveItem();

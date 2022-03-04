@@ -7,7 +7,6 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldIte
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
 
-import de.guntram.mcmod.crowdintranslate.CrowdinTranslate;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
@@ -44,11 +43,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
-
-        /**
-         * Try to grab crowdlin translations.
-         */
-        CrowdinTranslate.downloadTranslations(FabricShieldLib.MOD_ID);
 
         /**
          * Register tooltip callback this is the same as mixing into the end of:
@@ -121,11 +115,19 @@ public class FabricShieldLibClient implements ClientModInitializer {
     public static List<Text> getCooldownTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, int cooldownTicks) {
 
         List<Text> advanced = new ArrayList<Text>();
+
+        /**
+         * These all loop in reverse to grab the first instance of a match
+         * at the end of the tooltip
+         */
         if(context.isAdvanced()) {
 
+            /**
+             * Grab durability
+             */
             if(stack.isDamaged()) {
 
-                for(int i = 0; i < tooltip.size(); i++) {
+                for(int i = tooltip.size() - 1; i > 0; i--) {
 
                     Text text = tooltip.get(i);
                     String strText = text.getString();
@@ -133,24 +135,31 @@ public class FabricShieldLibClient implements ClientModInitializer {
                     if(strText.startsWith("Durability")) {
                         advanced.add(text);
                         tooltip.remove(i);
+                        break;
                     }
                 }
             }
 
-            for(int i = 0; i < tooltip.size(); i++) {
+            /**
+             * Grab item id
+             */
+            for(int i = tooltip.size() - 1; i > 0; i--) {
 
                 Text text = tooltip.get(i);
-                String strText = text.getString();
+                String strText = text.getString().trim();
 
                 if(Identifier.isValid(strText)) {
                     advanced.add(text);
                     tooltip.remove(i);
+                    break;
                 }
             }
             
-            
+            /**
+             * Grab nbt string
+             */
             if(stack.hasNbt()) {
-                for(int i = 0; i < tooltip.size(); i++) {
+                for(int i = tooltip.size() - 1; i > 0; i--) {
 
                     Text text = tooltip.get(i);
                     String strText = text.getString();
@@ -158,6 +167,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                     if(strText.startsWith("NBT: ")) {
                         advanced.add(text);
                         tooltip.remove(i);
+                        break;
                     }
                 }
             }
