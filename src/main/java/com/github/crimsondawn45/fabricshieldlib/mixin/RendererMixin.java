@@ -30,7 +30,7 @@ import net.minecraft.util.Identifier;
 public class RendererMixin {
 
     /**
-     * This whole mixin is dev code and will be made by the player
+     * This whole mixin is dev code and will be made by the player.
      */
     private static ShieldEntityModel modelFabricShield;
     @SuppressWarnings( "deprecation" )

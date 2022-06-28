@@ -31,12 +31,12 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 /**
- * Main class for Fabric Shield Lib
+ * Main class for Fabric Shield Lib.
  */
 public class FabricShieldLib implements ModInitializer {
 
     /**
-     * Fabric Shield Lib's modid.
+     * Fabric Shield Lib's mod id.
      */
     public static final String MOD_ID = "fabricshieldlib";
 
@@ -44,8 +44,9 @@ public class FabricShieldLib implements ModInitializer {
      * Fabric Shield Lib's logger.
      */
     public static final Logger logger = LoggerFactory.getLogger(MOD_ID);
+
     /**
-     * Fabric Shield Lib's config file
+     * Fabric Shield Lib's config file.
      */
     public static FabricShieldLibConfig config = new FabricShieldLibConfig();
 
@@ -55,12 +56,12 @@ public class FabricShieldLib implements ModInitializer {
     public static FabricBannerShieldItem fabric_banner_shield;
 
     /**
-     * Test shield item that does not support banners
+     * Test shield item that does not support banners.
      */
     public static FabricShieldItem fabric_shield;
 
     /**
-     * Recipe type and serializer for banner decoration recipe
+     * Recipe type and serializer for banner decoration recipe.
      */
     public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
@@ -82,15 +83,11 @@ public class FabricShieldLib implements ModInitializer {
     @Override
     public void onInitialize() {
 
-        /**
-         * Register Config
-         */
+        //Register Config
         AutoConfig.register(FabricShieldLibConfig.class, GsonConfigSerializer::new);
         config = AutoConfig.getConfigHolder(FabricShieldLibConfig.class).getConfig();   //Read config data
 
-        /*
-         * Dev environment code.
-         */
+        //Dev environment code.
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code
@@ -101,37 +98,31 @@ public class FabricShieldLib implements ModInitializer {
             fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));			//Register Development Stuff
             reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(Rarity.COMMON, false, false));
 
-            /*
-             * Test event: makes any shield with new enchantment reflect 1/3rd of damage back to attacker
-             */
+            //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
             ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
 
                 if(reflect_enchantment.hasEnchantment(shield)) {
                     Entity attacker = source.getAttacker();
 
                     assert attacker != null;
-                    if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyways
-                        attacker.damage(DamageSource.player((PlayerEntity) defender), (int)Math.round(amount * 0.33F));
+                    if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
+                        attacker.damage(DamageSource.player((PlayerEntity) defender), Math.round(amount * 0.33F));
                     } else {
-                        attacker.damage(DamageSource.mob(defender), (int)Math.round(amount * 0.33F));
+                        attacker.damage(DamageSource.mob(defender), Math.round(amount * 0.33F));
                     }
                 }
 
                 return ActionResult.PASS;
             });
 
-            /*
-             * Test Event: if your shield gets disabled give player speed
-             */
+            //Test Event: if your shield gets disabled, give player speed
             ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
                 defender.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 1, true, false));
                 return ActionResult.PASS;
             });
         }
 
-        /**
-         * Annouce done starting up
-         */
+        //Announce having finished starting up
         logger.info("Fabric Shield Lib Initialized!");
     }
 }

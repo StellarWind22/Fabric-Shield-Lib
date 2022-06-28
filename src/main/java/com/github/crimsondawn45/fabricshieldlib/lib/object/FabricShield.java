@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
 /**
- * used to identify which items should be treated as shields.
+ * Used to identify which items should be treated as shields.
  */
 public interface FabricShield {
 
@@ -18,21 +18,20 @@ public interface FabricShield {
     int getCooldownTicks();
 
     /**
-     * If shield supports banners. Used for enabling banner crafting
+     * If shield supports banners. Used for enabling banner crafting.
      * @return Whether a shield supports banners.
      */
     boolean supportsBanner();
 
     /**
-     * If library will allow this shield to have shield enchantments on it.
+     * If the library allows this shield to have shield enchantments on it.
      */
     default boolean acceptsShieldEnchantments() {
         return true;
     }
 
     /**
-     * Whether or not the shield will have a tooltip showing cooldown
-     * when hit by an axe.
+     * Whether the shield will have a tooltip showing cooldown when hit by an axe.
      */
     default boolean displayTooltip() {
         return true;
@@ -41,7 +40,6 @@ public interface FabricShield {
     /**
      * Adds a tooltip immediately after the name & before the tooltip saying shield stats.
      * @param stack shield's item stack
-     * @param world world
      * @param tooltip current tooltip
      * @param context context
      */

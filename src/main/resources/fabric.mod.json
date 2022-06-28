@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fabricshieldlib",
-  "version": "${version}",
+  "version": "1.6.0-1.19",
 
   "name": "Fabric Shield Lib",
   "description": "Library that makes it easy to add shields with fabric without conflictions!",
@@ -49,12 +49,12 @@
   ],
   "accessWidener": "fabricshieldlib.accesswidener",
   "depends": {
-    "fabricloader": ">=0.12.12",
+    "fabricloader": ">=0.14.8",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "java": ">=17",
     "mm":">=2.3",
-    "cloth-config":">=6.1.48"
+    "cloth-config":">=7.0.72"
   },
   "custom": {
     "modmenu": {
