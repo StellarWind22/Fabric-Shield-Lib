@@ -9,7 +9,7 @@ import com.mojang.datafixers.util.Pair;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
@@ -26,25 +26,24 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.RegistryEntry;
 
 @SuppressWarnings("deprecation")
 public class FabricShieldLibClient implements ClientModInitializer {
 
     /**
-     * Will be made by user (dev code)
+     * Will be made by user (dev code).
      */
     public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(new Identifier(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
     
     @Override
     public void onInitializeClient() {
 
-        /**
+        /*
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
          */
@@ -77,9 +76,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
             //Warn about dev code
             FabricShieldLib.logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Client side banner code ran!");
 
-            /*
-             * Registers sprite directories and model layer, will be done by player, dev code
-             */
+            //Registers sprite directories and model layer, will be done by player, dev code
             EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
             ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
                 registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
@@ -89,9 +86,9 @@ public class FabricShieldLibClient implements ClientModInitializer {
     }
 
     /**
-     * Used to simplify the mixin on the user end to make their shield render banner
+     * Used to simplify the mixin on the user end to make their shield render banner.
      *
-     * Uses params from the mixin method, and the model and sprite identifiers made by the player
+     * Uses params from the mixin method, and the model and sprite identifiers made by the player.
      */
     public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
         boolean bl = stack.getSubNbt("BlockEntityTag") != null;
@@ -101,7 +98,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
         VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
         model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         if (bl) {
-            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListNbt(stack));
+            List<Pair<RegistryEntry<BannerPattern>, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListNbt(stack));
             BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
         } else {
             model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
@@ -110,21 +107,19 @@ public class FabricShieldLibClient implements ClientModInitializer {
     }
 
     /**
-     * Shield tooltip thing
+     * Shield tooltip thing.
      */
     public static List<Text> getCooldownTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, int cooldownTicks) {
 
         List<Text> advanced = new ArrayList<Text>();
 
-        /**
+        /*
          * These all loop in reverse to grab the first instance of a match
          * at the end of the tooltip
          */
         if(context.isAdvanced()) {
 
-            /**
-             * Grab durability
-             */
+            //Grab durability
             if(stack.isDamaged()) {
 
                 for(int i = tooltip.size() - 1; i > 0; i--) {
@@ -140,9 +135,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 }
             }
 
-            /**
-             * Grab item id
-             */
+            //Grab item id
             for(int i = tooltip.size() - 1; i > 0; i--) {
 
                 Text text = tooltip.get(i);
@@ -155,9 +148,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 }
             }
             
-            /**
-             * Grab nbt string
-             */
+            //Grab nbt string
             if(stack.hasNbt()) {
                 for(int i = tooltip.size() - 1; i > 0; i--) {
 
@@ -173,13 +164,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
             }
         }
 
-        /**
-         * Add disabled cooldown tooltip
-         */
-        tooltip.add(new LiteralText(""));
-        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip.start").append(new LiteralText(":")).formatted(Formatting.GRAY));
+        //Add disabled cooldown tooltip
+        tooltip.add(Text.literal(""));
+        tooltip.add(Text.translatable("fabricshieldlib.shield_tooltip.start").append(Text.literal(":")).formatted(Formatting.GRAY));
 
-        /**
+        /*
          * All of this is so if there is a .0 instead of there being a need for a 
          * decimal remove the .0
          */
@@ -195,11 +184,13 @@ public class FabricShieldLibClient implements ClientModInitializer {
             }
         }
 
-        tooltip.add(new LiteralText(" " + cooldown).formatted(Formatting.DARK_GREEN).append(new TranslatableText("fabricshieldlib.shield_tooltip.unit")).append(new LiteralText(" ")).append(new TranslatableText("fabricshieldlib.shield_tooltip.end")));
+        tooltip.add(Text.literal(" " + cooldown)
+                        .formatted(Formatting.DARK_GREEN)
+                        .append(Text.translatable("fabricshieldlib.shield_tooltip.unit"))
+                        .append(Text.literal(" "))
+                        .append(Text.translatable("fabricshieldlib.shield_tooltip.end")));
 
-        /**
-         * Append advanced info
-         */
+        //Append advanced info
         if(context.isAdvanced()) {
             tooltip.addAll(advanced);
         }

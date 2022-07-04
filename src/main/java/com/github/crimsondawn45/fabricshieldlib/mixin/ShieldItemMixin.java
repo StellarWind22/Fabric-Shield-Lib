@@ -15,7 +15,7 @@ import net.minecraft.item.ShieldItem;
 public class ShieldItemMixin extends Item {
 
 	/**
-	 * @param settings item settings
+	 * @param settings item settings.
 	 */
     public ShieldItemMixin(Settings settings) {
 		super(settings);

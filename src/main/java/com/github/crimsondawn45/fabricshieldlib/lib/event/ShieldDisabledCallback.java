@@ -8,7 +8,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 /**
- * Event for doing things when the shield is disabled
+ * Event for doing things when the shield is disabled.
  */
 public interface ShieldDisabledCallback {
 

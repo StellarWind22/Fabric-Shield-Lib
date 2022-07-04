@@ -27,7 +27,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
 /**
- * Pre-made class for quickly making custom shields which support banners
+ * Pre-made class for quickly making custom shields which support banners.
  */
 public class FabricBannerShieldItem extends Item implements FabricShield {
 
@@ -46,7 +46,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItem item(s) for repairing shield.
+     * @param repairItems item(s) for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Item... repairItems) {
         super(settings);
@@ -120,7 +120,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param settings item settings.
      * @param cooldownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItemTag list of item tags for repairing shield.
+     * @param repairItemTags list of item tags for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int cooldownTicks, int enchantability, Collection<TagKey<Item>> repairItemTags) {
         super(settings);
