@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
