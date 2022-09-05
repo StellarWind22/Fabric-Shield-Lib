@@ -1,7 +1,7 @@
 buildscript {
     dependencies {
-        classpath "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
-    }
+		classpath "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
+	}
     repositories {
         maven {
             name = 'CrowdinTranslate source'
