@@ -7,8 +7,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.Nullable;
 
-import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
@@ -56,7 +56,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -80,7 +80,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -105,7 +105,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
@@ -130,7 +130,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-			FabricModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+			ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
 		         return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
 		    });
 		}
