@@ -3,6 +3,8 @@ package com.github.crimsondawn45.fabricshieldlib.lib.object;
 import java.util.Collection;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry;
