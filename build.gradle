@@ -15,11 +15,6 @@ plugins {
 	id 'maven-publish'
 }
 
-loom {
-	accessWidenerPath = file("src/main/resources/fabricshieldlib.accesswidener")
-}
-
-
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
@@ -56,10 +51,14 @@ dependencies {
 	}
 
 	//Fabric ASM
-	modImplementation("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}") {
+	modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
-	include("com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}")
+	include "com.github.Chocohead:Fabric-ASM:v2.3"
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/fabricshieldlib.accesswidener")
 }
 
 processResources {
