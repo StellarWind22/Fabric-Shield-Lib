@@ -56,13 +56,5 @@
     "java": ">=17",
     "mm":">=2.3",
     "cloth-config":">=7.0.72"
-  },
-  "custom": {
-    "modmenu": {
-      "badges": [ "library" ],
-      "parent": {
-        "id": "mm"
-      }
-    }
   }
 }
