@@ -1,6 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.enchantment.FabricShieldLibTarget;
+import com.github.crimsondawn45.fabricshieldlib.lib.enchantment.FabricShieldTarget;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,7 +19,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param weight rarity of enchantment.
      */
     public FabricShieldEnchantment(Rarity weight) {
-        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = false;
         this.isCurse = false;
     }
@@ -29,7 +29,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
-        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = false;
     }
@@ -39,7 +39,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
-        super(weight, FabricShieldLibTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = isCurse;
     }
