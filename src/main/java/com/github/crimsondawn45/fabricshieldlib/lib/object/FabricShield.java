@@ -24,13 +24,6 @@ public interface FabricShield {
     boolean supportsBanner();
 
     /**
-     * If the library allows this shield to have shield enchantments on it.
-     */
-    default boolean acceptsShieldEnchantments() {
-        return true;
-    }
-
-    /**
      * Whether the shield will have a tooltip showing cooldown when hit by an axe.
      */
     default boolean displayTooltip() {

@@ -1,9 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.enchantment.FabricShieldTarget;
+import com.chocohead.mm.api.ClassTinkerers;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 
@@ -19,7 +20,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param weight rarity of enchantment.
      */
     public FabricShieldEnchantment(Rarity weight) {
-        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, ClassTinkerers.getEnum(EnchantmentTarget.class, "FABRIC_SHIELD"), new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = false;
         this.isCurse = false;
     }
@@ -29,7 +30,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
-        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, ClassTinkerers.getEnum(EnchantmentTarget.class, "FABRIC_SHIELD"), new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = false;
     }
@@ -39,7 +40,7 @@ public class FabricShieldEnchantment extends Enchantment {
      * @param isTreasure if enchantment is a treasure enchantment.
      */
     public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
-        super(weight, FabricShieldTarget.SHIELD_TARGET, new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
+        super(weight, ClassTinkerers.getEnum(EnchantmentTarget.class, "FABRIC_SHIELD"), new EquipmentSlot[] { EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND });
         this.isTreasure = isTreasure;
         this.isCurse = isCurse;
     }

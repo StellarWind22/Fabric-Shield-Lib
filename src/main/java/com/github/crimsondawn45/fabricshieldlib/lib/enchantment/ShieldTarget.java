@@ -7,19 +7,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
 public class ShieldTarget extends EnchantmentTargetMixin {
-
+    
     @Override
     public boolean isAcceptableItem(Item item) {
-
-        if(item.equals(Items.SHIELD)) {
-            return true;
-        }
-
-        if(item instanceof FabricShield) {
-            FabricShield shield = (FabricShield) item;
-            return shield.acceptsShieldEnchantments();
-        }
-
-        return false;
+        
+        return item.equals(Items.SHIELD) || item instanceof FabricShield;
     }
 }
