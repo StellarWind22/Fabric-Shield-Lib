@@ -23,11 +23,7 @@ public class ShieldItemMixin extends Item {
 
 	@Override
 	public boolean isEnchantable(ItemStack item) {
-		if(FabricShieldLib.config.allow_vanilla_shield_enchanting) {
-			return !item.hasEnchantments();
-		} else {
-			return false;
-		}
+		return !item.hasEnchantments();
 	}
 	
 	@Override
