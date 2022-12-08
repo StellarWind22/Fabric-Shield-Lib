@@ -30,7 +30,7 @@ public class LivingEntityMixin {
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 
 				//Handle shield blocking
-//                ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
+                  ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
     
 				//Handle Shield
 				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
