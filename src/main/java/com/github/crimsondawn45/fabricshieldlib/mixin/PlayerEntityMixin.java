@@ -1,8 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -58,7 +60,7 @@ public class PlayerEntityMixin {
      * @param sprinting if player is sprinting
      * @param callbackInfo callback information
      */
-    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
+    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItemStack = player.getActiveItem();
@@ -78,6 +80,7 @@ public class PlayerEntityMixin {
                 player.getItemCooldownManager().set((Item) shield, shield.getCooldownTicks());
                 player.clearActiveItem();
                 player.world.sendEntityStatus(player, (byte) 30);
+                callbackInfo.cancel();
             }
         }
     }

@@ -29,7 +29,7 @@ public interface ShieldDisabledCallback {
     });
     
     /**
-     * Note: event can't be cancelled because the LivingEntity.damage method is very monolithic, and cancelling it results in broken behavior.
+     * Note: event can't be cancelled if mixing into LivingEntity.damage method because it is very monolithic, and cancelling it results in broken behavior.
      * 
      * @param defender entity being attacked.
      * @param hand which hand the shield is in.
