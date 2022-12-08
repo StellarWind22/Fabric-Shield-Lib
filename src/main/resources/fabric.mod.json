@@ -38,6 +38,9 @@
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
 
     ],
+    "mm:early_risers":[
+      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibEarlyRiser"
+    ],
     "modmenu":[
       "com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibModMenuIntegration"
     ]
@@ -45,11 +48,13 @@
   "mixins": [
     "fabricshieldlib.mixins.json"
   ],
+  "accessWidener": "fabricshieldlib.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric": "*",
     "minecraft": "1.19.x",
     "java": ">=17",
+    "mm":">=2.3",
     "cloth-config":">=7.0.72"
   }
 }
