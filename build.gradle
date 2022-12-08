@@ -1,17 +1,17 @@
 buildscript {
-    dependencies {
+	dependencies {
 		classpath "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
 	}
-    repositories {
-        maven {
-            name = 'CrowdinTranslate source'
-            url = "https://minecraft.guntram.de/maven/"
-        }
-    }
+	repositories {
+		maven {
+			name = 'CrowdinTranslate source'
+			url = "https://minecraft.guntram.de/maven/"
+		}
+	}
 }
 
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -24,13 +24,13 @@ group = project.maven_group
 
 apply plugin: 'de.guntram.mcmod.crowdin-translate'
 crowdintranslate.crowdinProjectName = 'fabric-shield-lib'
-crowdintranslate.minecraftProjectName = "fabricshieldib"
+crowdintranslate.minecraftProjectName = 'fabricshieldib'
 crowdintranslate.verbose = false
 
 repositories {
 	maven { url = "https://jitpack.io" }
 	maven { url = "https://maven.shedaniel.me/" }
-	maven { url = "https://maven.terraformersmc.com/" }
+	maven { url "https://maven.terraformersmc.com/releases/"}
 }
 
 dependencies {

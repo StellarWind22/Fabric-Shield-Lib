@@ -20,21 +20,22 @@ import net.minecraft.item.ItemStack;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
     
-    @Inject(at = @At(value = "HEAD"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
+    @Inject(at = @At(value = "TAIL"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
 	private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
 		LivingEntity entity = (LivingEntity)(Object)this;
 		ItemStack activeItem = entity.getActiveItem();
 		
-		if(!(entity.isInvulnerableTo(source) || entity.world.isClient || entity.isDead() || (source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)))) {
+		if(!entity.isInvulnerableTo(source) || !entity.world.isClient || !entity.isDead() || !(source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))) {
+			float g = 0.0F;
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
-				
+
 				//Handle shield blocking
-                ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
+//                ShieldBlockCallback.EVENT.invoker().block(entity, source, amount, entity.getActiveHand(), activeItem);
     
 				//Handle Shield
 				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
+				g = amount;
 				amount = 0.0F;
-
 				if (!source.isProjectile()) {
 					Entity sourceEntity = source.getSource();
 					
