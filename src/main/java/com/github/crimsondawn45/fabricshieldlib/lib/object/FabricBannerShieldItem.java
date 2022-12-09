@@ -206,12 +206,10 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
         }
     }
 
-    /*
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return !stack.hasEnchantments();
     }
-    */
 
     @Override
     public int getEnchantability() {

@@ -1,12 +1,12 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +26,6 @@ public class LivingEntityMixin {
 		ItemStack activeItem = entity.getActiveItem();
 		
 		if(!entity.isInvulnerableTo(source) || !entity.world.isClient || !entity.isDead() || !(source.isFire() && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))) {
-			float g = 0.0F;
 			if (amount > 0.0F && ((LivingEntityAccessor)entity).fabricshieldlib$invokeBlockedByShield(source)) {
 
 				//Handle shield blocking
@@ -34,7 +33,6 @@ public class LivingEntityMixin {
     
 				//Handle Shield
 				((LivingEntityAccessor)entity).fabricshieldlib$invokeDamageShield(amount);
-				g = amount;
 				amount = 0.0F;
 				if (!source.isProjectile()) {
 					Entity sourceEntity = source.getSource();

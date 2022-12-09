@@ -1,10 +1,8 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
