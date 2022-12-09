@@ -5,8 +5,6 @@ import java.util.List;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipContext;
@@ -154,7 +152,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
         return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
     }
 
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         BannerItem.appendBannerTooltip(stack, tooltip);
     }
 
