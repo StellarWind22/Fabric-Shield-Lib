@@ -55,6 +55,8 @@ dependencies {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
 	include "com.github.Chocohead:Fabric-ASM:v2.3"
+
+	compileOnly("com.google.code.findbugs:jsr305:3.0.2") // nullability annotations
 }
 
 loom {

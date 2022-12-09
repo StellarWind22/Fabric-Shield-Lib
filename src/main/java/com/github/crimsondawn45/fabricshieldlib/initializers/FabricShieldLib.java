@@ -104,7 +104,10 @@ public class FabricShieldLib implements ModInitializer {
                 if(reflect_enchantment.hasEnchantment(shield)) {
                     Entity attacker = source.getAttacker();
 
-                    assert attacker != null;
+                    if(attacker.equals(null)) {
+                        return ActionResult.CONSUME;
+                    }
+
                     if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
                         attacker.damage(DamageSource.player((PlayerEntity) defender), Math.round(amount * 0.33F));
                     } else {
