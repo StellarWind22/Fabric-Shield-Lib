@@ -1,9 +1,8 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
+import org.spongepowered.asm.mixin.Mixin;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
-import org.spongepowered.asm.mixin.Mixin;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

@@ -1,12 +1,11 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
