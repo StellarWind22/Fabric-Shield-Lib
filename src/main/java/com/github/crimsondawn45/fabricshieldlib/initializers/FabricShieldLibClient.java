@@ -3,6 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
@@ -49,7 +50,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
          */
         ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
 
-            if(FabricShieldLib.config.enable_tooltips) {
+            if(FabricShieldLibConfig.enable_tooltips) {
                 
                 if(stack.getItem() instanceof FabricShield) {
 
