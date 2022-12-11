@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "fabricshieldlib:entity/fabric_banner_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "fabricshieldlib:entity/fabric_banner_shield_base_nopattern"
+    }
+  ]
+}

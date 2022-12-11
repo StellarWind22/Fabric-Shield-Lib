@@ -1,9 +1,11 @@
 {   
-    "text.autoconfig.fabricshieldlib.title": "Fabric Shield Lib Config",
-    "text.autoconfig.fabricshieldlib.option.enable_tooltips":"Enable shield tooltips",
-    "text.autoconfig.fabricshieldlib.option.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
-    "text.autoconfig.fabricshieldlib.option.enchantability_convention": "Convention: 15 = Wood || 5 = Stone || 14 = Iron || 10 = Diamond || 22 = Gold",
-    "text.autoconfig.fabricshieldlib.option.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
+    "fabricshieldlib.midnightconfig.title": "Fabric Shield Lib Config",
+    "fabricshieldlib.midnightconfig.enable_tooltips":"Enable shield tooltips",
+    "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Allow vanilla shield enchanting",
+    "fabricshieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Wood || 5 = Stone || 14 = Iron || 10 = Diamond || 22 = Gold",
+    "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Vanilla Shield Enchantability",
+    "fabricshieldlib.midnightconfig.universal_disable":"Universal Shield Disabling",
+    "fabricshieldlib.midnightconfig.universal_disable_description":"If on, whenever any shield gets disabled, every type of shield will be disabled. If off, then disabling a shield will only disable shields of the same type",
     "fabricshieldlib.shield_tooltip.start":"When Hit by Axe",
     "fabricshieldlib.shield_tooltip.unit":"s",
     "fabricshieldlib.shield_tooltip.end":"Cooldown"
