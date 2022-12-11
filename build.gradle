@@ -45,6 +45,8 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
+	include "de.guntram.mcmod:crowdin-translate:${project.crowdlin_version}"
+
 	//Fabric ASM
 	modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
 		exclude (group: "net.fabricmc.fabric-api")
