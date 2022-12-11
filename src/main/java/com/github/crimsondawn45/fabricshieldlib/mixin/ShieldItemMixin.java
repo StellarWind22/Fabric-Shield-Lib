@@ -1,12 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShieldItem;
+import org.spongepowered.asm.mixin.Mixin;
 
 /**
  * Makes vanilla shield enchantable with an enchantability of 14.

@@ -1,10 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import java.util.List;
-
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+
+import java.util.List;
 
 /**
  * Used to identify which items should be treated as shields.
