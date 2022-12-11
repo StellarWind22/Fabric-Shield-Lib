@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -15,8 +16,9 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
+
     public FabricShieldDecoratorRecipe(Identifier identifier) {
-        super(identifier);
+        super(identifier,CraftingRecipeCategory.EQUIPMENT );
     }
 
 
@@ -87,9 +89,9 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     public boolean fits(int width, int height) {
         return width * height >= 2;
     }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
-    }
+//
+//    @Override
+//    public RecipeSerializer<?> getSerializer() {
+//        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
+//    }
 }
