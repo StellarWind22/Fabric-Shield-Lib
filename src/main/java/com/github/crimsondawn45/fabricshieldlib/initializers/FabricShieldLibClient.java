@@ -19,7 +19,6 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
