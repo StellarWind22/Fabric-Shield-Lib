@@ -1,13 +1,18 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
+import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -16,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.List;
 
 /**
  * Mixin that allows custom shields to be damaged, and to be disabled with axes.
@@ -73,10 +80,20 @@ public class PlayerEntityMixin {
             }
 
             if (player.getRandom().nextFloat() < f) {
-                player.getItemCooldownManager().set((Item) shield, shield.getCooldownTicks());
-                player.clearActiveItem();
-                player.world.sendEntityStatus(player, (byte) 30);
-                callbackInfo.cancel();
+                if (!FabricShieldLibConfig.universal_disable){
+                    player.getItemCooldownManager().set((Item) shield, shield.getCooldownTicks());
+                    player.clearActiveItem();
+                    player.world.sendEntityStatus(player, (byte) 30);
+                    callbackInfo.cancel();
+                } else if (FabricShieldLibConfig.universal_disable){
+                    List<RegistryEntryList.Named<Item>> listofShields = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS).stream().toList();
+                    for(int amountOfShields = listofShields.size(); amountOfShields > 0; amountOfShields--) {
+                        List theShields = listofShields.stream().toList();
+                        player.getItemCooldownManager().set((Item)theShields.get(amountOfShields-1), shield.getCooldownTicks());
+                        player.clearActiveItem();
+                        player.world.sendEntityStatus(player, (byte) 30);
+                    }
+                }
             }
         }
     }

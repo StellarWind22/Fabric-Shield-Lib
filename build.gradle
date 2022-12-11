@@ -31,6 +31,7 @@ repositories {
 	maven { url = "https://jitpack.io" }
 	maven { url = "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/releases/"}
+	maven {url = "https://api.modrinth.com/maven"}
 }
 
 dependencies {
@@ -49,6 +50,9 @@ dependencies {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
 	include "com.github.Chocohead:Fabric-ASM:v2.3"
+
+	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
+	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
 }
 
 loom {

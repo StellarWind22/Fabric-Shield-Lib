@@ -1,15 +1,13 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-//import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
-//import com.github.crimsondawn45.fabricshieldlib.lib.config.MidnightConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
-import com.github.crimsondawn45.fabricshieldlib.lib.config.MidnightConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -65,7 +63,7 @@ public class FabricShieldLib implements ModInitializer {
      * Recipe type and serializer for banner decoration recipe.
      */
 
-//    public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
+    public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
 
     static {
@@ -74,13 +72,13 @@ public class FabricShieldLib implements ModInitializer {
             @Override
             public String toString() {return "test_recipe";}
         });
-//        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
+        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
         }
 
 
     @Override
     public void onInitialize() {
-        
+
         //Register Config
         MidnightConfig.init(MOD_ID, FabricShieldLibConfig.class);
 
@@ -109,7 +107,7 @@ public class FabricShieldLib implements ModInitializer {
                 if(reflect_enchantment.hasEnchantment(shield)) {
                     Entity attacker = source.getAttacker();
 
-                    if(attacker == null) {
+                    if(attacker.equals(null)) {
                         return ActionResult.CONSUME;
                     }
                     if(defender.blockedByShield(source)){

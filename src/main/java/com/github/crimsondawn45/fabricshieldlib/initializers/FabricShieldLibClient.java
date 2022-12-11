@@ -1,6 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 //import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
+
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
@@ -18,6 +19,7 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -49,7 +51,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
         ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
 
             if(FabricShieldLibConfig.enable_tooltips) {
-
+                
                 if(stack.getItem() instanceof FabricShield) {
 
                     FabricShield shield = (FabricShield) stack.getItem();
@@ -77,10 +79,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
             //Registers sprite directories and model layer, will be done by player, dev code
             EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
-//            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-//                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
-//                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
-//            });
         }
     }
 
