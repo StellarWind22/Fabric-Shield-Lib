@@ -97,8 +97,8 @@ public class FabricShieldLib implements ModInitializer {
                     new FabricShieldEnchantment(Enchantment.Rarity.COMMON, false, false));
 
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-                entries.add(fabric_banner_shield);
-                entries.add(fabric_shield);
+                entries.addAfter(Items.SHIELD,fabric_banner_shield);
+                entries.addAfter(fabric_banner_shield,fabric_shield);
             });
 
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
