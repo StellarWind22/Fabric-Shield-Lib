@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.ShieldItem;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -36,9 +37,11 @@ import java.util.Optional;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
-    @Shadow @Final private PlayerInventory inventory;
+    @Shadow
+    @Final
+    private PlayerInventory inventory;
 
-    @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = false)
+    @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void damageShield(float amount, CallbackInfo callBackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItem = player.getActiveItem();
@@ -48,9 +51,7 @@ public class PlayerEntityMixin {
                 int i = 1 + MathHelper.floor(amount);
                 Hand hand = player.getActiveHand();
 
-                activeItem.damage(i, (LivingEntity) player, ((playerEntity) -> {
-                    player.sendToolBreakStatus(hand);
-                }));
+                activeItem.damage(i, (LivingEntity) player, ((playerEntity) -> player.sendToolBreakStatus(hand)));
 
                 if (activeItem.isEmpty()) {
                     if (hand == Hand.MAIN_HAND) {
@@ -68,7 +69,7 @@ public class PlayerEntityMixin {
     }
 
     /**
-     * @param sprinting if player is sprinting
+     * @param sprinting    if player is sprinting
      * @param callbackInfo callback information
      */
     @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
@@ -79,8 +80,7 @@ public class PlayerEntityMixin {
 
         ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), activeItemStack);
 
-        if (activeItem instanceof FabricShield) {
-            FabricShield shield = (FabricShield) activeItem;
+        if (activeItem instanceof FabricShield shield) {
 
             float f = 0.25F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
             if (sprinting) {
@@ -88,53 +88,38 @@ public class PlayerEntityMixin {
             }
 
             if (player.getRandom().nextFloat() < f) {
-                if (!FabricShieldLibConfig.universal_disable){
-                    player.getItemCooldownManager().set((Item) shield, shield.getCooldownTicks());
+                if (!FabricShieldLibConfig.universal_disable) {
+                    player.getItemCooldownManager().set((Item) shield, shield.getCoolDownTicks());
                     player.clearActiveItem();
                     player.world.sendEntityStatus(player, (byte) 30);
                     callbackInfo.cancel();
-                } else if (FabricShieldLibConfig.universal_disable){
-
-
-                    Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
-                    List<Item> list = new ArrayList<>();
-                    if (opt.isPresent()){
-                        list = opt.get().stream().map(entry -> entry.value()).toList();
-                    }
-
-                    for(int amountOfShields = list.size(); amountOfShields > 0; amountOfShields--) {
-
-                        if (list.get(amountOfShields-1) instanceof ShieldItem){
-                            player.getItemCooldownManager().set(Items.SHIELD, 100);
-                        } else if(list.get(amountOfShields-1) instanceof FabricShield){
-                            player.getItemCooldownManager().set(list.get(amountOfShields-1), ((FabricShield)list.get(amountOfShields-1)).getCooldownTicks());
-                        }
-                        player.clearActiveItem();
-                        player.world.sendEntityStatus(player, (byte) 30);
-                    }
+                } else {
+                    getEntryList(player);
                 }
             }
-        } else if (activeItem instanceof ShieldItem){
-            if (FabricShieldLibConfig.universal_disable){
-
-
-                Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
-                List<Item> list = new ArrayList<>();
-                if (opt.isPresent()){
-                    list = opt.get().stream().map(entry -> entry.value()).toList();
-                }
-
-                for(int amountOfShields = list.size(); amountOfShields > 0; amountOfShields--) {
-
-                    if (list.get(amountOfShields-1) instanceof ShieldItem){
-                        player.getItemCooldownManager().set(Items.SHIELD, 100);
-                    } else if(list.get(amountOfShields-1) instanceof FabricShield){
-                        player.getItemCooldownManager().set(list.get(amountOfShields-1), ((FabricShield)list.get(amountOfShields-1)).getCooldownTicks());
-                    }
-                    player.clearActiveItem();
-                    player.world.sendEntityStatus(player, (byte) 30);
-                }
+        } else if (activeItem instanceof ShieldItem) {
+            if (FabricShieldLibConfig.universal_disable) {
+                getEntryList(player);
             }
+        }
+    }
+
+    private void getEntryList(PlayerEntity player) {
+        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
+        List<Item> list = new ArrayList<>();
+        if (opt.isPresent()) {
+            list = opt.get().stream().map(RegistryEntry::value).toList();
+        }
+
+        for (int amountOfShields = list.size(); amountOfShields > 0; amountOfShields--) {
+
+            if (list.get(amountOfShields - 1) instanceof ShieldItem) {
+                player.getItemCooldownManager().set(Items.SHIELD, 100);
+            } else if (list.get(amountOfShields - 1) instanceof FabricShield) {
+                player.getItemCooldownManager().set(list.get(amountOfShields - 1), ((FabricShield) list.get(amountOfShields - 1)).getCoolDownTicks());
+            }
+            player.clearActiveItem();
+            player.world.sendEntityStatus(player, (byte) 30);
         }
     }
 }

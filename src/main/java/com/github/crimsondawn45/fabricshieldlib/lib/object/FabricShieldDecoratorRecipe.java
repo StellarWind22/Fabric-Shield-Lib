@@ -14,18 +14,16 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
-
     public FabricShieldDecoratorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
-        super(identifier,CraftingRecipeCategory.EQUIPMENT );
+        super(identifier, CraftingRecipeCategory.EQUIPMENT);
     }
-
 
     @Override
     public boolean matches(CraftingInventory craftingInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for(int i = 0; i < craftingInventory.size(); ++i) {
+        for (int i = 0; i < craftingInventory.size(); ++i) {
             ItemStack itemStack3 = craftingInventory.getStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
@@ -66,9 +64,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
-                } else if (itemStack3.getItem() instanceof FabricShield) {
-                    FabricShield theShieldItem = ((FabricShield) itemStack3.getItem());
-                    if (theShieldItem.supportsBanner()){
+                } else if (itemStack3.getItem() instanceof FabricShield theShieldItem) {
+                    if (theShieldItem.supportsBanner()) {
                         itemStack2 = itemStack3.copy();
                     }
                 }

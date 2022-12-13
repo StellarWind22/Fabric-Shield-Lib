@@ -3,7 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.lib.config;
 import eu.midnightdust.lib.config.MidnightConfig;
 
 public class FabricShieldLibConfig extends MidnightConfig {
-    
+
     @Entry
     public static boolean enable_tooltips = true;
 
@@ -18,5 +18,4 @@ public class FabricShieldLibConfig extends MidnightConfig {
 
     @Comment
     public static Comment universal_disable_description;
-    
 }
