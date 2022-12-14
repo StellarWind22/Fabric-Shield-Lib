@@ -29,8 +29,8 @@ import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.get
  */
 public class FabricShieldItem extends Item implements FabricShield {
 
-    private final int coolDownTicks;
-    private final int enchantability;
+    private int coolDownTicks;
+    private int enchantability;
 
     //Repair stuff
     private Item[] repairItems;
@@ -183,5 +183,13 @@ public class FabricShieldItem extends Item implements FabricShield {
     @Override
     public boolean supportsBanner() {
         return false;
+    }
+
+    public void setCoolDownTicks(int coolDownTicks) {
+        this.coolDownTicks = coolDownTicks;
+    }
+
+    public void setEnchantability(int enchantability) {
+        this.enchantability = enchantability;
     }
 }
