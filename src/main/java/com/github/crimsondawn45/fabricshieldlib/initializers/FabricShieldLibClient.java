@@ -60,7 +60,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
                     //Add cooldown tooltip
                     if(shield.displayTooltip()) {
-                        getCooldownTooltip(stack, context,tooltip, shield.getCooldownTicks());
+                        getCooldownTooltip(stack, context,tooltip, shield.getCoolDownTicks());
                     }
                 }
 

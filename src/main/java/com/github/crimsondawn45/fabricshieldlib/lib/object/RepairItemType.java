@@ -4,5 +4,5 @@ public enum RepairItemType {
     ARRAY,
     TAG,
     INGREDIENT,
-    TAG_ARRAY;
+    TAG_ARRAY
 }
