@@ -1,17 +1,14 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-import java.util.ArrayList;
-import java.util.List;
+//import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
@@ -22,16 +19,18 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.RegistryEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class FabricShieldLibClient implements ClientModInitializer {
@@ -61,7 +60,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
                     //Add cooldown tooltip
                     if(shield.displayTooltip()) {
-                        getCooldownTooltip(stack, context,tooltip, shield.getCooldownTicks());
+                        getCooldownTooltip(stack, context,tooltip, shield.getCoolDownTicks());
                     }
                 }
 
@@ -79,10 +78,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
             //Registers sprite directories and model layer, will be done by player, dev code
             EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
-            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
-                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
-                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
-            });
         }
     }
 

@@ -1,13 +1,11 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
-
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -16,17 +14,16 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
-    public FabricShieldDecoratorRecipe(Identifier identifier) {
-        super(identifier);
+    public FabricShieldDecoratorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
+        super(identifier, CraftingRecipeCategory.EQUIPMENT);
     }
-
 
     @Override
     public boolean matches(CraftingInventory craftingInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for(int i = 0; i < craftingInventory.size(); ++i) {
+        for (int i = 0; i < craftingInventory.size(); ++i) {
             ItemStack itemStack3 = craftingInventory.getStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
@@ -67,9 +64,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
-                } else if (itemStack3.getItem() instanceof FabricShield) {
-                    FabricShield theShieldItem = ((FabricShield) itemStack3.getItem());
-                    if (theShieldItem.supportsBanner()){
+                } else if (itemStack3.getItem() instanceof FabricShield theShieldItem) {
+                    if (theShieldItem.supportsBanner()) {
                         itemStack2 = itemStack3.copy();
                     }
                 }
@@ -88,9 +84,9 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     public boolean fits(int width, int height) {
         return width * height >= 2;
     }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
-    }
+//
+//    @Override
+//    public RecipeSerializer<?> getSerializer() {
+//        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
+//    }
 }
