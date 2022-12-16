@@ -1,4 +1,4 @@
-package com.github.crimsondawn45.fabricshieldlib.lib.core;
+package com.github.crimsondawn45.fabricshieldlib.lib.enchantment;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import net.minecraft.item.Item;
