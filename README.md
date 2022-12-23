@@ -13,7 +13,7 @@ library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric
 
 #### put this in gradle.properties
 ```properties
-fabric_shield_lib_version=1.6.3-1.19
+fabric_shield_lib_version=1.7-pre2-1.19.3
 ```
 
 #### build.gradle under repositories just above dependencies
