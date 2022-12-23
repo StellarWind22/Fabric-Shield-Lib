@@ -10,7 +10,7 @@ public class FabricShieldLibEarlyRiser implements Runnable {
     public void run() {
         MappingResolver remapper = FabricLoader.getInstance().getMappingResolver();
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
-        ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("FABRIC_SHIELD", "com.github.crimsondawn45.fabricshieldlib.lib.core.ShieldEnchantmentTarget").build();
+        ClassTinkerers.enumBuilder(enchantmentTarget).addEnumSubclass("FABRIC_SHIELD", "com.github.crimsondawn45.fabricshieldlib.lib.enchantment.ShieldEnchantmentTarget").build();
     }
     
 }

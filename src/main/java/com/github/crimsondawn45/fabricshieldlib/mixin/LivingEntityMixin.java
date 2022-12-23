@@ -46,8 +46,8 @@ public class LivingEntityMixin {
         }
     }
 
-    @Inject(at = @At(value = "HEAD"), method = "getPreferredEquipmentSlot")
-    private void getPreferredEquipmentSlot(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> callbackinfo) {
+    @Inject(at = @At(value = "HEAD"), method = "getPreferredEquipmentSlot", cancellable = true)
+    private static void getPreferredEquipmentSlot(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> callbackinfo) {
 
         if(stack.getItem() instanceof FabricShield) {
             callbackinfo.setReturnValue(EquipmentSlot.OFFHAND);
