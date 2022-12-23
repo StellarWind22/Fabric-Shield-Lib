@@ -1,13 +1,19 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
+import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
@@ -19,18 +25,17 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FabricShieldLibClient implements ClientModInitializer {
 
@@ -38,6 +43,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
      * Will be made by user (dev code).
      */
     public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(new Identifier(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
+    public static ShieldEntityModel modelFabricShield;
+    @SuppressWarnings("deprecation")
+    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
+    @SuppressWarnings("deprecation")
+    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
     
     @Override
     public void onInitializeClient() {
@@ -77,6 +87,17 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
             //Registers sprite directories and model layer, will be done by player, dev code
             EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer, ShieldEntityModel::getTexturedModelData);
+
+            //Set model
+            ShieldSetModelCallback.EVENT.register((loader) -> {
+                modelFabricShield = new ShieldEntityModel(loader.getModelPart(FabricShieldLibClient.fabric_banner_shield_model_layer));
+                return ActionResult.PASS;
+            });
+
+            //Register renderer
+            BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
+            });
         }
     }
 

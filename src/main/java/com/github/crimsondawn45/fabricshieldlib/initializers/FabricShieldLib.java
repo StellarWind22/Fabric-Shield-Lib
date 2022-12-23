@@ -10,15 +10,11 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldIte
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-import com.github.crimsondawn45.fabricshieldlib.mixin.RendererMixin;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.render.entity.model.ShieldEntityModel;
-import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
@@ -66,15 +62,6 @@ public class FabricShieldLib implements ModInitializer {
     public static FabricShieldEnchantment reflect_enchantment;
 
     /**
-     * Client side shield stuff(isn't on client side because shield constructor needs it)
-     */
-    public static ShieldEntityModel modelFabricShield = new ShieldEntityModel(RendererMixin.entityModelLoader.getModelPart(FabricShieldLibClient.fabric_banner_shield_model_layer));
-    @SuppressWarnings("deprecation")
-    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
-    @SuppressWarnings("deprecation")
-    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
-
-    /**
      * Recipe type and serializer for banner decoration recipe.
      */
 
@@ -105,7 +92,7 @@ public class FabricShieldLib implements ModInitializer {
 
             //Register Custom Shield
             fabric_banner_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"),
-                    new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+                    new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
             fabric_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_shield"),
                     new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
             reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"),
