@@ -1,7 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffects;
@@ -40,6 +43,14 @@ public class LivingEntityMixin {
                     }
                 }
             }
+        }
+    }
+
+    @Inject(at = @At(value = "HEAD"), method = "getPreferredEquipmentSlot")
+    private void getPreferredEquipmentSlot(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> callbackinfo) {
+
+        if(stack.getItem() instanceof FabricShield) {
+            callbackinfo.setReturnValue(EquipmentSlot.OFFHAND);
         }
     }
 }
