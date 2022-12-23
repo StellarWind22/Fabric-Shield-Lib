@@ -1,5 +1,10 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.getRepairType;
+
+import java.util.Collection;
+import java.util.List;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
@@ -18,11 +23,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-
-import java.util.Collection;
-import java.util.List;
-
-import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.getRepairType;
 
 /**
  * Pre-made class for quickly making custom shields.
@@ -54,9 +54,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-                return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-            });
+            this.RegisterModelPredicate();
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -78,9 +76,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-                return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-            });
+            this.RegisterModelPredicate();
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -103,9 +99,7 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-                return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-            });
+            this.RegisterModelPredicate();
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -128,15 +122,19 @@ public class FabricShieldItem extends Item implements FabricShield {
 
         //Register that item has a blocking model
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-                return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-            });
+            this.RegisterModelPredicate();
         }
 
         this.coolDownTicks = coolDownTicks;
         this.repairType = RepairItemType.TAG_ARRAY;
         this.repairTags = repairItemTags;
         this.enchantability = enchantability;
+    }
+
+    private void RegisterModelPredicate() {
+        ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+            return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+        });
     }
 
     @Override
