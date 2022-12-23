@@ -19,15 +19,11 @@ import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 @Mixin(BuiltinModelItemRenderer.class)
 public class RendererMixin {
 
-    /**
-     * This whole mixin is dev code and will be made by the player.
-     */
-
     @Final
     @Shadow
     public EntityModelLoader entityModelLoader;
 
-    @Inject(method = "reload", at = @At("TAIL"))
+    @Inject(method = "reload", at = @At("INVOKE"))
     private void setModelFabricShield(CallbackInfo ci){
         ShieldSetModelCallback.EVENT.invoker().setModel(this.entityModelLoader);
     }
