@@ -46,6 +46,7 @@ public class LivingEntityMixin {
         }
     }
 
+    //Makes armor stands equip shields correctly
     @Inject(at = @At(value = "HEAD"), method = "getPreferredEquipmentSlot", cancellable = true)
     private static void getPreferredEquipmentSlot(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> callbackinfo) {
 
