@@ -27,7 +27,7 @@ public class RendererMixin {
     @Shadow
     public EntityModelLoader entityModelLoader;
 
-    @Inject(method = "reload", at = @At("HEAD"))
+    @Inject(method = "reload", at = @At("TAIL"))
     private void setModelFabricShield(CallbackInfo ci){
         ShieldSetModelCallback.EVENT.invoker().setModel(this.entityModelLoader);
     }
