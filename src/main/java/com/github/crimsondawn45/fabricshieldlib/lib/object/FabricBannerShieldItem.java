@@ -5,11 +5,16 @@ import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.get
 import java.util.Collection;
 import java.util.List;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient;
+
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.entity.model.ShieldEntityModel;
+import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BannerItem;
@@ -48,15 +53,23 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItems    item(s) for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, Item... repairItems) {
+    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, ShieldEntityModel modelFabricShield, SpriteIdentifier baseTexture, SpriteIdentifier nopatternTexture, Item... repairItems) {
         super(settings);
 
         //Register dispenser equip behavior
         DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 
-        //Register that item has a blocking model
+        /**
+         * Client side code
+         */
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            //Register that item has a blocking model
             this.RegisterModelPredicate();
+
+            //Register rendering
+            BuiltinItemRendererRegistry.INSTANCE.register(this, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+                FabricShieldLibClient.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, baseTexture, nopatternTexture);
+            });
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -70,15 +83,23 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param coolDownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
      * @param material      tool material.
      */
-    public FabricBannerShieldItem(Settings settings, int coolDownTicks, ToolMaterial material) {
+    public FabricBannerShieldItem(Settings settings, int coolDownTicks, ShieldEntityModel modelFabricShield, SpriteIdentifier baseTexture, SpriteIdentifier nopatternTexture, ToolMaterial material) {
         super(settings.maxDamage(material.getDurability())); //Make durability match material
 
         //Register dispenser equip behavior
         DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 
-        //Register that item has a blocking model
+        /**
+         * Client side code
+         */
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            //Register that item has a blocking model
             this.RegisterModelPredicate();
+
+            //Register rendering
+            BuiltinItemRendererRegistry.INSTANCE.register(this, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+                FabricShieldLibClient.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, baseTexture, nopatternTexture);
+            });
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -93,15 +114,23 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTag  item tag for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, TagKey<Item> repairItemTag) {
+    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, ShieldEntityModel modelFabricShield, SpriteIdentifier baseTexture, SpriteIdentifier nopatternTexture, TagKey<Item> repairItemTag) {
         super(settings);
 
         //Register dispenser equip behavior
         DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 
-        //Register that item has a blocking model
+        /**
+         * Client side code
+         */
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            //Register that item has a blocking model
             this.RegisterModelPredicate();
+
+            //Register rendering
+            BuiltinItemRendererRegistry.INSTANCE.register(this, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+                FabricShieldLibClient.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, baseTexture, nopatternTexture);
+            });
         }
 
         this.coolDownTicks = coolDownTicks;
@@ -116,15 +145,23 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTags list of item tags for repairing shield.
      */
-    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, Collection<TagKey<Item>> repairItemTags) {
+    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, ShieldEntityModel modelFabricShield, SpriteIdentifier baseTexture, SpriteIdentifier nopatternTexture, Collection<TagKey<Item>> repairItemTags) {
         super(settings);
 
         //Register dispenser equip behavior
         DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
 
-        //Register that item has a blocking model
+        /**
+         * Client side code
+         */
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            //Register that item has a blocking model
             this.RegisterModelPredicate();
+
+            //Register rendering
+            BuiltinItemRendererRegistry.INSTANCE.register(this, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+                FabricShieldLibClient.renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, baseTexture, nopatternTexture);
+            });
         }
 
         this.coolDownTicks = coolDownTicks;
