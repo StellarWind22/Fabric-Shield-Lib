@@ -1,0 +1,12 @@
+{
+    "replace": false,
+    "values": [
+        {
+        "id": "fabricshieldlib:fabric_shield",
+        "required": false
+        },{
+        "id": "fabricshieldlib:fabric_banner_shield",
+        "required": false
+        }
+    ]
+}
