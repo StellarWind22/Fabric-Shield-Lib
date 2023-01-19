@@ -1,0 +1,12 @@
+{   
+    "fabricshieldlib.midnightconfig.title": "Configuration de Fabric Shield Lib",
+    "fabricshieldlib.midnightconfig.enable_tooltips":"Activer les infobulles du bouclier",
+    "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Autoriser l'enchantement du bouclier vanilla",
+    "fabricshieldlib.midnightconfig.enchantability_convention": "Convention: 15 = Bois || 5 = Pierre || 14 = Fer || 10 = Diamant || 22 = Or",
+    "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Enchantabilité du bouclier vanilla",
+    "fabricshieldlib.midnightconfig.universal_disable":"Désactivation du bouclier universel",
+    "fabricshieldlib.midnightconfig.universal_disable_description":"Si activé, chaque fois qu'un bouclier est désactivé, chaque type de bouclier sera désactivé. Si désactivé, la désactivation d'un bouclier ne désactivera que les boucliers du même type",
+    "fabricshieldlib.shield_tooltip.start":"Lorsqu'il est touché par la hache",
+    "fabricshieldlib.shield_tooltip.unit":"s",
+    "fabricshieldlib.shield_tooltip.end":"Temps de recharge"
+}
