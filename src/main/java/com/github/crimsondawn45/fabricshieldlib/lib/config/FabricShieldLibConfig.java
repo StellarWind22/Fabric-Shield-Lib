@@ -17,5 +17,8 @@ public class FabricShieldLibConfig extends MidnightConfig {
     public static boolean universal_disable = false;
 
     @Comment
-    public static Comment universal_disable_description;
+    public static Comment universal_disable_description_1;
+
+    @Comment
+    public static Comment universal_disable_description_2;
 }
