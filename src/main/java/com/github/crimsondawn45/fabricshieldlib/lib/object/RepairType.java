@@ -3,7 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.lib.object;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.TagKey;
 
 import java.util.Collection;
 

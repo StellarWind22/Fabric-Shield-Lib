@@ -1,5 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +15,6 @@ import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -22,12 +23,9 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
@@ -70,11 +68,11 @@ public class FabricShieldLib implements ModInitializer {
 
     static {
         //Registering Banner Recipe (Lib only)
-        FABRIC_SHIELD_DECORATION = Registry.register(Registries.RECIPE_TYPE, new Identifier(MOD_ID, "fabric_shield_decoration"), new RecipeType<FabricShieldDecoratorRecipe>() {
+        FABRIC_SHIELD_DECORATION = Registry.register(Registry.RECIPE_TYPE, new Identifier(MOD_ID, "fabric_shield_decoration"), new RecipeType<FabricShieldDecoratorRecipe>() {
             @Override
             public String toString() {return "test_recipe";}
         });
-        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, new Identifier(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
+        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
         }
 
 
@@ -91,17 +89,12 @@ public class FabricShieldLib implements ModInitializer {
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
             //Register Custom Shield
-            fabric_banner_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"),
-                    new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
-            fabric_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_shield"),
-                    new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
-            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"),
+            fabric_banner_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"),
+                    new FabricBannerShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            fabric_shield = Registry.register(Registry.ITEM, new Identifier(MOD_ID, "fabric_shield"),
+                    new FabricShieldItem(new Item.Settings().maxDamage(336).group(ItemGroup.COMBAT), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            reflect_enchantment = Registry.register(Registry.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"),
                     new FabricShieldEnchantment(Enchantment.Rarity.COMMON, false, false));
-
-            ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-                entries.addAfter(Items.SHIELD,fabric_banner_shield);
-                entries.addAfter(fabric_banner_shield,fabric_shield);
-            });
 
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
             ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
