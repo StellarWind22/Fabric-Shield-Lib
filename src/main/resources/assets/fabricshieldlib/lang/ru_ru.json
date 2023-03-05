@@ -1,0 +1,13 @@
+{
+  "fabricshieldlib.midnightconfig.title": "Конфигурация Fabric Shield Lib",
+  "fabricshieldlib.midnightconfig.enable_tooltips":"Включить подсказки щита",
+  "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Разрешить зачарование ванильного щита",
+  "fabricshieldlib.midnightconfig.enchantability_convention": "Условное обозначение: 15 = Дерево || 5 = Камень || 14 = железо || 10 = Алмаз || 22 = Золото",
+  "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Сила зачарования ванильного щита",
+  "fabricshieldlib.midnightconfig.universal_disable":"Универсальная отключение щитов ",
+  "fabricshieldlib.midnightconfig.universal_disable_description_1":"Если включено, при отключении любого щита будут отключены все типы щитов",
+  "fabricshieldlib.midnightconfig.universal_disable_description_2":"Если выключено, то при отключении щита будут отключены только щиты того же типа.",
+  "fabricshieldlib.shield_tooltip.start":"При ударе топором",
+  "fabricshieldlib.shield_tooltip.unit":"s",
+  "fabricshieldlib.shield_tooltip.end":"Для восстановления"
+}
