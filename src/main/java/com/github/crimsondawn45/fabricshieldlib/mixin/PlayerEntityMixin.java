@@ -1,9 +1,9 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -16,8 +16,6 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntryList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,11 +23,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import net.minecraft.util.registry.RegistryEntry;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Mixin that allows custom shields to be damaged, and to be disabled with axes.
@@ -105,18 +100,14 @@ public class PlayerEntityMixin {
     }
 
     private void getEntryList(PlayerEntity player) {
-        Optional<RegistryEntryList.Named<Item>> opt = Registry.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
-        List<Item> list = new ArrayList<>();
-        if (opt.isPresent()) {
-            list = opt.get().stream().map(RegistryEntry::value).toList();
-        }
+        List<Item> shieldList = FabricShieldLib.fabricShields.values().stream().toList();
 
-        for (int amountOfShields = list.size(); amountOfShields > 0; amountOfShields--) {
+        for (int amountOfShields = shieldList.size(); amountOfShields > 0; amountOfShields--) {
 
-            if (list.get(amountOfShields - 1) instanceof ShieldItem) {
+            if (shieldList.get(amountOfShields - 1) instanceof ShieldItem) {
                 player.getItemCooldownManager().set(Items.SHIELD, 100);
-            } else if (list.get(amountOfShields - 1) instanceof FabricShield) {
-                player.getItemCooldownManager().set(list.get(amountOfShields - 1), ((FabricShield) list.get(amountOfShields - 1)).getCoolDownTicks());
+            } else if (shieldList.get(amountOfShields - 1) instanceof FabricShield) {
+                player.getItemCooldownManager().set(shieldList.get(amountOfShields - 1), ((FabricShield) shieldList.get(amountOfShields - 1)).getCoolDownTicks());
             }
             player.clearActiveItem();
             player.world.sendEntityStatus(player, (byte) 30);

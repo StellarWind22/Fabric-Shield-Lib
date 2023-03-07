@@ -1,6 +1,8 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
+import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +67,12 @@ public class FabricShieldLib implements ModInitializer {
 
     public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
+
+    /**
+     * Custom Shield Tag because common tag for shields is not available in versions 1.18.2 and below
+     */
+    public static final Tag<Item> fabricShields = TagFactory.ITEM.create(new Identifier("c", "shields"));
+
 
     static {
         //Registering Banner Recipe (Lib only)
