@@ -3,7 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.lib.object;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.Tag;
 
 import java.util.Collection;
 
@@ -12,9 +12,9 @@ public class RepairType {
             ItemStack ingredient,
             RepairItemType repairType,
             Item[] repairItems,
-            TagKey<Item> repairTag,
+            Tag<Item> repairTag,
             Ingredient repairIngredients,
-            Collection<TagKey<Item>> repairTags
+            Collection<Tag<Item>> repairTags
     ) {
         switch (repairType) {
             case ARRAY:
@@ -29,7 +29,7 @@ public class RepairType {
             case INGREDIENT:
                 return repairIngredients.test(ingredient);
             case TAG_ARRAY:
-                for (TagKey<Item> tag : repairTags) {
+                for (Tag<Item> tag : repairTags) {
                     if (ingredient.isIn(tag)) {
                         return true;
                     }

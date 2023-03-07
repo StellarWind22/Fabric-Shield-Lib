@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.mixin.object.builder.ModelPredicateProviderRegistryAccessor;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
@@ -16,13 +17,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.Tag;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
+import net.minecraft.tag.Tag;
 
 /**
  * Pre-made class for quickly making custom shields.
@@ -34,9 +36,9 @@ public class FabricShieldItem extends Item implements FabricShield {
 
     //Repair stuff
     private Item[] repairItems;
-    private TagKey<Item> repairTag;
+    private Tag<Item> repairTag;
     private Ingredient repairIngredients;
-    private Collection<TagKey<Item>> repairTags;
+    private Collection<Tag<Item>> repairTags;
 
     private final RepairItemType repairType;
 
@@ -91,7 +93,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 14
      * @param repairItemTag  item tag for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, TagKey<Item> repairItemTag) {
+    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, Tag<Item> repairItemTag) {
         super(settings); //Make durability match material
 
         //Register dispenser equip behavior
@@ -114,7 +116,7 @@ public class FabricShieldItem extends Item implements FabricShield {
      * @param enchantability enchantability of shield. Vanilla: 9
      * @param repairItemTags list of item tags for repairing shield.
      */
-    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, Collection<TagKey<Item>> repairItemTags) {
+    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, Collection<Tag<Item>> repairItemTags) {
         super(settings);
 
         //Register dispenser equip behavior
@@ -132,7 +134,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     }
 
     private void RegisterModelPredicate() {
-        ModelPredicateProviderRegistry.register(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+        ModelPredicateProviderRegistryAccessor.callRegister(new Identifier("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
             return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
         });
     }

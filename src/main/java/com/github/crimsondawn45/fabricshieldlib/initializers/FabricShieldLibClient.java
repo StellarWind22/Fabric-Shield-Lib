@@ -1,20 +1,15 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-//import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
-
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.mojang.datafixers.util.Pair;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BannerPattern;
@@ -30,12 +25,16 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FabricShieldLibClient implements ClientModInitializer {
 
@@ -93,6 +92,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 modelFabricShield = new ShieldEntityModel(loader.getModelPart(FabricShieldLibClient.fabric_banner_shield_model_layer));
                 return ActionResult.PASS;
             });
+            ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE).register((atlasTexture, registry) -> {
+                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
+                registry.register(new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
+            });
+
 
             //Register renderer
             BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
@@ -114,8 +118,9 @@ public class FabricShieldLibClient implements ClientModInitializer {
         VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
         model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         if (bl) {
-            List<Pair<RegistryEntry<BannerPattern>, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListNbt(stack));
+            List<Pair<BannerPattern, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListTag(stack));
             BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+
         } else {
             model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
@@ -181,8 +186,8 @@ public class FabricShieldLibClient implements ClientModInitializer {
         }
 
         //Add disabled cooldown tooltip
-        tooltip.add(Text.literal(""));
-        tooltip.add(Text.translatable("fabricshieldlib.shield_tooltip.start").append(Text.literal(":")).formatted(Formatting.GRAY));
+        tooltip.add(new LiteralText(""));
+        tooltip.add(new TranslatableText("fabricshieldlib.shield_tooltip.start").append(new LiteralText(":")).formatted(Formatting.GRAY));
 
         /*
          * All of this is so if there is a .0 instead of there being a need for a 
@@ -200,11 +205,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
             }
         }
 
-        tooltip.add(Text.literal(" " + cooldown)
+        tooltip.add(new LiteralText(" " + cooldown)
                         .formatted(Formatting.DARK_GREEN)
-                        .append(Text.translatable("fabricshieldlib.shield_tooltip.unit"))
-                        .append(Text.literal(" "))
-                        .append(Text.translatable("fabricshieldlib.shield_tooltip.end")));
+                        .append(new TranslatableText("fabricshieldlib.shield_tooltip.unit"))
+                        .append(new LiteralText(" "))
+                        .append(new TranslatableText("fabricshieldlib.shield_tooltip.end")));
 
         //Append advanced info
         if(context.isAdvanced()) {

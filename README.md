@@ -3,17 +3,12 @@
 # Fabric Shield Lib
 Library for easily adding new shields, shield enchantments, and enabling you to enchant shields in general without worry of conflictions.
 
-## Translations
-Translations are handled using the Crowdlin gradle plugin.
-
-Want to help translate Fabric shield lib? head over to [here](https://crwd.in/fabric-shield-lib).
-
 ## Importing
 library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric-Shield-Lib)
 
 #### put this in gradle.properties
 ```properties
-fabric_shield_lib_version=1.6.3-1.19
+fabric_shield_lib_version=1.7-1.17.1
 ```
 
 #### build.gradle under repositories just above dependencies
@@ -42,6 +37,6 @@ modImplementation "com.github.CrimsonDawn45:Fabric-Shield-Lib:v${project.fabric_
 - - - -
 
 ## Documentation?
-Tutorial available on on [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
+Tutorial available on [Fabric Wiki](https://fabricmc.net/wiki/tutorial:shield).
 
 The [example mod repo](https://github.com/CrimsonDawn45/Fabric-Shield-Lib-Example-Mod) is a template repo you can use to quickly get started if your making a new mod. Although it isn't updated as frequently.
