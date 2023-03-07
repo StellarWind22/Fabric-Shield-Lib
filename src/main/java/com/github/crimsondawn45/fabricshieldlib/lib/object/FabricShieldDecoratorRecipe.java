@@ -1,11 +1,12 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
-import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -14,8 +15,8 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
-    public FabricShieldDecoratorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
-        super(identifier, CraftingRecipeCategory.EQUIPMENT);
+    public FabricShieldDecoratorRecipe(Identifier identifier) {
+        super(identifier);
     }
 
     @Override
@@ -84,9 +85,9 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     public boolean fits(int width, int height) {
         return width * height >= 2;
     }
-//
-//    @Override
-//    public RecipeSerializer<?> getSerializer() {
-//        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
-//    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
+    }
 }
