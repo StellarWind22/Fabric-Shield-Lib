@@ -114,9 +114,9 @@ public class FabricShieldLib implements ModInitializer {
                     }
                     if(defender.blockedByShield(source)){
                         if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
-                            attacker.damage(DamageSource.player((PlayerEntity) defender), Math.round(amount * 0.33F));
+                            attacker.damage(attacker.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
                         } else {
-                            attacker.damage(DamageSource.mob(defender), Math.round(amount * 0.33F));
+                            attacker.damage(attacker.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
                         }
                     }
                 }
