@@ -30,6 +30,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 
 /**
  * Main class for Fabric Shield Lib.
@@ -113,10 +114,11 @@ public class FabricShieldLib implements ModInitializer {
                         return ActionResult.CONSUME;
                     }
                     if(defender.blockedByShield(source)){
+                        World world = attacker.getWorld();
                         if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
-                            attacker.damage(DamageSource.player((PlayerEntity) defender), Math.round(amount * 0.33F));
+                            attacker.damage(world.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
                         } else {
-                            attacker.damage(DamageSource.mob(defender), Math.round(amount * 0.33F));
+                            attacker.damage(world.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
                         }
                     }
                 }
