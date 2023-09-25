@@ -31,7 +31,7 @@ public class LivingEntityMixin {
     @Inject(at = @At(value = "TAIL"), method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
     private void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (!entity.isInvulnerableTo(source) || !entity.world.isClient || !entity.isDead() || !(source.isIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))) {
+        if (!entity.isInvulnerableTo(source) || !entity.getWorld().isClient || !entity.isDead() || !(source.isIn(DamageTypeTags.IS_FIRE) && entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE))) {
             if (amount > 0.0F && ((LivingEntityAccessor) entity).fabricshieldlib$invokeBlockedByShield(source)) {
                 // Handle Shield
                 ((LivingEntityAccessor) entity).fabricshieldlib$invokeDamageShield(amount);

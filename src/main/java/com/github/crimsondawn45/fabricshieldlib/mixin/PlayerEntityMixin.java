@@ -61,7 +61,7 @@ public class PlayerEntityMixin {
                     }
 
                     activeItem = ItemStack.EMPTY;
-                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.world.random.nextFloat() * 0.4F);
+                    player.playSound(SoundEvents.ITEM_SHIELD_BREAK, 0.8F, 0.8F + player.getWorld().random.nextFloat() * 0.4F);
                 }
             }
 
@@ -91,7 +91,7 @@ public class PlayerEntityMixin {
                 if (!FabricShieldLibConfig.universal_disable) {
                     player.getItemCooldownManager().set((Item) shield, shield.getCoolDownTicks());
                     player.clearActiveItem();
-                    player.world.sendEntityStatus(player, (byte) 30);
+                    player.getWorld().sendEntityStatus(player, (byte) 30);
                     callbackInfo.cancel();
                 } else {
                     getEntryList(player);
@@ -119,7 +119,7 @@ public class PlayerEntityMixin {
                 player.getItemCooldownManager().set(list.get(amountOfShields - 1), ((FabricShield) list.get(amountOfShields - 1)).getCoolDownTicks());
             }
             player.clearActiveItem();
-            player.world.sendEntityStatus(player, (byte) 30);
+            player.getWorld().sendEntityStatus(player, (byte) 30);
         }
     }
 }

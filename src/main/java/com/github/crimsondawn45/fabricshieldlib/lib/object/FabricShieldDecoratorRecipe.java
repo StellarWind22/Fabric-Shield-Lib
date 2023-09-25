@@ -1,13 +1,12 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 /**
@@ -15,17 +14,17 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
-    public FabricShieldDecoratorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
-        super(identifier, CraftingRecipeCategory.EQUIPMENT);
+    public FabricShieldDecoratorRecipe(CraftingRecipeCategory craftingRecipeCategory) {
+        super(CraftingRecipeCategory.EQUIPMENT);
     }
 
     @Override
-    public boolean matches(CraftingInventory craftingInventory, World world) {
+    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingInventory.size(); ++i) {
-            ItemStack itemStack3 = craftingInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+            ItemStack itemStack3 = recipeInputInventory.getStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     if (!itemStack2.isEmpty()) {
@@ -57,12 +56,12 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
 
     @Override
-    public ItemStack craft(CraftingInventory craftingInventory, DynamicRegistryManager dynamicRegistryManager) {
+    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingInventory.size(); ++i) {
-            ItemStack itemStack3 = craftingInventory.getStack(i);
+        for (int i = 0; i < recipeInputInventory.size(); ++i) {
+            ItemStack itemStack3 = recipeInputInventory.getStack(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
