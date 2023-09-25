@@ -2,7 +2,6 @@ package com.github.crimsondawn45.fabricshieldlib.mixin;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
