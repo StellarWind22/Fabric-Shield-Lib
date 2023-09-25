@@ -1,10 +1,5 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.getRepairType;
-
-import java.util.Collection;
-import java.util.List;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
@@ -13,20 +8,17 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BannerItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+
+import java.util.Collection;
+import java.util.List;
+
+import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.getRepairType;
 
 /**
  * Pre-made class for quickly making custom shields which support banners.
