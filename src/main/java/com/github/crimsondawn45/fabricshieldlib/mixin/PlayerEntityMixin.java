@@ -1,9 +1,9 @@
 package com.github.crimsondawn45.fabricshieldlib.mixin;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -105,7 +105,7 @@ public class PlayerEntityMixin {
     }
 
     private void getEntryList(PlayerEntity player) {
-        Optional<RegistryEntryList.Named<Item>> opt = Registry.ITEM.getEntryList(FabricShieldLib.fabricShields);
+        Optional<RegistryEntryList.Named<Item>> opt = Registry.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
         List<Item> list = new ArrayList<>();
         if (opt.isPresent()) {
             list = opt.get().stream().map(RegistryEntry::value).toList();

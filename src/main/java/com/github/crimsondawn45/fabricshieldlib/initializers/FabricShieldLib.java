@@ -21,7 +21,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -64,11 +63,6 @@ public class FabricShieldLib implements ModInitializer {
 
     public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
-
-    /**
-     * Custom Shield Tag because common tag for shields is not available in versions 1.18.2 and below
-     */
-    public static final TagKey<Item> fabricShields = TagKey.of(Registry.ITEM_KEY, new Identifier("c", "shields"));
 
     static {
         //Registering Banner Recipe (Lib only)
