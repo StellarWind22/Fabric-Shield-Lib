@@ -1,0 +1,15 @@
+{   
+    "fabricshieldlib.shield_tooltip.start":"Після удара сокирою",
+    "fabricshieldlib.shield_tooltip.unit":"сек.",
+    "fabricshieldlib.shield_tooltip.end":"швидкість відновлення",
+
+
+    "fabricshieldlib.midnightconfig.title": "Fabric Shield Lib налаштування",
+    "fabricshieldlib.midnightconfig.enable_tooltips":"Увімкнути підказки",
+    "fabricshieldlib.midnightconfig.allow_vanilla_shield_enchanting":"Дозволити зачарування ванільних щитів",
+    "fabricshieldlib.midnightconfig.enchantability_convention": "Конвенція: 15 = дерево || 5 = камінь || 14 = залізо || 10 = діамант || 22 = золото",
+    "fabricshieldlib.midnightconfig.vanilla_shield_enchantability":"Зачаровуваність ванільного щита",
+    "fabricshieldlib.midnightconfig.universal_disable":"Вимкнення універсального щита",
+    "fabricshieldlib.midnightconfig.universal_disable_description_1":"Якщо увімкнено, тоді будь-який щит буде вимкнено.",
+    "fabricshieldlib.midnightconfig.universal_disable_description_2":"Якщо вимкнено, то вимкнення щита призведе до вимкнення лише щитів того самого типу."
+}
