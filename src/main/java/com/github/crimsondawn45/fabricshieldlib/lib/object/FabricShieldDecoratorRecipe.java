@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 /**
@@ -14,8 +15,9 @@ import net.minecraft.world.World;
  */
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
-    public FabricShieldDecoratorRecipe(CraftingRecipeCategory craftingRecipeCategory) {
-        super(CraftingRecipeCategory.EQUIPMENT);
+
+    public FabricShieldDecoratorRecipe(Identifier identifier, CraftingRecipeCategory craftingRecipeCategory) {
+        super(identifier, craftingRecipeCategory);
     }
 
     @Override
