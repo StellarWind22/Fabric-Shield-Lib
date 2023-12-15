@@ -30,9 +30,7 @@ dependencies {
 	}
 
 	//Fabric ASM
-	modImplementation("com.github.Chocohead:Fabric-ASM:v2.3") {
-		exclude (group: "net.fabricmc.fabric-api")
-	}
+	modImplementation "com.github.Chocohead:Fabric-ASM:v2.3"
 	include "com.github.Chocohead:Fabric-ASM:v2.3"
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
