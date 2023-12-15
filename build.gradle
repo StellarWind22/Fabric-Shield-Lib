@@ -31,7 +31,7 @@ dependencies {
 
 	//Fabric ASM
 	modImplementation "com.github.Chocohead:Fabric-ASM:v2.3"
-	include "com.github.Chocohead:Fabric-ASM:v2.3"
+	include(implementation "com.github.Chocohead:Fabric-ASM:v2.3")
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
