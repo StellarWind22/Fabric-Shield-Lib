@@ -1,12 +1,13 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
 /**
@@ -42,7 +43,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
                         return false;
                     }
 
-                    if (itemStack3.getSubNbt("BlockEntityTag") != null) {
+                    BannerPatternsComponent bannerPatternsComponent = (BannerPatternsComponent)itemStack3.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT);
+                    if (!bannerPatternsComponent.layers().isEmpty()) {
                         return false;
                     }
 
@@ -56,7 +58,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, DynamicRegistryManager dynamicRegistryManager) {
+    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
@@ -74,10 +76,8 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         }
 
         if (!itemStack2.isEmpty()) {
-            NbtCompound nbtCompound = itemStack.getSubNbt("BlockEntityTag");
-            NbtCompound nbtCompound2 = nbtCompound == null ? new NbtCompound() : nbtCompound.copy();
-            nbtCompound2.putInt("Base", ((BannerItem) itemStack.getItem()).getColor().getId());
-            itemStack2.setSubNbt("BlockEntityTag", nbtCompound2);
+            itemStack2.set(DataComponentTypes.BANNER_PATTERNS, (BannerPatternsComponent)itemStack.get(DataComponentTypes.BANNER_PATTERNS));
+            itemStack2.set(DataComponentTypes.BASE_COLOR, ((BannerItem)itemStack.getItem()).getColor());
         }
         return itemStack2;
     }

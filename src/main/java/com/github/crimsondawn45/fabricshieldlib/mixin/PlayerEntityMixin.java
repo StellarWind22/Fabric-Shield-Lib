@@ -49,12 +49,17 @@ public class PlayerEntityMixin {
         if (activeItem.getItem() instanceof FabricShield) {
             if (amount >= 3.0F) {
                 int i = 1 + MathHelper.floor(amount);
-                Hand hand = player.getActiveHand();
+                boolean offHand = player.getActiveHand().equals(Hand.OFF_HAND);
+                boolean mainHand = player.getActiveHand().equals(Hand.MAIN_HAND);
 
-                activeItem.damage(i, (LivingEntity) player, ((playerEntity) -> player.sendToolBreakStatus(hand)));
+                if(offHand){
+                    activeItem.damage(i, (LivingEntity) player, EquipmentSlot.OFFHAND);
+                } else if (mainHand){
+                    activeItem.damage(i, (LivingEntity) player, EquipmentSlot.MAINHAND);
+                }
 
                 if (activeItem.isEmpty()) {
-                    if (hand == Hand.MAIN_HAND) {
+                    if (mainHand) {
                         player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
                         player.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);

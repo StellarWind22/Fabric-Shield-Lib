@@ -2,17 +2,13 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import com.mojang.datafixers.util.Pair;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.entity.BannerBlockEntity;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
@@ -22,9 +18,10 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
@@ -33,6 +30,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 
 public class FabricShieldLibClient implements ClientModInitializer {
 
@@ -62,7 +61,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                     FabricShield shield = (FabricShield) stack.getItem();
 
                     //Add any custom tooltips
-                    shield.appendShieldTooltip(stack, tooltip, context);
+                    shield.appendTooltip(stack, tooltip, context);
 
                     //Add cooldown tooltip
                     if(shield.displayTooltip()) {
@@ -104,25 +103,27 @@ public class FabricShieldLibClient implements ClientModInitializer {
      * Uses params from the mixin method, and the model and sprite identifiers made by the player.
      */
     public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
-        boolean bl = stack.getSubNbt("BlockEntityTag") != null;
+        BannerPatternsComponent bannerPatternsComponent = (BannerPatternsComponent)stack.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT);
+        DyeColor dyeColor2 = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
+        boolean bl = !bannerPatternsComponent.layers().isEmpty() || dyeColor2 != null;
         matrices.push();
         matrices.scale(1.0F, -1.0F, -1.0F);
         SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
         VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
         model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         if (bl) {
-            List<Pair<RegistryEntry<BannerPattern>, DyeColor>> list = BannerBlockEntity.getPatternsFromNbt(FabricBannerShieldItem.getColor(stack), BannerBlockEntity.getPatternListNbt(stack));
-            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, list, stack.hasGlint());
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor2, DyeColor.WHITE), bannerPatternsComponent, stack.hasGlint());
         } else {
             model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
+
         matrices.pop();
     }
 
     /**
      * Shield tooltip thing.
      */
-    public static List<Text> getCooldownTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, int cooldownTicks) {
+    public static List<Text> getCooldownTooltip(ItemStack stack, TooltipType type, List<Text> tooltip, int cooldownTicks) {
 
         List<Text> advanced = new ArrayList<Text>();
 
@@ -130,7 +131,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
          * These all loop in reverse to grab the first instance of a match
          * at the end of the tooltip
          */
-        if(context.isAdvanced()) {
+        if(type.isAdvanced()) {
 
             //Grab durability
             if(stack.isDamaged()) {
@@ -162,7 +163,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
             }
             
             //Grab nbt string
-            if(stack.hasNbt()) {
+            if(!stack.getComponents().isEmpty()) {
                 for(int i = tooltip.size() - 1; i > 0; i--) {
 
                     Text text = tooltip.get(i);
@@ -204,7 +205,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                         .append(Text.translatable("fabricshieldlib.shield_tooltip.end")));
 
         //Append advanced info
-        if(context.isAdvanced()) {
+        if(type.isAdvanced()) {
             tooltip.addAll(advanced);
         }
         return tooltip;

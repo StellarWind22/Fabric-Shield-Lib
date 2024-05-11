@@ -25,6 +25,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,12 +91,11 @@ public class FabricShieldLib implements ModInitializer {
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
             //Register Custom Shield
-            fabric_banner_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"),
-                    new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
-            fabric_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_shield"),
-                    new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
-            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"),
-                    new FabricShieldEnchantment(Enchantment.Rarity.COMMON, false, false));
+            fabric_banner_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+
+            fabric_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+
+            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(2, 1, new Enchantment.Cost(1, 5), new Enchantment.Cost(1, 7), 5, false, false));
 
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addAfter(Items.SHIELD,fabric_banner_shield);

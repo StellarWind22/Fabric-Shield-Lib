@@ -45,9 +45,6 @@
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
 
     ],
-    "mm:early_risers":[
-      "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibEarlyRiser"
-    ],
     "modmenu":[
       "com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibModMenuIntegration"
     ]
