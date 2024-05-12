@@ -39,10 +39,6 @@ dependencies {
 	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
 }
 
-loom {
-	accessWidenerPath = file("src/main/resources/fabricshieldlib.accesswidener")
-}
-
 processResources {
 	inputs.property "version", project.version
 

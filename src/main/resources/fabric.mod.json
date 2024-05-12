@@ -52,7 +52,6 @@
   "mixins": [
     "fabricshieldlib.mixins.json"
   ],
-  "accessWidener": "fabricshieldlib.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric": "*",
