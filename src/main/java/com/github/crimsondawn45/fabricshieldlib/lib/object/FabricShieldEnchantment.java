@@ -23,36 +23,6 @@ public class FabricShieldEnchantment extends Enchantment {
         this.isTreasure = isTreasure;
     }
 
-
-//    /**
-//     * @param weight     rarity of enchantment.
-//     * @param isTreasure if enchantment is a treasure enchantment.
-//     */
-//    public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
-//        super(weight, TARGET, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
-//        this.isTreasure = isTreasure;
-//        this.isCurse = isCurse;
-//    }
-//
-//    /**
-//     * @param weight     rarity of enchantment.
-//     * @param isTreasure if enchantment is a treasure enchantment.
-//     */
-//    public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
-//        this(weight, isTreasure, false);
-//    }
-//
-//    /**
-//     * @param weight rarity of enchantment.
-//     */
-//    public FabricShieldEnchantment(Rarity weight) {
-//        this(weight, false, false);
-//    }
-
-
-
-
-
     @Override
     public boolean isTreasure() {
         return this.isTreasure;

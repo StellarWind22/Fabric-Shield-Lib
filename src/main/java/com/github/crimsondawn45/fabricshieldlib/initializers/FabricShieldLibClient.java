@@ -52,7 +52,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
          */
-        ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
+        ItemTooltipCallback.EVENT.register((stack, context, type, tooltip) -> {
 
             if(FabricShieldLibConfig.enable_tooltips) {
                 
@@ -61,17 +61,17 @@ public class FabricShieldLibClient implements ClientModInitializer {
                     FabricShield shield = (FabricShield) stack.getItem();
 
                     //Add any custom tooltips
-                    shield.appendTooltip(stack, tooltip, context);
+                    shield.appendTooltip(stack, context, tooltip, type);
 
                     //Add cooldown tooltip
                     if(shield.displayTooltip()) {
-                        getCooldownTooltip(stack, context,tooltip, shield.getCoolDownTicks());
+                        getCooldownTooltip(stack, type ,tooltip, shield.getCoolDownTicks());
                     }
                 }
 
                 //Display tooltip for vanilla shield
                 if(stack.getItem().equals(Items.SHIELD)) {
-                    getCooldownTooltip(stack, context,tooltip, 100);
+                    getCooldownTooltip(stack, type,tooltip, 100);
                 }
             }
         });
