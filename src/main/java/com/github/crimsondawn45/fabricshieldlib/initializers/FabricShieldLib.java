@@ -19,13 +19,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +35,9 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("ALL")
 public class FabricShieldLib implements ModInitializer {
+
+    public  static ShieldItem testshield;
+
 
     /**
      * Fabric Shield Lib's mod id.
@@ -95,7 +98,9 @@ public class FabricShieldLib implements ModInitializer {
 
             fabric_shield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
-            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(2, 1, new Enchantment.Cost(1, 5), new Enchantment.Cost(1, 7), 5, false, false));
+            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(2, 1, new Enchantment.Cost(1, 5), new Enchantment.Cost(1, 7), 5, false, false, true));
+
+            testshield = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "test_shield"), new ShieldItem(new Item.Settings().maxDamage(336)));
 
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addAfter(Items.SHIELD,fabric_banner_shield);

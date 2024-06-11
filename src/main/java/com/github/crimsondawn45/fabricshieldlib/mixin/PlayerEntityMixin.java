@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,12 +35,13 @@ import java.util.Optional;
 /**
  * Mixin that allows custom shields to be damaged, and to be disabled with axes.
  */
+@SuppressWarnings("UnreachableCode")
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
     @Shadow
     @Final
-    private PlayerInventory inventory;
+    PlayerInventory inventory;
 
     @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void damageShield(float amount, CallbackInfo callBackInfo) {
@@ -86,10 +88,8 @@ public class PlayerEntityMixin {
 
         if (activeItem instanceof FabricShield shield) {
 
-            float f = 0.25F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
-//            if (sprinting) {
-//                f += 0.75F;
-//            }
+            float f = 1F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
+
 
             if (player.getRandom().nextFloat() < f) {
                 if (!FabricShieldLibConfig.universal_disable) {
@@ -108,6 +108,7 @@ public class PlayerEntityMixin {
         }
     }
 
+    @Unique
     private void getEntryList(PlayerEntity player) {
         Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS_TOOLS);
         List<Item> list = new ArrayList<>();
