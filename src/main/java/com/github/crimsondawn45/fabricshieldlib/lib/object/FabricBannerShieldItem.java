@@ -4,9 +4,10 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
@@ -134,16 +135,13 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     public String getTranslationKey(ItemStack stack) {
-        if (stack.getSubNbt("BlockEntityTag") != null) {
+        DyeColor dyeColor = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
+        if (dyeColor != null) {
             String key = this.getTranslationKey();
-            return key + "." + getColor(stack).getName();
+            return key + "." + dyeColor.getName();
         } else {
             return super.getTranslationKey(stack);
         }
-    }
-
-    public static DyeColor getColor(ItemStack stack) {
-        return DyeColor.byId(stack.getOrCreateSubNbt("BlockEntityTag").getInt("Base"));
     }
 
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
@@ -151,7 +149,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
     }
 
     @Override
-    public void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
     }
 
     @Override

@@ -1,43 +1,30 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.chocohead.mm.api.ClassTinkerers;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
+
+import java.util.Optional;
 
 /**
  * Enchantment that works on fabric shields and vanilla shield(Needs events to do anything).
  */
 public class FabricShieldEnchantment extends Enchantment {
-    public static final EnchantmentTarget TARGET = ClassTinkerers.getEnum(EnchantmentTarget.class, "FABRIC_SHIELD");
     private final boolean isTreasure;
     private final boolean isCurse;
+    private final boolean vanillaShieldAllow;
 
-    /**
-     * @param weight     rarity of enchantment.
-     * @param isTreasure if enchantment is a treasure enchantment.
-     */
-    public FabricShieldEnchantment(Rarity weight, boolean isTreasure, boolean isCurse) {
-        super(weight, TARGET, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
-        this.isTreasure = isTreasure;
+
+    public FabricShieldEnchantment(int weight, int maxLevel, Enchantment.Cost minCost, Enchantment.Cost maxCost, int anvilCost, boolean isCurse, boolean isTreasure, boolean allowOnVanillaShields) {
+        super(new Enchantment.Properties(ConventionalItemTags.SHIELDS_TOOLS, Optional.empty(), weight, maxLevel, minCost, maxCost, anvilCost, FeatureFlags.DEFAULT_ENABLED_FEATURES, new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND}));
         this.isCurse = isCurse;
-    }
-
-    /**
-     * @param weight     rarity of enchantment.
-     * @param isTreasure if enchantment is a treasure enchantment.
-     */
-    public FabricShieldEnchantment(Rarity weight, boolean isTreasure) {
-        this(weight, isTreasure, false);
-    }
-
-    /**
-     * @param weight rarity of enchantment.
-     */
-    public FabricShieldEnchantment(Rarity weight) {
-        this(weight, false, false);
+        this.isTreasure = isTreasure;
+        this.vanillaShieldAllow = allowOnVanillaShields;
     }
 
     @Override
@@ -58,4 +45,11 @@ public class FabricShieldEnchantment extends Enchantment {
         return EnchantmentHelper.getLevel(this, stack) > 0;
     }
 
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        if(vanillaShieldAllow) {
+            return super.isAcceptableItem(stack) || stack.getItem() instanceof FabricShield || stack.getItem() instanceof ShieldItem;
+        }
+        return stack.getItem() instanceof FabricShield;
+    }
 }

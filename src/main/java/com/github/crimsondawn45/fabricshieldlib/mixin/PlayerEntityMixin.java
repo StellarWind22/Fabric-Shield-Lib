@@ -3,7 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.mixin;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,12 +35,13 @@ import java.util.Optional;
 /**
  * Mixin that allows custom shields to be damaged, and to be disabled with axes.
  */
+@SuppressWarnings("UnreachableCode")
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
     @Shadow
     @Final
-    private PlayerInventory inventory;
+    PlayerInventory inventory;
 
     @Inject(at = @At(value = "HEAD"), method = "damageShield(F)V", locals = LocalCapture.CAPTURE_FAILHARD)
     private void damageShield(float amount, CallbackInfo callBackInfo) {
@@ -49,12 +51,17 @@ public class PlayerEntityMixin {
         if (activeItem.getItem() instanceof FabricShield) {
             if (amount >= 3.0F) {
                 int i = 1 + MathHelper.floor(amount);
-                Hand hand = player.getActiveHand();
+                boolean offHand = player.getActiveHand().equals(Hand.OFF_HAND);
+                boolean mainHand = player.getActiveHand().equals(Hand.MAIN_HAND);
 
-                activeItem.damage(i, (LivingEntity) player, ((playerEntity) -> player.sendToolBreakStatus(hand)));
+                if(offHand){
+                    activeItem.damage(i, (LivingEntity) player, EquipmentSlot.OFFHAND);
+                } else if (mainHand){
+                    activeItem.damage(i, (LivingEntity) player, EquipmentSlot.MAINHAND);
+                }
 
                 if (activeItem.isEmpty()) {
-                    if (hand == Hand.MAIN_HAND) {
+                    if (mainHand) {
                         player.equipStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                     } else {
                         player.equipStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
@@ -69,11 +76,10 @@ public class PlayerEntityMixin {
     }
 
     /**
-     * @param sprinting    if player is sprinting
      * @param callbackInfo callback information
      */
-    @Inject(at = @At(value = "HEAD"), method = "disableShield(Z)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void disableShieldHead(boolean sprinting, CallbackInfo callbackInfo) {
+    @Inject(at = @At(value = "HEAD"), method = "disableShield()V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    private void disableShieldHead(CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack activeItemStack = player.getActiveItem();
         Item activeItem = activeItemStack.getItem();
@@ -82,10 +88,8 @@ public class PlayerEntityMixin {
 
         if (activeItem instanceof FabricShield shield) {
 
-            float f = 0.25F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
-            if (sprinting) {
-                f += 0.75F;
-            }
+            float f = 1F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
+
 
             if (player.getRandom().nextFloat() < f) {
                 if (!FabricShieldLibConfig.universal_disable) {
@@ -104,8 +108,9 @@ public class PlayerEntityMixin {
         }
     }
 
+    @Unique
     private void getEntryList(PlayerEntity player) {
-        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS);
+        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS_TOOLS);
         List<Item> list = new ArrayList<>();
         if (opt.isPresent()) {
             list = opt.get().stream().map(RegistryEntry::value).toList();

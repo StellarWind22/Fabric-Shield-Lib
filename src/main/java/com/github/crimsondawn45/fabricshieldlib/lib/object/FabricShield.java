@@ -1,6 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
@@ -39,6 +40,6 @@ public interface FabricShield {
      * @param tooltip current tooltip
      * @param context context
      */
-    default void appendShieldTooltip(ItemStack stack, List<Text> tooltip, TooltipContext context) {
+    default void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
     }
 }
