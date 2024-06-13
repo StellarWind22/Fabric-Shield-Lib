@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class RendererMixin {
 
     /**
-     * This whole mixin is dev code and will be made by the player.
+     * This is now lib code and the player will not have to make this!
      */
 
     @Final
