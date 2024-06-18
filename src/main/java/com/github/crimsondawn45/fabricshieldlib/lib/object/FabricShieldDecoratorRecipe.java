@@ -2,11 +2,11 @@ package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
@@ -20,12 +20,12 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     }
 
     @Override
-    public boolean matches(RecipeInputInventory recipeInputInventory, World world) {
+    public boolean matches(CraftingRecipeInput craftingRecipeInput, World world) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack3 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+            ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     if (!itemStack2.isEmpty()) {
@@ -58,12 +58,12 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
 
     @Override
-    public ItemStack craft(RecipeInputInventory recipeInputInventory, RegistryWrapper.WrapperLookup wrapperLookup) {
+    public ItemStack craft(CraftingRecipeInput craftingRecipeInput, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < recipeInputInventory.size(); ++i) {
-            ItemStack itemStack3 = recipeInputInventory.getStack(i);
+        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+            ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
