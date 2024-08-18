@@ -103,7 +103,7 @@ public class PlayerEntityMixin {
 
     @Unique
     private void getEntryList(PlayerEntity player) {
-        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS_TOOLS);
+        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELD_TOOLS);
         List<Item> list = new ArrayList<>();
         if (opt.isPresent()) {
             list = opt.get().stream().map(RegistryEntry::value).toList();

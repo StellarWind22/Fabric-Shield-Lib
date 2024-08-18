@@ -76,4 +76,10 @@ publishing {
 	}
 	repositories {
 	}
+
+
+}
+
+fabricApi {
+	configureDataGeneration()
 }

@@ -5,13 +5,14 @@ import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldEnchantment;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldLibDataGenerator;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -19,11 +20,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
-import net.minecraft.item.ShieldItem;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -35,9 +38,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("ALL")
 public class FabricShieldLib implements ModInitializer {
-
-    public  static ShieldItem testshield;
-
 
     /**
      * Fabric Shield Lib's mod id.
@@ -59,10 +59,6 @@ public class FabricShieldLib implements ModInitializer {
      */
     public static FabricShieldItem fabric_shield;
     
-    /**
-     * Test shield enchantment.
-     */
-    public static FabricShieldEnchantment reflect_enchantment;
 
     /**
      * Recipe type and serializer for banner decoration recipe.
@@ -75,7 +71,7 @@ public class FabricShieldLib implements ModInitializer {
         //Registering Banner Recipe (Lib only)
         FABRIC_SHIELD_DECORATION = Registry.register(Registries.RECIPE_TYPE, Identifier.of(MOD_ID, "fabric_shield_decoration"), new RecipeType<FabricShieldDecoratorRecipe>() {
             @Override
-            public String toString() {return "test_recipe";}
+            public String toString() {return "fabric_shield_decoration";}
         });
         FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
         }
@@ -98,10 +94,6 @@ public class FabricShieldLib implements ModInitializer {
 
             fabric_shield = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
-            reflect_enchantment = Registry.register(Registries.ENCHANTMENT, Identifier.of(MOD_ID, "reflect_enchantment"), new FabricShieldEnchantment(2, 1, new Enchantment.Cost(1, 5), new Enchantment.Cost(1, 7), 5, false, false, true));
-
-            testshield = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "test_shield"), new ShieldItem(new Item.Settings().maxDamage(336)));
-
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addAfter(Items.SHIELD,fabric_banner_shield);
                 entries.addAfter(fabric_banner_shield,fabric_shield);
@@ -110,7 +102,11 @@ public class FabricShieldLib implements ModInitializer {
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
             ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
 
-                if(reflect_enchantment.hasEnchantment(shield)) {
+                RegistryKey<Enchantment> key = FabricShieldLibDataGenerator.EnchantmentGenerator.REFLECTION;
+                RegistryEntry<Enchantment> entry = defender.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(key).get();
+                int reflectNumber = EnchantmentHelper.getLevel(entry, shield);
+
+                if(reflectNumber > 0) {
                     Entity attacker = source.getAttacker();
 
                     if(attacker.equals(null)) {

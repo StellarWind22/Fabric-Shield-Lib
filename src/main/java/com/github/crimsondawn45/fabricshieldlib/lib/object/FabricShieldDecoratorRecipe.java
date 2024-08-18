@@ -1,9 +1,12 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShieldItem;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
@@ -24,7 +27,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+        for(int i = 0; i < craftingRecipeInput.getSize(); ++i) {
             ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
@@ -34,8 +37,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
                     itemStack2 = itemStack3;
                 } else {
-
-                    if (!(itemStack3.getItem() instanceof FabricShield)) {
+                    if (!(itemStack3.getItem() instanceof FabricBannerShieldItem || itemStack3.getItem() instanceof ShieldItem)) {
                         return false;
                     }
 
@@ -56,38 +58,33 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         return !itemStack.isEmpty() && !itemStack2.isEmpty();
     }
 
-
     @Override
     public ItemStack craft(CraftingRecipeInput craftingRecipeInput, RegistryWrapper.WrapperLookup wrapperLookup) {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for (int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+        for(int i = 0; i < craftingRecipeInput.getSize(); ++i) {
             ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
                     itemStack = itemStack3;
-                } else if (itemStack3.getItem() instanceof FabricShield theShieldItem) {
-                    if (theShieldItem.supportsBanner()) {
-                        itemStack2 = itemStack3.copy();
-                    }
+                } else if (itemStack3.getItem() instanceof FabricBannerShieldItem || itemStack3.getItem() instanceof ShieldItem) {
+                    itemStack2 = itemStack3.copy();
                 }
             }
         }
 
-        if (!itemStack2.isEmpty()) {
+        if (itemStack2.isEmpty()) {
+            return itemStack2;
+        } else {
             itemStack2.set(DataComponentTypes.BANNER_PATTERNS, (BannerPatternsComponent)itemStack.get(DataComponentTypes.BANNER_PATTERNS));
             itemStack2.set(DataComponentTypes.BASE_COLOR, ((BannerItem)itemStack.getItem()).getColor());
+            return itemStack2;
         }
-        return itemStack2;
     }
 
-    public boolean fits(int width, int height) {
-        return width * height >= 2;
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
     }
-//
-//    @Override
-//    public RecipeSerializer<?> getSerializer() {
-//        return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
-//    }
 }
