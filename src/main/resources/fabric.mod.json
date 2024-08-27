@@ -38,6 +38,9 @@
 
   "environment": "*",
   "entrypoints": {
+    "fabric-datagen": [
+      "com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldLibDataGenerator"
+    ],
     "main": [
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib"
     ],

@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
@@ -22,6 +21,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
@@ -38,12 +38,12 @@ public class FabricShieldLibClient implements ClientModInitializer {
     /**
      * Will be made by user (dev code).
      */
-    public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(new Identifier(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
+    public static final EntityModelLayer fabric_banner_shield_model_layer = new EntityModelLayer(Identifier.of(FabricShieldLib.MOD_ID, "fabric_banner_shield"),"main");
     public static ShieldEntityModel modelFabricShield;
     @SuppressWarnings("deprecation")
-    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
+    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
     @SuppressWarnings("deprecation")
-    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
+    public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
     
     @Override
     public void onInitializeClient() {
@@ -110,11 +110,11 @@ public class FabricShieldLibClient implements ClientModInitializer {
         matrices.scale(1.0F, -1.0F, -1.0F);
         SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
         VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
-        model.getHandle().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        model.getHandle().render(matrices, vertexConsumer, light, overlay);
         if (bl) {
             BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor2, DyeColor.WHITE), bannerPatternsComponent, stack.hasGlint());
         } else {
-            model.getPlate().render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            model.getPlate().render(matrices, vertexConsumer, light, overlay);
         }
 
         matrices.pop();
@@ -155,7 +155,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 Text text = tooltip.get(i);
                 String strText = text.getString().trim();
 
-                if(Identifier.isValid(strText)) {
+                if(Identifier.isNamespaceValid(strText)) { //not sure if isnamespacevalid or ispathvalid
                     advanced.add(text);
                     tooltip.remove(i);
                     break;

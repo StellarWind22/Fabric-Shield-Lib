@@ -4,7 +4,6 @@ import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -87,19 +86,13 @@ public class PlayerEntityMixin {
         ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), activeItemStack);
 
         if (activeItem instanceof FabricShield shield) {
-
-            float f = 1F + (float) EnchantmentHelper.getEfficiency(player) * 0.05F;
-
-
-            if (player.getRandom().nextFloat() < f) {
-                if (!FabricShieldLibConfig.universal_disable) {
-                    player.getItemCooldownManager().set((Item) shield, shield.getCoolDownTicks());
-                    player.clearActiveItem();
-                    player.getWorld().sendEntityStatus(player, (byte) 30);
-                    callbackInfo.cancel();
-                } else {
-                    getEntryList(player);
-                }
+            if (!FabricShieldLibConfig.universal_disable) {
+                player.getItemCooldownManager().set((Item) shield, shield.getCoolDownTicks());
+                player.clearActiveItem();
+                player.getWorld().sendEntityStatus(player, (byte) 30);
+                callbackInfo.cancel();
+            } else {
+                getEntryList(player);
             }
         } else if (activeItem instanceof ShieldItem) {
             if (FabricShieldLibConfig.universal_disable) {
@@ -110,7 +103,7 @@ public class PlayerEntityMixin {
 
     @Unique
     private void getEntryList(PlayerEntity player) {
-        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELDS_TOOLS);
+        Optional<RegistryEntryList.Named<Item>> opt = Registries.ITEM.getEntryList(ConventionalItemTags.SHIELD_TOOLS);
         List<Item> list = new ArrayList<>();
         if (opt.isPresent()) {
             list = opt.get().stream().map(RegistryEntry::value).toList();
