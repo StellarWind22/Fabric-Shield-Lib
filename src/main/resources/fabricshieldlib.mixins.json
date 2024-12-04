@@ -7,7 +7,7 @@
     "LivingEntityAccessor",
     "LivingEntityMixin",
     "PlayerEntityMixin",
-    "ShieldItemMixin"
+    "ItemsMixin"
   ],
   "client": [
     "RendererMixin"
