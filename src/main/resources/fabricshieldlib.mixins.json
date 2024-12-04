@@ -4,7 +4,6 @@
   "package": "com.github.crimsondawn45.fabricshieldlib.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingEntityAccessor",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "ItemsMixin"
