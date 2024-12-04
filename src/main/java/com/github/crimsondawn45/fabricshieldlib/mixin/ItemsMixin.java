@@ -20,7 +20,7 @@ public class ItemsMixin {
 			method = "<clinit>",
 			slice = @Slice(
 					from = @At(value = "CONSTANT", args = "stringValue=shield"),
-					to = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "SHIELD:Lnet/minecraft/item/Item;")),
+					to = @At(value = "FIELD", opcode = Opcodes.PUTSTATIC, target = "Lnet/minecraft/item/Items;SHIELD:Lnet/minecraft/item/Item;")),
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item$Settings;equippableUnswappable(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/Item$Settings;"))
 	private static Item.Settings assignVanillaShieldEnchantability(Item.Settings settings) {
 		return settings.enchantable(FabricShieldLibConfig.vanilla_shield_enchantability);

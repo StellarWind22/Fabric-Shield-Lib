@@ -64,12 +64,10 @@ public class PlayerEntityMixin {
     @Inject(at = @At(value = "HEAD"), method = "disableShield(Lnet/minecraft/item/ItemStack;)V", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void disableShieldHead(ItemStack itemStack, CallbackInfo callbackInfo) {
         PlayerEntity player = (PlayerEntity) (Object) this;
-        ItemStack activeItemStack = player.getActiveItem();
-        Item activeItem = activeItemStack.getItem();
 
-        ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), activeItemStack);
+        ShieldDisabledCallback.EVENT.invoker().disable(player, player.getActiveHand(), itemStack);
 
-        if (activeItem instanceof FabricShield shield) {
+        if (itemStack.getItem() instanceof FabricShield shield) {
             if (!FabricShieldLibConfig.universal_disable) {
                 player.getItemCooldownManager().set(itemStack, shield.getCoolDownTicks());
                 player.clearActiveItem();
@@ -78,7 +76,7 @@ public class PlayerEntityMixin {
             } else {
                 getEntryList(player);
             }
-        } else if (activeItem instanceof ShieldItem) {
+        } else if (itemStack.isOf(Items.SHIELD)) {
             if (FabricShieldLibConfig.universal_disable) {
                 getEntryList(player);
             }
