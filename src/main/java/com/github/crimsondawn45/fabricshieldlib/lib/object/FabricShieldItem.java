@@ -119,11 +119,6 @@ public class FabricShieldItem extends Item implements FabricShield {
         return ActionResult.CONSUME;
     }
 
-    @Override
-    public boolean supportsBanner() {
-        return false;
-    }
-
     public void setCoolDownTicks(int coolDownTicks) {
         this.coolDownTicks = coolDownTicks;
     }

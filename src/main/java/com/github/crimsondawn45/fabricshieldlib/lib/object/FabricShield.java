@@ -17,14 +17,18 @@ public interface FabricShield {
      *
      * @return how many ticks shield will be disabled for when it with axe.
      */
-    int getCoolDownTicks();
+	default int getCoolDownTicks() {
+		return 100;
+	}
 
     /**
      * If shield supports banners. Used for enabling banner crafting.
      *
      * @return Whether a shield supports banners.
      */
-    boolean supportsBanner();
+	default boolean supportsBanner() {
+		return false;
+	}
 
     /**
      * Whether the shield will have a tooltip showing cooldown when hit by an axe.
