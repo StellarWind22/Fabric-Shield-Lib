@@ -27,7 +27,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for(int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+        for(int i = 0; i < craftingRecipeInput.size(); ++i) {
             ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
@@ -63,7 +63,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
         ItemStack itemStack = ItemStack.EMPTY;
         ItemStack itemStack2 = ItemStack.EMPTY;
 
-        for(int i = 0; i < craftingRecipeInput.getSize(); ++i) {
+        for(int i = 0; i < craftingRecipeInput.size(); ++i) {
             ItemStack itemStack3 = craftingRecipeInput.getStackInSlot(i);
             if (!itemStack3.isEmpty()) {
                 if (itemStack3.getItem() instanceof BannerItem) {
@@ -84,7 +84,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<ShieldDecorationRecipe> getSerializer() {
         return FabricShieldLib.FABRIC_SHIELD_DECORATION_SERIALIZER;
     }
 }

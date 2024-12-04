@@ -44,7 +44,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
     public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base"));
     @SuppressWarnings("deprecation")
     public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern"));
-    
+
     @Override
     public void onInitializeClient() {
 
@@ -55,7 +55,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
         ItemTooltipCallback.EVENT.register((stack, context, type, tooltip) -> {
 
             if(FabricShieldLibConfig.enable_tooltips) {
-                
+
                 if(stack.getItem() instanceof FabricShield) {
 
                     FabricShield shield = (FabricShield) stack.getItem();
@@ -109,10 +109,10 @@ public class FabricShieldLibClient implements ClientModInitializer {
         matrices.push();
         matrices.scale(1.0F, -1.0F, -1.0F);
         SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
         model.getHandle().render(matrices, vertexConsumer, light, overlay);
         if (bl) {
-            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor2, DyeColor.WHITE), bannerPatternsComponent, stack.hasGlint());
+            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor2, DyeColor.WHITE), bannerPatternsComponent, stack.hasGlint(), true);
         } else {
             model.getPlate().render(matrices, vertexConsumer, light, overlay);
         }

@@ -35,7 +35,7 @@ public class FabricShieldLibDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-            register(entries, REFLECTION, Enchantment.builder(Enchantment.definition(registries.getWrapperOrThrow(RegistryKeys.ITEM).getOrThrow(ConventionalItemTags.SHIELD_TOOLS),
+            register(entries, REFLECTION, Enchantment.builder(Enchantment.definition(registries.getOrThrow(RegistryKeys.ITEM).getOrThrow(ConventionalItemTags.SHIELD_TOOLS),
                                             // this is the "weight" or probability of our enchantment showing up in the table
                                             10,
                                             // the maximum level of the enchantment

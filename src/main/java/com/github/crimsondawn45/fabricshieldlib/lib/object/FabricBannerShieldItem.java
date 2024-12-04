@@ -1,43 +1,18 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.render.entity.model.ShieldEntityModel;
-import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
-import net.minecraft.world.World;
 
-import java.util.Collection;
 import java.util.List;
-
-import static com.github.crimsondawn45.fabricshieldlib.lib.object.RepairType.getRepairType;
 
 /**
  * Pre-made class for quickly making custom shields which support banners.
  */
-public class FabricBannerShieldItem extends Item implements FabricShield {
-
-    private int coolDownTicks;
-    private int enchantability;
-
-    //Repair stuff
-    private Item[] repairItems;
-    private TagKey<Item> repairTag;
-    private Ingredient repairIngredients;
-    private Collection<TagKey<Item>> repairTags;
-
-    private final RepairItemType repairType;
-
+public class FabricBannerShieldItem extends FabricShieldItem {
     /**
      * @param settings       item settings.
      * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
@@ -45,20 +20,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param repairItems    item(s) for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, Item... repairItems) {
-        super(settings);
-
-        //Register dispenser equip behavior
-        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-
-        //Register that item has a blocking model
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            this.RegisterModelPredicate();
-        }
-
-        this.coolDownTicks = coolDownTicks;
-        this.enchantability = enchantability;
-        this.repairType = RepairItemType.ARRAY;
-        this.repairItems = repairItems;
+        super(settings, coolDownTicks, enchantability, repairItems);
     }
 
     /**
@@ -67,20 +29,7 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param material      tool material.
      */
     public FabricBannerShieldItem(Settings settings, int coolDownTicks, ToolMaterial material) {
-        super(settings.maxDamage(material.getDurability())); //Make durability match material
-
-        //Register dispenser equip behavior
-        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-
-        //Register that item has a blocking model
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            this.RegisterModelPredicate();
-        }
-
-        this.coolDownTicks = coolDownTicks;
-        this.enchantability = material.getEnchantability();
-        this.repairType = RepairItemType.INGREDIENT;
-        this.repairIngredients = material.getRepairIngredient();
+        super(settings, coolDownTicks, material);
     }
 
     /**
@@ -90,116 +39,27 @@ public class FabricBannerShieldItem extends Item implements FabricShield {
      * @param repairItemTag  item tag for repairing shield.
      */
     public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, TagKey<Item> repairItemTag) {
-        super(settings);
-
-        //Register dispenser equip behavior
-        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-
-        //Register that item has a blocking model
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            this.RegisterModelPredicate();
-        }
-
-        this.coolDownTicks = coolDownTicks;
-        this.repairType = RepairItemType.TAG;
-        this.repairTag = repairItemTag;
-        this.enchantability = enchantability;
+        super(settings, coolDownTicks, enchantability, repairItemTag);
     }
 
-    /**
-     * @param settings       item settings.
-     * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param enchantability enchantability of shield. Vanilla: 9
-     * @param repairItemTags list of item tags for repairing shield.
-     */
-    public FabricBannerShieldItem(Settings settings, int coolDownTicks, int enchantability, ShieldEntityModel modelFabricShield, SpriteIdentifier baseTexture, SpriteIdentifier nopatternTexture, Collection<TagKey<Item>> repairItemTags) {
-        super(settings);
-
-        //Register dispenser equip behavior
-        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
-
-        //Register that item has a blocking model
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            this.RegisterModelPredicate();
-        }
-
-        this.coolDownTicks = coolDownTicks;
-        this.repairType = RepairItemType.TAG_ARRAY;
-        this.repairTags = repairItemTags;
-        this.enchantability = enchantability;
-    }
-
-    private void RegisterModelPredicate() {
-        ModelPredicateProviderRegistry.register(Identifier.of("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-            return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-        });
-    }
-
-    public String getTranslationKey(ItemStack stack) {
+    @Override
+    public Text getName(ItemStack stack) {
         DyeColor dyeColor = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
         if (dyeColor != null) {
             String key = this.getTranslationKey();
-            return key + "." + dyeColor.getName();
+            return Text.translatable(key + "." + dyeColor.getName());
         } else {
-            return super.getTranslationKey(stack);
+            return super.getName(stack);
         }
-    }
-
-    public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        BannerItem.appendBannerTooltip(stack, tooltip);
     }
 
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-    }
-
-    @Override
-    public int getCoolDownTicks() {
-        return this.coolDownTicks;
-    }
-
-    @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BLOCK;
-    }
-
-    @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 72000;
-    }
-
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        user.setCurrentHand(hand);
-        return TypedActionResult.consume(itemStack);
-    }
-
-    @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return getRepairType(ingredient, this.repairType, this.repairItems, this.repairTag, this.repairIngredients, this.repairTags);
-    }
-
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return !stack.hasEnchantments();
-    }
-
-    @Override
-    public int getEnchantability() {
-        return this.enchantability;
+    	BannerItem.appendBannerTooltip(stack, tooltip);
     }
 
     @Override
     public boolean supportsBanner() {
         return true;
-    }
-
-    public void setCoolDownTicks(int coolDownTicks) {
-        this.coolDownTicks = coolDownTicks;
-    }
-
-    public void setEnchantability(int enchantability) {
-        this.enchantability = enchantability;
     }
 }
