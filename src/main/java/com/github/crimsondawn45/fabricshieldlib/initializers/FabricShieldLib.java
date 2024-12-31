@@ -21,7 +21,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.SpecialRecipeSerializer;
+import net.minecraft.recipe.ShieldDecorationRecipe;
+import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -30,6 +31,9 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+
+import java.util.function.Function;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,13 +62,13 @@ public class FabricShieldLib implements ModInitializer {
      * Test shield item that does not support banners.
      */
     public static FabricShieldItem fabric_shield;
-    
+
 
     /**
      * Recipe type and serializer for banner decoration recipe.
      */
 
-    public static final SpecialRecipeSerializer<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
+    public static final SpecialCraftingRecipe.SpecialRecipeSerializer<ShieldDecorationRecipe> FABRIC_SHIELD_DECORATION_SERIALIZER;
     public static final RecipeType<FabricShieldDecoratorRecipe> FABRIC_SHIELD_DECORATION;
 
     static {
@@ -73,7 +77,7 @@ public class FabricShieldLib implements ModInitializer {
             @Override
             public String toString() {return "fabric_shield_decoration";}
         });
-        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(MOD_ID, "fabric_shield_decoration"), new SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
+        FABRIC_SHIELD_DECORATION_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER, Identifier.of(MOD_ID, "fabric_shield_decoration"), new SpecialCraftingRecipe.SpecialRecipeSerializer<>(FabricShieldDecoratorRecipe::new));
         }
 
 
@@ -90,9 +94,9 @@ public class FabricShieldLib implements ModInitializer {
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
             //Register Custom Shield
-            fabric_banner_shield = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "fabric_banner_shield"), new FabricBannerShieldItem(new Item.Settings().maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            fabric_banner_shield = registerItem("fabric_banner_shield", (props) -> new FabricBannerShieldItem(props.maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
-            fabric_shield = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "fabric_shield"), new FabricShieldItem(new Item.Settings().maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            fabric_shield = registerItem("fabric_shield", (props) -> new FabricShieldItem(props.maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addAfter(Items.SHIELD,fabric_banner_shield);
@@ -103,7 +107,7 @@ public class FabricShieldLib implements ModInitializer {
             ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
 
                 RegistryKey<Enchantment> key = FabricShieldLibDataGenerator.EnchantmentGenerator.REFLECTION;
-                RegistryEntry<Enchantment> entry = defender.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(key).get();
+                RegistryEntry<Enchantment> entry = defender.getWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(key.getValue()).get();
                 int reflectNumber = EnchantmentHelper.getLevel(entry, shield);
 
                 if(reflectNumber > 0) {
@@ -115,9 +119,9 @@ public class FabricShieldLib implements ModInitializer {
                     if(defender.blockedByShield(source)){
                         World world = attacker.getWorld();
                         if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
-                            attacker.damage(world.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
+                            attacker.sidedDamage(world.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
                         } else {
-                            attacker.damage(world.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
+                            attacker.sidedDamage(world.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
                         }
                     }
                 }
@@ -133,5 +137,13 @@ public class FabricShieldLib implements ModInitializer {
         }
         //Announce having finished starting up
         logger.info("Fabric Shield Lib Initialized!");
+    }
+
+    private static <T extends Item> T registerItem(String name, Function<Item.Settings, T> constructor) {
+    	RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(MOD_ID, name));
+    	Item.Settings settings = new Item.Settings();
+    	settings = settings.registryKey(key);
+    	T item = constructor.apply(settings);
+    	return Registry.register(Registries.ITEM, key, item);
     }
 }
