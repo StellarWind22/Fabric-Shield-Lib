@@ -77,7 +77,7 @@ public abstract class LivingEntityMixin {
 	@ModifyExpressionValue(
 			allow = 1,
 			require = 1,
-			method = "blockedByShield(Lnet/minecraft/entity/damage/DamageSource;)V",
+			method = "blockedByShield(Lnet/minecraft/entity/damage/DamageSource;)Z",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;")
 		)
 	private Item instanceOfShieldItem(Item item) {
