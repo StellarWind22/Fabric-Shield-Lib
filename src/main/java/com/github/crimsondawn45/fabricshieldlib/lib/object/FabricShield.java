@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface FabricShield {
      *
      * @return how many ticks shield will be disabled for when it with axe.
      */
-	default int getCoolDownTicks() {
+	default int getCoolDownTicks(@Nullable ItemStack itemStack) {
 		return 100;
 	}
 
