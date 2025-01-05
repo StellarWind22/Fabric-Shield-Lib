@@ -96,7 +96,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     }
 
     @Override
-    public int getCoolDownTicks() {
+    public int getCoolDownTicks(@Nullable ItemStack itemStack) {
         return this.coolDownTicks;
     }
 

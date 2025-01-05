@@ -66,7 +66,7 @@ public class PlayerEntityMixin {
 
         if (itemStack.getItem() instanceof FabricShield shield) {
             if (!FabricShieldLibConfig.universal_disable) {
-                player.getItemCooldownManager().set(itemStack, shield.getCoolDownTicks());
+                player.getItemCooldownManager().set(itemStack, shield.getCoolDownTicks(itemStack));
                 player.clearActiveItem();
                 player.getWorld().sendEntityStatus(player, (byte) 30);
                 callbackInfo.cancel();
@@ -93,7 +93,7 @@ public class PlayerEntityMixin {
             if (list.get(amountOfShields - 1) instanceof ShieldItem) {
                 player.getItemCooldownManager().set(Items.SHIELD.getDefaultStack(), 100);
             } else if (list.get(amountOfShields - 1) instanceof FabricShield) {
-                player.getItemCooldownManager().set(list.get(amountOfShields - 1).getDefaultStack(), ((FabricShield) list.get(amountOfShields - 1)).getCoolDownTicks());
+                player.getItemCooldownManager().set(list.get(amountOfShields - 1).getDefaultStack(), ((FabricShield) list.get(amountOfShields - 1)).getCoolDownTicks(list.get(amountOfShields - 1).getDefaultStack()));
             }
             player.clearActiveItem();
             player.getWorld().sendEntityStatus(player, (byte) 30);

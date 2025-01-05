@@ -6,7 +6,7 @@ import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldLibDataGenerator;
+//import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldLibDataGenerator;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -103,36 +103,36 @@ public class FabricShieldLib implements ModInitializer {
             });
 
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
-            ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
-
-                RegistryKey<Enchantment> key = FabricShieldLibDataGenerator.EnchantmentGenerator.REFLECTION;
-                RegistryEntry<Enchantment> entry = defender.getWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(key.getValue()).get();
-                int reflectNumber = EnchantmentHelper.getLevel(entry, shield);
-
-                if(reflectNumber > 0) {
-                    Entity attacker = source.getAttacker();
-
-                    if(attacker.equals(null)) {
-                        return ActionResult.CONSUME;
-                    }
-                    if(defender.blockedByShield(source)){
-                        World world = attacker.getWorld();
-                        if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
-                            attacker.sidedDamage(world.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
-                        } else {
-                            attacker.sidedDamage(world.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
-                        }
-                    }
-                }
-
-                return ActionResult.PASS;
-            });
+//            ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
+//
+//                RegistryKey<Enchantment> key = FabricShieldLibDataGenerator.EnchantmentGenerator.REFLECTION;
+//                RegistryEntry<Enchantment> entry = defender.getWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(key.getValue()).get();
+//                int reflectNumber = EnchantmentHelper.getLevel(entry, shield);
+//
+//                if(reflectNumber > 0) {
+//                    Entity attacker = source.getAttacker();
+//
+//                    if(attacker.equals(null)) {
+//                        return ActionResult.CONSUME;
+//                    }
+//                    if(defender.blockedByShield(source)){
+//                        World world = attacker.getWorld();
+//                        if(defender instanceof PlayerEntity) {  //Defender should always be a player, but check anyway
+//                            attacker.sidedDamage(world.getDamageSources().playerAttack((PlayerEntity) defender), Math.round(amount * 0.33F));
+//                        } else {
+//                            attacker.sidedDamage(world.getDamageSources().mobAttack(defender), Math.round(amount * 0.33F));
+//                        }
+//                    }
+//                }
+//
+//                return ActionResult.PASS;
+//            });
 
             //Test Event: if your shield gets disabled, give player speed
-            ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
-                defender.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 1, true, false));
-                return ActionResult.PASS;
-            });
+//            ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
+//                defender.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 1, true, false));
+//                return ActionResult.PASS;
+//            });
         }
         //Announce having finished starting up
         logger.info("Fabric Shield Lib Initialized!");
