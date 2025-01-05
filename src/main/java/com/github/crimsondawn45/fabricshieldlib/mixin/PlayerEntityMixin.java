@@ -4,9 +4,7 @@ import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldUtils;
-
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -16,7 +14,6 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

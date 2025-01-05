@@ -5,7 +5,6 @@ import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.VertexConsumer;
@@ -17,16 +16,19 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +104,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
      *
      * Uses params from the mixin method, and the model and sprite identifiers made by the player.
      */
-    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
+    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern) {
         BannerPatternsComponent bannerPatternsComponent = (BannerPatternsComponent)stack.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT);
         DyeColor dyeColor2 = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
         boolean bl = !bannerPatternsComponent.layers().isEmpty() || dyeColor2 != null;
@@ -119,6 +121,25 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
         matrices.pop();
     }
+        public static void renderNew(@Nullable ComponentMap componentMap, ModelTransformationMode modelTransformationMode, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, boolean bl, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern) {
+
+        BannerPatternsComponent bannerPatternsComponent = componentMap != null ? (BannerPatternsComponent)componentMap.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT) : BannerPatternsComponent.DEFAULT;
+        DyeColor dyeColor = componentMap != null ? (DyeColor)componentMap.get(DataComponentTypes.BASE_COLOR) : null;
+        boolean bl2 = !bannerPatternsComponent.layers().isEmpty() || dyeColor != null;
+        matrixStack.push();
+        matrixStack.scale(1.0F, -1.0F, -1.0F);
+        SpriteIdentifier spriteIdentifier = bl2 ? base : base_nopattern;
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, model.getLayer(spriteIdentifier.getAtlasId()), modelTransformationMode == ModelTransformationMode.GUI, bl));
+        model.getHandle().render(matrixStack, vertexConsumer, i, j);
+        if (bl2) {
+            BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(), spriteIdentifier, false, (DyeColor)Objects.requireNonNullElse(dyeColor, DyeColor.WHITE), bannerPatternsComponent, bl, false);
+        } else {
+            model.getPlate().render(matrixStack, vertexConsumer, i, j);
+        }
+        matrixStack.pop();
+    }
+
+
 
     /**
      * Shield tooltip thing.

@@ -4,7 +4,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.EquippableDispenserBehavior;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.RepairableComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,14 +20,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Pre-made class for quickly making custom shields.

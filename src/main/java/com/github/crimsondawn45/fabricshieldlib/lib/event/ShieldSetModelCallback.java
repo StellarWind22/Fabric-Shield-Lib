@@ -2,7 +2,7 @@ package com.github.crimsondawn45.fabricshieldlib.lib.event;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
+import net.minecraft.client.render.entity.model.LoadedEntityModels;
 import net.minecraft.util.ActionResult;
 
 public interface ShieldSetModelCallback {
@@ -23,5 +23,5 @@ public interface ShieldSetModelCallback {
                 return ActionResult.PASS;
             });
 
-    ActionResult setModel(EntityModelLoader loader);
+    ActionResult setModel(LoadedEntityModels loader);
 }
