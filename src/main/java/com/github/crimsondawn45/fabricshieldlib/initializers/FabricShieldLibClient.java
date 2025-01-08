@@ -3,6 +3,7 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
@@ -13,6 +14,7 @@ import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.item.model.special.SpecialModelTypes;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
@@ -93,9 +95,12 @@ public class FabricShieldLibClient implements ClientModInitializer {
             });
 
             //Register renderer
-            BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
-                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
-            });
+//            BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
+//                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
+//            });
+
+            SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
+
         }
     }
 
