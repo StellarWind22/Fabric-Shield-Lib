@@ -99,6 +99,8 @@ public class FabricShieldLibClient implements ClientModInitializer {
 //                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
 //            });
 
+//            FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId()
+
             SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
 
         }
