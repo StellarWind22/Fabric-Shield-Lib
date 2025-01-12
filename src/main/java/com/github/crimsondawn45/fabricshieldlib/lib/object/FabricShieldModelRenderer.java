@@ -1,7 +1,6 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,16 +24,14 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
 public class FabricShieldModelRenderer implements SpecialModelRenderer<ComponentMap> {
-    private final ShieldEntityModel model;
-    private static HashMap<ShieldEntityModel, EntityModelLayer> models = new HashMap<>();
+    private final LoadedEntityModels loadedEntityModels;
 
-    public FabricShieldModelRenderer(ShieldEntityModel model) {
-        this.model = model;
+    public FabricShieldModelRenderer(LoadedEntityModels loadedEntityModels) {
+        this.loadedEntityModels = loadedEntityModels;
     }
 
     @Nullable
@@ -49,15 +46,16 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
         matrixStack.push();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
         FabricShieldModelComponent modelComponent = componentMap.get(FabricShieldLib.MODEL_COMPONENT);
-        models.put(this.model, new EntityModelLayer(getEMLID(modelComponent.layer()),"main"));
+        EntityModelLayer EML = new EntityModelLayer(getEMLID(modelComponent.layer()), "main");
+        ShieldEntityModel model = new ShieldEntityModel(loadedEntityModels.getModelPart(EML));
         @SuppressWarnings("deprecation")
         SpriteIdentifier spriteIdentifier = bl2 ? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModel()) : new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModelNoPat());
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, this.model.getLayer(spriteIdentifier.getAtlasId()), modelTransformationMode == ModelTransformationMode.GUI, bl));
-        this.model.getHandle().render(matrixStack, vertexConsumer, i, j);
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, model.getLayer(spriteIdentifier.getAtlasId()), modelTransformationMode == ModelTransformationMode.GUI, bl));
+        model.getHandle().render(matrixStack, vertexConsumer, i, j);
         if (bl2) {
-            BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, this.model.getPlate(), spriteIdentifier, false, (DyeColor)Objects.requireNonNullElse(dyeColor, DyeColor.WHITE), bannerPatternsComponent, bl, false);
+            BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(), spriteIdentifier, false, (DyeColor)Objects.requireNonNullElse(dyeColor, DyeColor.WHITE), bannerPatternsComponent, bl, false);
         } else {
-            this.model.getPlate().render(matrixStack, vertexConsumer, i, j);
+            model.getPlate().render(matrixStack, vertexConsumer, i, j);
         }
 
         matrixStack.pop();
@@ -74,7 +72,7 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
 
 
         public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
-            return new FabricShieldModelRenderer(new ShieldEntityModel(entityModels.getModelPart(models.get(model))));
+            return new FabricShieldModelRenderer(entityModels);
         }
 
         static {

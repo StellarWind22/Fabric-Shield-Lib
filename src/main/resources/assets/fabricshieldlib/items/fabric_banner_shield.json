@@ -1,9 +1,7 @@
 {
   "model": {
     "type": "minecraft:condition",
-
     "property": "minecraft:using_item",
-
     "on_false": {
       "type": "minecraft:special",
       "base": "fabricshieldlib:item/fabric_banner_shield",

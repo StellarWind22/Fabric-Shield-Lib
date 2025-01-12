@@ -86,18 +86,19 @@ public class FabricShieldLib implements ModInitializer {
             //Warn about dev code
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
 
-            //Register Custom Shield
-            fabric_banner_shield = registerItem("fabric_banner_shield", (props) -> new FabricBannerShieldItem(props.maxDamage(336), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            MODEL_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(MOD_ID, "shieldlibmodelcomponent"), ComponentType.<FabricShieldModelComponent>builder().codec(FabricShieldModelComponent.CODEC).build());
 
-            fabric_shield = registerItem("fabric_shield", (props) -> new FabricShieldItem(props.maxDamage(336).component(MODEL_COMPONENT, new FabricShieldModelComponent(FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE.getTextureId(), FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(), FabricShieldLibClient.fabric_banner_shield_model_layer.toString())), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            //Register Custom Shield
+            fabric_banner_shield = registerItem("fabric_banner_shield", (props) -> new FabricBannerShieldItem(props.maxDamage(336).component(MODEL_COMPONENT, new FabricShieldModelComponent(FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE.getTextureId(), FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(), FabricShieldLibClient.fabric_banner_shield_model_layer.toString())), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+
+            fabric_shield = registerItem("fabric_shield", (props) -> new FabricShieldItem(props.maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addAfter(Items.SHIELD,fabric_banner_shield);
                 entries.addAfter(fabric_banner_shield,fabric_shield);
             });
 
-            MODEL_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(MOD_ID, "shieldLibModelComponent"), ComponentType.<FabricShieldModelComponent>builder().codec(FabricShieldModelComponent.CODEC).build()
-            );
+
 
 
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
