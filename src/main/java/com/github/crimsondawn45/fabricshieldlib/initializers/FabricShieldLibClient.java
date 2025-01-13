@@ -52,6 +52,8 @@ public class FabricShieldLibClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+        SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
+
         /*
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
@@ -93,15 +95,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 modelFabricShield = new ShieldEntityModel(loader.getModelPart(FabricShieldLibClient.fabric_banner_shield_model_layer));
                 return ActionResult.PASS;
             });
-
-            //Register renderer
-//            BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
-//                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
-//            });
-
-//            FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId()
-
-            SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
 
         }
     }
