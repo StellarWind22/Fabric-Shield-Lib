@@ -80,13 +80,13 @@ public class FabricShieldLib implements ModInitializer {
         //Register Config
         MidnightConfig.init(MOD_ID, FabricShieldLibConfig.class);
 
+        MODEL_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(MOD_ID, "shieldlibmodelcomponent"), ComponentType.<FabricShieldModelComponent>builder().codec(FabricShieldModelComponent.CODEC).build());
+
         //Dev environment code.
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
 
             //Warn about dev code
             logger.warn("FABRIC SHIELD LIB DEVELOPMENT CODE RAN!!!, if you are not in a development environment this is very bad! Test items and test enchantments will be ingame!");
-
-            MODEL_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Identifier.of(MOD_ID, "shieldlibmodelcomponent"), ComponentType.<FabricShieldModelComponent>builder().codec(FabricShieldModelComponent.CODEC).build());
 
             //Register Custom Shield
             fabric_banner_shield = registerItem("fabric_banner_shield", (props) -> new FabricBannerShieldItem(props.maxDamage(336).component(MODEL_COMPONENT, new FabricShieldModelComponent(FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE.getTextureId(), FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(), FabricShieldLibClient.fabric_banner_shield_model_layer.toString())), 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
