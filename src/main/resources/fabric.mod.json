@@ -26,7 +26,8 @@
     "muhammedesadcomert",
     "timoreo22",
     "OverLordsIII",
-    "SKZGx"
+    "SKZGx",
+    "Starexify"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fabric-shield-lib",
@@ -44,7 +45,6 @@
     ],
     "client": [
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
-
     ],
     "modmenu":[
       "com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibModMenuIntegration"
@@ -56,7 +56,7 @@
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric-api": "*",
-    "minecraft": ">=1.21.2",
+    "minecraft": ">=1.21.4",
     "java": ">=17",
     "mm":">=2.3"
   }

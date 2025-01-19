@@ -9,7 +9,8 @@
     "PlayerEntityMixin"
   ],
   "client": [
-    "RendererMixin"
+    "RendererMixin",
+    "HeldItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
