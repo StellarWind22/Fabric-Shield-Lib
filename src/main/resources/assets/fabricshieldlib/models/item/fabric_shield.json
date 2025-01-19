@@ -64,12 +64,12 @@
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [0, 90, 0],
-			"translation": [0.5, -5.0, 2],
+			"translation": [0, -5.0, 2],
 			"scale": [1.00, 1.00, 1.00]
 		},
 		"thirdperson_lefthand": {
 			"rotation": [0, 90, 0],
-			"translation": [0.50, -5, 6],
+			"translation": [0, -5, 6],
 			"scale": [1.00, 1.00, 1.00]
 		},
 		"firstperson_righthand": {
