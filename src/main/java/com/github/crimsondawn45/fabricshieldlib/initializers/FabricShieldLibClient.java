@@ -3,34 +3,26 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldSetModelCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.ShieldEntityModel;
-import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.item.model.special.SpecialModelTypes;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class FabricShieldLibClient implements ClientModInitializer {
@@ -47,6 +39,8 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
+        SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
 
         /*
          * Register tooltip callback this is the same as mixing into the end of:
@@ -65,7 +59,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
                     //Add cooldown tooltip
                     if(shield.displayTooltip()) {
-                        getCooldownTooltip(stack, type ,tooltip, shield.getCoolDownTicks());
+                        getCooldownTooltip(stack, type ,tooltip, shield.getCoolDownTicks(stack));
                     }
                 }
 
@@ -90,34 +84,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                 return ActionResult.PASS;
             });
 
-            //Register renderer
-            BuiltinItemRendererRegistry.INSTANCE.register(FabricShieldLib.fabric_banner_shield, (stack, mode, matrices, vertexConsumers, light, overlay) -> {
-                renderBanner(stack, matrices, vertexConsumers, light, overlay, modelFabricShield, FABRIC_BANNER_SHIELD_BASE, FABRIC_BANNER_SHIELD_BASE_NO_PATTERN);
-            });
         }
-    }
-
-    /**
-     * Used to simplify the mixin on the user end to make their shield render banner.
-     *
-     * Uses params from the mixin method, and the model and sprite identifiers made by the player.
-     */
-    public static void renderBanner(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, ShieldEntityModel model, SpriteIdentifier base, SpriteIdentifier base_nopattern){
-        BannerPatternsComponent bannerPatternsComponent = (BannerPatternsComponent)stack.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT);
-        DyeColor dyeColor2 = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
-        boolean bl = !bannerPatternsComponent.layers().isEmpty() || dyeColor2 != null;
-        matrices.push();
-        matrices.scale(1.0F, -1.0F, -1.0F);
-        SpriteIdentifier spriteIdentifier = bl ? base : base_nopattern;
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumers, model.getLayer(spriteIdentifier.getAtlasId()), true, stack.hasGlint()));
-        model.getHandle().render(matrices, vertexConsumer, light, overlay);
-        if (bl) {
-            BannerBlockEntityRenderer.renderCanvas(matrices, vertexConsumers, light, overlay, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor2, DyeColor.WHITE), bannerPatternsComponent, stack.hasGlint(), true);
-        } else {
-            model.getPlate().render(matrices, vertexConsumer, light, overlay);
-        }
-
-        matrices.pop();
     }
 
     /**

@@ -9,9 +9,9 @@
     "CrimsonDawn45"
   ],
   "contributors":[
-	"Rikka0w0",
     "LegibleSleet827",
     "CringeStar",
+    "Rikka0w0",
     "RDKRACZ",
     "Jamalam360",
     "NLxDodge",
@@ -26,7 +26,8 @@
     "muhammedesadcomert",
     "timoreo22",
     "OverLordsIII",
-    "SKZGx"
+    "SKZGx",
+    "Starexify"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/fabric-shield-lib",
@@ -39,15 +40,11 @@
 
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldLibDataGenerator"
-    ],
     "main": [
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib"
     ],
     "client": [
       "com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLibClient"
-
     ],
     "modmenu":[
       "com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibModMenuIntegration"
@@ -58,8 +55,8 @@
   ],
   "depends": {
     "fabricloader": ">=0.14.8",
-    "fabric": "*",
-    "minecraft": ">=1.20.5",
+    "fabric-api": "*",
+    "minecraft": ">=1.21.4",
     "java": ">=17",
     "mm":">=2.3"
   }

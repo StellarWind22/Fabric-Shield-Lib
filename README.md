@@ -8,7 +8,7 @@ library is distributed via [jitpack.io](https://jitpack.io/#CrimsonDawn45/Fabric
 
 #### put this in gradle.properties
 ```properties
-fabric_shield_lib_version=1.7.2-1.21.1
+fabric_shield_lib_version=1.8.0-1.21.4
 ```
 
 #### build.gradle under repositories just above dependencies

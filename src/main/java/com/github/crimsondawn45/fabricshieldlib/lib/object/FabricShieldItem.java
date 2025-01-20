@@ -4,7 +4,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.EquippableDispenserBehavior;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.RepairableComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -21,14 +20,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Pre-made class for quickly making custom shields.
@@ -89,9 +86,9 @@ public class FabricShieldItem extends Item implements FabricShield {
     }
 
     private void RegisterModelPredicate() {
-        ModelPredicateProviderRegistry.register(Identifier.of("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
-            return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
-        });
+//        ModelPredicateProviderRegistry.register(Identifier.of("blocking"), (itemStack, clientWorld, livingEntity, i) -> {
+//            return livingEntity != null && livingEntity.isUsingItem() && livingEntity.getActiveItem() == itemStack ? 1.0F : 0.0F;
+//        });
     }
 
     @Override
@@ -99,7 +96,7 @@ public class FabricShieldItem extends Item implements FabricShield {
     }
 
     @Override
-    public int getCoolDownTicks() {
+    public int getCoolDownTicks(@Nullable ItemStack itemStack) {
         return this.coolDownTicks;
     }
 

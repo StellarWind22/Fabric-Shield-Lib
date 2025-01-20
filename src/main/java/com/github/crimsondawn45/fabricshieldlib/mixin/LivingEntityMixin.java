@@ -3,14 +3,12 @@ package com.github.crimsondawn45.fabricshieldlib.mixin;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldUtils;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -77,7 +75,7 @@ public abstract class LivingEntityMixin {
 	@ModifyExpressionValue(
 			allow = 1,
 			require = 1,
-			method = "blockedByShield(Lnet/minecraft/entity/damage/DamageSource;)V",
+			method = "blockedByShield(Lnet/minecraft/entity/damage/DamageSource;)Z",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;")
 		)
 	private Item instanceOfShieldItem(Item item) {

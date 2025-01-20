@@ -1,11 +1,14 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.*;
+import net.minecraft.item.BannerItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.*;
+import net.minecraft.util.DyeColor;
 
 import java.util.List;
 
