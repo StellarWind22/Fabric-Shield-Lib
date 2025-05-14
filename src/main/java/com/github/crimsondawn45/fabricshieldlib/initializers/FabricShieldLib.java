@@ -1,6 +1,8 @@
 package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
+import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
+import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
@@ -21,6 +23,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,8 +101,15 @@ public class FabricShieldLib implements ModInitializer {
                 entries.addAfter(fabric_banner_shield,fabric_shield);
             });
 
+            ShieldDisabledCallback.EVENT.register((defender, hand, shield) -> {
+                System.out.println(defender + "'s " + shield.getName().getString() + " has been disabled!");
+                return ActionResult.PASS;
+            });
 
-
+            ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {
+                System.out.println(defender + " blocked " + amount + " from " + source + " with " + shield.getName().getString());
+                return ActionResult.PASS;
+            });
 
             //Test event: makes any shield with new enchantment reflect a 1/3rd of damage back to attacker
 //            ShieldBlockCallback.EVENT.register((defender, source, amount, hand, shield) -> {

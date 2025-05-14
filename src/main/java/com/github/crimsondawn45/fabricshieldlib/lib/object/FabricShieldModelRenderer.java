@@ -18,8 +18,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.ComponentMap;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
+import net.minecraft.item.ItemDisplayContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +39,7 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
         return itemStack.getImmutableComponents();
     }
 
-    public void render(@Nullable ComponentMap componentMap, ModelTransformationMode modelTransformationMode, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, boolean bl) {
+    public void render(@Nullable ComponentMap componentMap, ItemDisplayContext modelTransformationMode, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, boolean bl) {
         BannerPatternsComponent bannerPatternsComponent = componentMap != null ? (BannerPatternsComponent)componentMap.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT) : BannerPatternsComponent.DEFAULT;
         DyeColor dyeColor = componentMap != null ? (DyeColor)componentMap.get(DataComponentTypes.BASE_COLOR) : null;
         boolean bl2 = !bannerPatternsComponent.layers().isEmpty() || dyeColor != null;
@@ -50,7 +50,7 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
         ShieldEntityModel model = new ShieldEntityModel(loadedEntityModels.getModelPart(EML));
         @SuppressWarnings("deprecation")
         SpriteIdentifier spriteIdentifier = bl2 ? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModel()) : new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModelNoPat());
-        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, model.getLayer(spriteIdentifier.getAtlasId()), modelTransformationMode == ModelTransformationMode.GUI, bl));
+        VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, model.getLayer(spriteIdentifier.getAtlasId()), modelTransformationMode == ItemDisplayContext.GUI, bl));
         model.getHandle().render(matrixStack, vertexConsumer, i, j);
         if (bl2) {
             BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(), spriteIdentifier, false, (DyeColor)Objects.requireNonNullElse(dyeColor, DyeColor.WHITE), bannerPatternsComponent, bl, false);

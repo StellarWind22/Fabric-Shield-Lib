@@ -50,7 +50,7 @@ public class FabricBannerShieldItem extends FabricShieldItem {
         DyeColor dyeColor = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
         if (dyeColor != null) {
             String key = this.getTranslationKey();
-            return Text.translatable(key + "." + dyeColor.getName());
+            return Text.translatable(key + "." + dyeColor.name());
         } else {
             return super.getName(stack);
         }
@@ -58,11 +58,6 @@ public class FabricBannerShieldItem extends FabricShieldItem {
 
     @Override
     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
-    	BannerItem.appendBannerTooltip(stack, tooltip);
-    }
-
-    @Override
-    public boolean supportsBanner() {
-        return true;
+        // TODO: BannerItem.appendBannerTooltip(stack, tooltip);
     }
 }
