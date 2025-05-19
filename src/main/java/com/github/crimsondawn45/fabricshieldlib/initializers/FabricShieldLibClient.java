@@ -42,7 +42,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
-
         /*
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
@@ -55,9 +54,6 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
                 	FabricShield shield = (FabricShield) stack.getItem();
                     displayTooltip = shield.displayTooltip();
-
-                    //Add any custom tooltips
-                    shield.appendTooltip(stack, context, tooltip, type);
                 }
 
                 //Display tooltip for shields
