@@ -3,9 +3,15 @@ package com.github.crimsondawn45.fabricshieldlib.lib.object;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 
 import java.util.List;
@@ -13,7 +19,16 @@ import java.util.Optional;
 
 public class FabricShieldUtils {
 	public static final int VANILLA_SHIELD_DURABILITY = 336;
-	public static final BlocksAttacksComponent VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT = makeNewComponent(100);
+	public static final BlocksAttacksComponent VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT =
+			new BlocksAttacksComponent(
+			0.25F,
+			1.0F,
+			List.of(new BlocksAttacksComponent.DamageReduction(90.0F, Optional.empty(), 0.0F, 1.0F)),
+			new BlocksAttacksComponent.ItemDamage(3.0F, 1.0F, 1.0F),
+			Optional.of(DamageTypeTags.BYPASSES_SHIELD),
+			Optional.of(SoundEvents.ITEM_SHIELD_BLOCK),
+			Optional.of(SoundEvents.ITEM_SHIELD_BREAK)
+	);
 
 
 	public static boolean isShieldItem(ItemStack itemStack) {
@@ -24,24 +39,100 @@ public class FabricShieldUtils {
 		return item.getComponents().contains(DataComponentTypes.BLOCKS_ATTACKS);
 	}
 
-	public static BlocksAttacksComponent makeNewComponent(int cooldownTicks) {
+	public static BlocksAttacksComponent withBlockDelaySeconds(BlocksAttacksComponent in, float blockDelaySeconds) {
 		return new BlocksAttacksComponent(
-				0.25F,
-				(float)cooldownTicks/100F,
-				List.of(new BlocksAttacksComponent.DamageReduction(90.0F, Optional.empty(), 0.0F, 1.0F)),
-				new BlocksAttacksComponent.ItemDamage(3.0F, 1.0F, 1.0F),
-				Optional.of(DamageTypeTags.BYPASSES_SHIELD),
-				Optional.of(SoundEvents.ITEM_SHIELD_BLOCK),
-				Optional.of(SoundEvents.ITEM_SHIELD_BREAK)
+				blockDelaySeconds,
+				in.disableCooldownScale(),
+				in.damageReductions(),
+				in.itemDamage(),
+				in.bypassedBy(),
+				in.blockSound(),
+				in.disableSound()
 		);
 	}
 
+	public static BlocksAttacksComponent withCooldownTicks(BlocksAttacksComponent in, int cooldownTicks) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				(float)cooldownTicks / 100.0F,
+				in.damageReductions(),
+				in.itemDamage(),
+				in.bypassedBy(),
+				in.blockSound(),
+				in.disableSound()
+		);
+	}
+
+	//TODO:maybe make seperate methods for the 4 variables in damageReductions: type, base, factor, blocking angle
+	public static BlocksAttacksComponent withDamageReductions(BlocksAttacksComponent in, BlocksAttacksComponent.DamageReduction damageReductions) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				in.disableCooldownScale(),
+				List.of(damageReductions),
+				in.itemDamage(),
+				in.bypassedBy(),
+				in.blockSound(),
+				in.disableSound()
+		);
+	}
+
+	//TODO: Same concern as above: threshold, base, factor
+	public static BlocksAttacksComponent withItemDamage(BlocksAttacksComponent in, BlocksAttacksComponent.ItemDamage itemDamage) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				in.disableCooldownScale(),
+				in.damageReductions(),
+				itemDamage,
+				in.bypassedBy(),
+				in.blockSound(),
+				in.disableSound()
+		);
+	}
+
+	public static BlocksAttacksComponent withBypassedDamageTypes(BlocksAttacksComponent in, TagKey<DamageType> damageType) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				in.disableCooldownScale(),
+				in.damageReductions(),
+				in.itemDamage(),
+				Optional.of(damageType),
+				in.blockSound(),
+				in.disableSound()
+		);
+	}
+
+	public static BlocksAttacksComponent withBlocSound(BlocksAttacksComponent in, RegistryEntry<SoundEvent> blockSound) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				in.disableCooldownScale(),
+				in.damageReductions(),
+				in.itemDamage(),
+				in.bypassedBy(),
+				Optional.of(blockSound),
+				in.disableSound()
+		);
+	}
+
+	public static BlocksAttacksComponent withDisableSound(BlocksAttacksComponent in, RegistryEntry<SoundEvent> disableSound) {
+		return new BlocksAttacksComponent(
+				in.blockDelaySeconds(),
+				in.disableCooldownScale(),
+				in.damageReductions(),
+				in.itemDamage(),
+				in.bypassedBy(),
+				in.blockSound(),
+				Optional.of(disableSound)
+		);
+	}
+
+
+
 	public static Item.Settings vanillaShieldSettings(Item.Settings settings) {
-		return settings
+		return defaultShieldSettings(
+			settings
 			.maxDamage(FabricShieldUtils.VANILLA_SHIELD_DURABILITY)
-			.equippableUnswappable(EquipmentSlot.OFFHAND)
 			.component(DataComponentTypes.BLOCKS_ATTACKS, FabricShieldUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT)
-			.component(DataComponentTypes.BREAK_SOUND, SoundEvents.ITEM_SHIELD_BREAK);
+		);
 	}
 
 	public static Item.Settings defaultShieldSettings(Item.Settings settings) {
