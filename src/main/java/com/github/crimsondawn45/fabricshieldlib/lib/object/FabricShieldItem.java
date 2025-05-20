@@ -11,7 +11,9 @@ import net.minecraft.item.consume.UseAction;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -63,7 +65,7 @@ public class FabricShieldItem extends Item implements FabricShield {
         super(
              attachRepairable(FabricShieldUtils.defaultShieldSettings(settings), repairItems)
             .enchantable(enchantability)
-            .component(DataComponentTypes.BLOCKS_ATTACKS, FabricShieldUtils.makeNewComponent(coolDownTicks))
+            .component(DataComponentTypes.BLOCKS_ATTACKS, FabricShieldUtils.withCooldownTicks(FabricShieldUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT, coolDownTicks))
         );
     }
 
@@ -119,5 +121,16 @@ public class FabricShieldItem extends Item implements FabricShield {
 
     public static Item.Settings attachRepairable(Item.Settings settings, @Nullable RegistryEntryList<Item> repairItems) {
         return (repairItems == null ? settings : settings.component(DataComponentTypes.REPAIRABLE, new RepairableComponent(repairItems)));
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        DyeColor dyeColor = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
+        if (dyeColor != null) {
+            String key = this.getTranslationKey();
+            return Text.translatable(key + "." + dyeColor.name());
+        } else {
+            return super.getName(stack);
+        }
     }
 }

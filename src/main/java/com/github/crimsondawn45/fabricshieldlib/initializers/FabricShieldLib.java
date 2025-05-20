@@ -3,10 +3,10 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricBannerShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelComponent;
+import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldUtils;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -54,7 +54,7 @@ public class FabricShieldLib implements ModInitializer {
     /**
      * Test shield item.
      */
-    public static FabricBannerShieldItem fabric_banner_shield;
+    public static FabricShieldItem fabric_banner_shield;
 
     /**
      * Test shield item that does not support banners.
@@ -104,11 +104,11 @@ public class FabricShieldLib implements ModInitializer {
 
             //Register Custom Shield
             fabric_banner_shield = registerItem("fabric_banner_shield",
-                    (props) -> new FabricBannerShieldItem(props.maxDamage(336)
+                    (props) -> new FabricShieldItem(props.maxDamage(FabricShieldUtils.VANILLA_SHIELD_DURABILITY)
                             .component(MODEL_COMPONENT, new FabricShieldModelComponent(FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE.getTextureId(), FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(), FabricShieldLibClient.fabric_banner_shield_model_layer.toString())),
                             85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
-            fabric_shield = registerItem("fabric_shield", (props) -> new FabricShieldItem(props.maxDamage(336), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+            fabric_shield = registerItem("fabric_shield", (props) -> new FabricShieldItem(props.maxDamage(200), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
             fabric_component_shield = registerItem("fabric_component_shield",
                     (props) -> new FabricShieldItem(props.maxDamage(100)
@@ -116,7 +116,7 @@ public class FabricShieldLib implements ModInitializer {
                             .component(DataComponentTypes.BLOCKS_ATTACKS, new BlocksAttacksComponent(
                                     0.25F,
                                     150F/100F,
-                                    List.of(new BlocksAttacksComponent.DamageReduction(90.0F, Optional.empty(), 0.0F, 0.5F)),
+                                    List.of(new BlocksAttacksComponent.DamageReduction(180.0F, Optional.empty(), 0.0F, 0.5F)),
                                     new BlocksAttacksComponent.ItemDamage(3.0F, 1.0F, 1.0F),
                                     Optional.of(DamageTypeTags.BYPASSES_SHIELD),
                                     Optional.of(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND),
