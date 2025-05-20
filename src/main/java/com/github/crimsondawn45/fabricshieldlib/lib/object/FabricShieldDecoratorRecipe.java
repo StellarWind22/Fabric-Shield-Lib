@@ -37,6 +37,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 
                     itemStack2 = itemStack3;
                 } else {
+                  
                     if (!(FabricShieldUtils.supportsBanner(itemStack3))) {
                         return false;
                     }
