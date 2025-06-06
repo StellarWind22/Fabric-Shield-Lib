@@ -13,8 +13,9 @@ import net.minecraft.client.render.entity.model.ShieldEntityModel;
 import net.minecraft.client.render.item.model.special.SpecialModelTypes;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -41,31 +42,24 @@ public class FabricShieldLibClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         SpecialModelTypes.ID_MAPPER.put(Identifier.of("fabricshieldlib", "fabric_banner_shield"), FabricShieldModelRenderer.Unbaked.CODEC);
-
         /*
          * Register tooltip callback this is the same as mixing into the end of:
          * ItemStack.getTooltip()
          */
         ItemTooltipCallback.EVENT.register((stack, context, type, tooltip) -> {
 
-            if(FabricShieldLibConfig.enable_tooltips) {
-
+        	if(FabricShieldLibConfig.enable_tooltips) {
+                boolean displayTooltip = true;
                 if(stack.getItem() instanceof FabricShield) {
 
-                    FabricShield shield = (FabricShield) stack.getItem();
-
-                    //Add any custom tooltips
-                    shield.appendTooltip(stack, context, tooltip, type);
-
-                    //Add cooldown tooltip
-                    if(shield.displayTooltip()) {
-                        getCooldownTooltip(stack, type ,tooltip, shield.getCoolDownTicks(stack));
-                    }
+                	FabricShield shield = (FabricShield) stack.getItem();
+                    displayTooltip = shield.displayTooltip();
                 }
 
-                //Display tooltip for vanilla shield
-                if(stack.getItem().equals(Items.SHIELD)) {
-                    getCooldownTooltip(stack, type,tooltip, 100);
+                //Display tooltip for shields
+                BlocksAttacksComponent shield = stack.get(DataComponentTypes.BLOCKS_ATTACKS);
+                if (shield != null && displayTooltip) {
+                    getCooldownTooltip(stack, type, tooltip, (int) (100.0F * shield.disableCooldownScale()));
                 }
             }
         });
@@ -128,7 +122,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
                     break;
                 }
             }
-            
+
             //Grab nbt string
             if(!stack.getComponents().isEmpty()) {
                 for(int i = tooltip.size() - 1; i > 0; i--) {
@@ -150,7 +144,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
         tooltip.add(Text.translatable("fabricshieldlib.shield_tooltip.start").append(Text.literal(":")).formatted(Formatting.GRAY));
 
         /*
-         * All of this is so if there is a .0 instead of there being a need for a 
+         * All of this is so if there is a .0 instead of there being a need for a
          * decimal remove the .0
          */
         String cooldown = String.valueOf((Double)(cooldownTicks / 20.0));
