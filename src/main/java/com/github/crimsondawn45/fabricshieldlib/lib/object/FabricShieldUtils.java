@@ -1,5 +1,7 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
+
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -39,6 +41,14 @@ public class FabricShieldUtils {
 		return item.getComponents().contains(DataComponentTypes.BLOCKS_ATTACKS);
 	}
 
+	public static boolean supportsBanner(ItemStack itemStack) {
+		return itemStack.contains(FabricShieldLib.MODEL_COMPONENT);
+	}
+
+	public static boolean supportsBanner(Item item) {
+		return item.getComponents().contains(FabricShieldLib.MODEL_COMPONENT);
+	}
+  
 	public static BlocksAttacksComponent withBlockDelaySeconds(BlocksAttacksComponent in, float blockDelaySeconds) {
 		return new BlocksAttacksComponent(
 				blockDelaySeconds,
