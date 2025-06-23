@@ -9,7 +9,7 @@ public class FabricShieldLibConfig extends MidnightConfig {
 
     @Comment
     public static Comment enchantability_convention;
-    
+
     @Entry
     public static int vanilla_shield_enchantability = 14;
 
