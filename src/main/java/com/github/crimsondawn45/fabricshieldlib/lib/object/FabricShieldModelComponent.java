@@ -5,11 +5,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.Identifier;
 
 public record FabricShieldModelComponent(Identifier baseModel, Identifier baseModelNoPat, String layer) {
-
-    public static final Codec<FabricShieldModelComponent> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-            Identifier.CODEC.fieldOf("baseModel").forGetter(FabricShieldModelComponent::baseModel),
-            Identifier.CODEC.fieldOf("baseModelNoPat").forGetter(FabricShieldModelComponent::baseModelNoPat),
-            Codec.STRING.fieldOf("EML").forGetter(FabricShieldModelComponent::layer)
-            ).apply(builder, FabricShieldModelComponent::new));
-
+	public static final Codec<FabricShieldModelComponent> CODEC = RecordCodecBuilder.create(
+		builder -> builder.group(
+			Identifier.CODEC.fieldOf("baseModel").forGetter(FabricShieldModelComponent::baseModel),
+			Identifier.CODEC.fieldOf("baseModelNoPat").forGetter(FabricShieldModelComponent::baseModelNoPat),
+			Codec.STRING.fieldOf("EML").forGetter(FabricShieldModelComponent::layer)
+		).apply(builder, FabricShieldModelComponent::new)
+	);
 }
