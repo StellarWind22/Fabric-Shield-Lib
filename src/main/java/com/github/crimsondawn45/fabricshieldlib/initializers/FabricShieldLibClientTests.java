@@ -18,8 +18,7 @@ public class FabricShieldLibClientTests {
 	private static ShieldEntityModel modelFabricShield;
 
 	protected static void runTests() {
-		// Registers sprite directories and model layer, will be done by player, dev
-		// code
+		// Registers sprite directories and model layer, will be done by player, dev code
 		EntityModelLayerRegistry.registerModelLayer(fabric_banner_shield_model_layer,
 			ShieldEntityModel::getTexturedModelData);
 

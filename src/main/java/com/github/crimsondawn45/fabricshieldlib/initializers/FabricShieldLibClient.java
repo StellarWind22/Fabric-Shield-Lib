@@ -34,7 +34,7 @@ public class FabricShieldLibClient implements ClientModInitializer {
 	);
 
 	public static final Identifier FABRIC_BANNER_SHIELD_MODEL_TYPE =
-		Identifier.of("fabricshieldlib", "fabric_banner_shield");
+		Identifier.of(FabricShieldLib.MOD_ID, "fabric_banner_shield");
 
 	@Override
 	public void onInitializeClient() {
