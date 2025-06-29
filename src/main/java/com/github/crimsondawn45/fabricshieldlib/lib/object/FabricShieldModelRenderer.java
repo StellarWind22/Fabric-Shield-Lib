@@ -30,78 +30,83 @@ import java.util.Set;
 
 @Environment(EnvType.CLIENT)
 public class FabricShieldModelRenderer implements SpecialModelRenderer<ComponentMap> {
-    private final LoadedEntityModels loadedEntityModels;
-    private static final ThreadLocal<ShieldEntityModel> CURRENT_MODEL = new ThreadLocal<>();
+	private final LoadedEntityModels loadedEntityModels;
+	private static final ThreadLocal<ShieldEntityModel> CURRENT_MODEL = ThreadLocal.withInitial(null);
 
+	public FabricShieldModelRenderer(LoadedEntityModels loadedEntityModels) {
+		this.loadedEntityModels = loadedEntityModels;
+	}
 
-    public FabricShieldModelRenderer(LoadedEntityModels loadedEntityModels) {
-        this.loadedEntityModels = loadedEntityModels;
-    }
+	@Nullable
+	public ComponentMap getData(ItemStack itemStack) {
+		return itemStack.getImmutableComponents();
+	}
 
-    @Nullable
-    public ComponentMap getData(ItemStack itemStack) {
-        return itemStack.getImmutableComponents();
-    }
+	public void render(
+		@Nullable ComponentMap componentMap, ItemDisplayContext displayContext, MatrixStack matrixStack,
+		VertexConsumerProvider vertexConsumerProvider, int i, int j, boolean bl
+	) {
+		BannerPatternsComponent bannerPatternsComponent = componentMap == null ? BannerPatternsComponent.DEFAULT:
+			(BannerPatternsComponent) componentMap.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT);
 
-    public void render(@Nullable ComponentMap componentMap, ItemDisplayContext displayContext, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j, boolean bl) {
-        BannerPatternsComponent bannerPatternsComponent = componentMap != null ? (BannerPatternsComponent)componentMap.getOrDefault(DataComponentTypes.BANNER_PATTERNS, BannerPatternsComponent.DEFAULT) : BannerPatternsComponent.DEFAULT;
-        DyeColor dyeColor = componentMap != null ? (DyeColor) componentMap.get(DataComponentTypes.BASE_COLOR) : null;
-        boolean bl2 = !bannerPatternsComponent.layers().isEmpty() || dyeColor != null;
-        matrixStack.push();
-        matrixStack.scale(1.0F, -1.0F, -1.0F);
-        FabricShieldModelComponent modelComponent = componentMap.get(FabricShieldLib.MODEL_COMPONENT);
-        EntityModelLayer EML = new EntityModelLayer(getEMLID(modelComponent.layer()), "main");
-        ShieldEntityModel model = new ShieldEntityModel(loadedEntityModels.getModelPart(EML));
-        CURRENT_MODEL.set(model);
-        try {
-            @SuppressWarnings("deprecation")
-            SpriteIdentifier spriteIdentifier = bl2 ? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModel()) : new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModelNoPat());
-            VertexConsumer vertexConsumer = spriteIdentifier.getSprite().getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider, model.getLayer(spriteIdentifier.getAtlasId()), displayContext == ItemDisplayContext.GUI, bl));
-            model.getHandle().render(matrixStack, vertexConsumer, i, j);
-            if (bl2) {
-                BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(), spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor, DyeColor.WHITE), bannerPatternsComponent, bl, false);
-            } else {
-                model.getPlate().render(matrixStack, vertexConsumer, i, j);
-            }
-        } finally {
-            CURRENT_MODEL.remove();
-            matrixStack.pop();
-        }
-    }
+		DyeColor dyeColor = componentMap == null ? null : (DyeColor) componentMap.get(DataComponentTypes.BASE_COLOR);
 
+		boolean bl2 = !bannerPatternsComponent.layers().isEmpty() || dyeColor != null;
 
-    @Override
-    public void collectVertices(Set<Vector3f> vertices) {
-        ShieldEntityModel model = CURRENT_MODEL.get();
-        if (model != null) {
-            MatrixStack matrixStack = new MatrixStack();
-            matrixStack.scale(1.0F, -1.0F, -1.0F);
-            model.getRootPart().collectVertices(matrixStack, vertices);
-        }
-    }
+		matrixStack.push();
+		matrixStack.scale(1.0F, -1.0F, -1.0F);
+		FabricShieldModelComponent modelComponent = componentMap.get(FabricShieldLib.MODEL_COMPONENT);
+		EntityModelLayer EML = new EntityModelLayer(getEMLID(modelComponent.layer()), "main");
+		ShieldEntityModel model = new ShieldEntityModel(loadedEntityModels.getModelPart(EML));
+		CURRENT_MODEL.set(model);
+		try {
+			@SuppressWarnings("deprecation")
+			SpriteIdentifier spriteIdentifier = bl2
+				? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModel())
+				: new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModelNoPat());
+			VertexConsumer vertexConsumer = spriteIdentifier.getSprite()
+				.getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider,
+					model.getLayer(spriteIdentifier.getAtlasId()), displayContext == ItemDisplayContext.GUI, bl));
+			model.getHandle().render(matrixStack, vertexConsumer, i, j);
+			if (bl2) {
+				BannerBlockEntityRenderer.renderCanvas(matrixStack, vertexConsumerProvider, i, j, model.getPlate(),
+					spriteIdentifier, false, (DyeColor) Objects.requireNonNullElse(dyeColor, DyeColor.WHITE),
+					bannerPatternsComponent, bl, false);
+			} else {
+				model.getPlate().render(matrixStack, vertexConsumer, i, j);
+			}
+		} finally {
+			CURRENT_MODEL.remove();
+			matrixStack.pop();
+		}
+	}
 
-    @Environment(EnvType.CLIENT)
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
-        public static final FabricShieldModelRenderer.Unbaked INSTANCE = new FabricShieldModelRenderer.Unbaked();
-        public static final MapCodec<FabricShieldModelRenderer.Unbaked> CODEC;
+	@Override
+	public void collectVertices(Set<Vector3f> vertices) {
+		ShieldEntityModel model = CURRENT_MODEL.get();
+		if (model != null) {
+			MatrixStack matrixStack = new MatrixStack();
+			matrixStack.scale(1.0F, -1.0F, -1.0F);
+			model.getRootPart().collectVertices(matrixStack, vertices);
+		}
+	}
 
-        public MapCodec<FabricShieldModelRenderer.Unbaked> getCodec() {
-            return CODEC;
-        }
+	@Environment(EnvType.CLIENT)
+	public record Unbaked() implements SpecialModelRenderer.Unbaked {
+		public static final FabricShieldModelRenderer.Unbaked INSTANCE = new FabricShieldModelRenderer.Unbaked();
+		public static final MapCodec<FabricShieldModelRenderer.Unbaked> CODEC = MapCodec.unit(INSTANCE);
 
+		public MapCodec<FabricShieldModelRenderer.Unbaked> getCodec() {
+			return CODEC;
+		}
 
-        public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
-            return new FabricShieldModelRenderer(entityModels);
-        }
+		public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
+			return new FabricShieldModelRenderer(entityModels);
+		}
+	}
 
-        static {
-            CODEC = MapCodec.unit(INSTANCE);
-        }
-    }
-
-    @Nullable
-    public static Identifier getEMLID(String IdWithVariant) {
-        return Identifier.tryParse(IdWithVariant.split("#")[0]);
-    }
+	@Nullable
+	public static Identifier getEMLID(String IdWithVariant) {
+		return Identifier.tryParse(IdWithVariant.split("#")[0]);
+	}
 }
-
