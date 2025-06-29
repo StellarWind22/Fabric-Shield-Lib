@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  * Main class for Fabric Shield Lib.
  */
 public class FabricShieldLib implements ModInitializer {
-
 	/**
 	 * Fabric Shield Lib's mod id.
 	 */

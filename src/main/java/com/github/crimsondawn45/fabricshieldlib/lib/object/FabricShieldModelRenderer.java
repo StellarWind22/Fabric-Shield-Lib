@@ -31,7 +31,7 @@ import java.util.Set;
 @Environment(EnvType.CLIENT)
 public class FabricShieldModelRenderer implements SpecialModelRenderer<ComponentMap> {
 	private final LoadedEntityModels loadedEntityModels;
-	private static final ThreadLocal<ShieldEntityModel> CURRENT_MODEL = ThreadLocal.withInitial(null);
+	private static final ThreadLocal<ShieldEntityModel> CURRENT_MODEL = new ThreadLocal<>();
 
 	public FabricShieldModelRenderer(LoadedEntityModels loadedEntityModels) {
 		this.loadedEntityModels = loadedEntityModels;

@@ -33,10 +33,13 @@ public class FabricShieldLibClient implements ClientModInitializer {
 		Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern")
 	);
 
+	public static final Identifier FABRIC_BANNER_SHIELD_MODEL_TYPE =
+		Identifier.of("fabricshieldlib", "fabric_banner_shield");
+
 	@Override
 	public void onInitializeClient() {
 		SpecialModelTypes.ID_MAPPER.put(
-			Identifier.of("fabricshieldlib", "fabric_banner_shield"),
+			FABRIC_BANNER_SHIELD_MODEL_TYPE,
 			FabricShieldModelRenderer.Unbaked.CODEC
 		);
 
