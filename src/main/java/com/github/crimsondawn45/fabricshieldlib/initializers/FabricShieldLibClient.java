@@ -3,6 +3,8 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelRenderer;
+import com.mojang.serialization.MapCodec;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.loader.api.FabricLoader;
@@ -38,10 +40,14 @@ public class FabricShieldLibClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		SpecialModelTypes.ID_MAPPER.put(
-			FABRIC_BANNER_SHIELD_MODEL_TYPE,
-			FabricShieldModelRenderer.Unbaked.CODEC
-		);
+		MapCodec<FabricShieldModelRenderer.UnbakedInstance.Unbaked> codec =
+			new FabricShieldModelRenderer.UnbakedInstance(
+				FABRIC_BANNER_SHIELD_BASE.getTextureId(),
+				FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(),
+				FabricShieldLibClientTests.fabric_banner_shield_model_layer
+			).codec;
+
+		SpecialModelTypes.ID_MAPPER.put(FABRIC_BANNER_SHIELD_MODEL_TYPE, codec);
 
 		/*
 		 * Register tooltip callback this is the same as mixing into the end of:

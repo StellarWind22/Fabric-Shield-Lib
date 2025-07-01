@@ -7,7 +7,6 @@ import java.util.function.Function;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelComponent;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldUtils;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -24,6 +23,7 @@ import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Unit;
 
 public class FabricShieldLibTests {
 	/**
@@ -38,7 +38,7 @@ public class FabricShieldLibTests {
 	private final static FabricShieldItem fabric_banner_shield = registerItem("fabric_banner_shield",
 		(props) -> new FabricShieldItem(props
 				.maxDamage(FabricShieldUtils.VANILLA_SHIELD_DURABILITY)
-				.component(FabricShieldLib.MODEL_COMPONENT, testModelComponent()),
+				.component(FabricShieldLib.MODEL_COMPONENT, Unit.INSTANCE),
 			85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
 	/**
@@ -46,7 +46,7 @@ public class FabricShieldLibTests {
 	 */
 	private final static FabricShieldItem fabric_component_shield = registerItem("fabric_component_shield",
 		(props) -> new FabricShieldItem(props.maxDamage(100)
-			.component(FabricShieldLib.MODEL_COMPONENT, testModelComponent())
+			.component(FabricShieldLib.MODEL_COMPONENT, Unit.INSTANCE)
 			.component(DataComponentTypes.BLOCKS_ATTACKS,
 				new BlocksAttacksComponent(0.25F, 150F / 100F,
 					List.of(new BlocksAttacksComponent.DamageReduction(180.0F, Optional.empty(), 0.0F, 0.5F)),
@@ -108,14 +108,6 @@ public class FabricShieldLibTests {
 //            defender.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 1, true, false));
 //            return ActionResult.PASS;
 //        });
-	}
-
-	private static FabricShieldModelComponent testModelComponent() {
-		return new FabricShieldModelComponent(
-			FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE.getTextureId(),
-			FabricShieldLibClient.FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(),
-			FabricShieldLibClientTests.fabric_banner_shield_model_layer.toString()
-		);
 	}
 
 	private static <T extends Item> T registerItem(String name, Function<Item.Settings, T> constructor) {

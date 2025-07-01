@@ -1,9 +1,9 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BannerBlockEntityRenderer;
@@ -30,11 +30,13 @@ import java.util.Set;
 
 @Environment(EnvType.CLIENT)
 public class FabricShieldModelRenderer implements SpecialModelRenderer<ComponentMap> {
-	private final LoadedEntityModels loadedEntityModels;
-	private static final ThreadLocal<ShieldEntityModel> CURRENT_MODEL = new ThreadLocal<>();
+	private final Identifier baseModel, baseModelNoPat;
+	private final ShieldEntityModel model;
 
-	public FabricShieldModelRenderer(LoadedEntityModels loadedEntityModels) {
-		this.loadedEntityModels = loadedEntityModels;
+	public FabricShieldModelRenderer(Identifier baseModel, Identifier baseModelNoPat, ShieldEntityModel model) {
+		this.baseModel = baseModel;
+		this.baseModelNoPat = baseModelNoPat;
+		this.model = model;
 	}
 
 	@Nullable
@@ -55,15 +57,12 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
 
 		matrixStack.push();
 		matrixStack.scale(1.0F, -1.0F, -1.0F);
-		FabricShieldModelComponent modelComponent = componentMap.get(FabricShieldLib.MODEL_COMPONENT);
-		EntityModelLayer EML = new EntityModelLayer(getEMLID(modelComponent.layer()), "main");
-		ShieldEntityModel model = new ShieldEntityModel(loadedEntityModels.getModelPart(EML));
-		CURRENT_MODEL.set(model);
+
 		try {
 			@SuppressWarnings("deprecation")
 			SpriteIdentifier spriteIdentifier = bl2
-				? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModel())
-				: new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, modelComponent.baseModelNoPat());
+				? new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, this.baseModel)
+				: new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, this.baseModelNoPat);
 			VertexConsumer vertexConsumer = spriteIdentifier.getSprite()
 				.getTextureSpecificVertexConsumer(ItemRenderer.getItemGlintConsumer(vertexConsumerProvider,
 					model.getLayer(spriteIdentifier.getAtlasId()), displayContext == ItemDisplayContext.GUI, bl));
@@ -76,37 +75,49 @@ public class FabricShieldModelRenderer implements SpecialModelRenderer<Component
 				model.getPlate().render(matrixStack, vertexConsumer, i, j);
 			}
 		} finally {
-			CURRENT_MODEL.remove();
 			matrixStack.pop();
 		}
 	}
 
 	@Override
 	public void collectVertices(Set<Vector3f> vertices) {
-		ShieldEntityModel model = CURRENT_MODEL.get();
-		if (model != null) {
-			MatrixStack matrixStack = new MatrixStack();
-			matrixStack.scale(1.0F, -1.0F, -1.0F);
-			model.getRootPart().collectVertices(matrixStack, vertices);
-		}
+		MatrixStack matrixStack = new MatrixStack();
+		matrixStack.scale(1.0F, -1.0F, -1.0F);
+		this.model.getRootPart().collectVertices(matrixStack, vertices);
 	}
 
-	@Environment(EnvType.CLIENT)
-	public record Unbaked() implements SpecialModelRenderer.Unbaked {
-		public static final FabricShieldModelRenderer.Unbaked INSTANCE = new FabricShieldModelRenderer.Unbaked();
-		public static final MapCodec<FabricShieldModelRenderer.Unbaked> CODEC = MapCodec.unit(INSTANCE);
+	public static class UnbakedInstance {
+		public final Identifier baseModel, baseModelNoPat;
+		public final EntityModelLayer entityModelLayer;
+		public final Unbaked instance;
+		public final MapCodec<UnbakedInstance.Unbaked> codec;
 
-		public MapCodec<FabricShieldModelRenderer.Unbaked> getCodec() {
-			return CODEC;
+		public UnbakedInstance(Identifier baseModel, Identifier baseModelNoPat, EntityModelLayer entityModelLayer) {
+			this.baseModel = baseModel;
+			this.baseModelNoPat = baseModelNoPat;
+			this.entityModelLayer = entityModelLayer;
+			this.instance = new Unbaked();
+			this.codec = MapCodec.unit(this.instance);
 		}
 
-		public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
-			return new FabricShieldModelRenderer(entityModels);
-		}
-	}
+		public class Unbaked implements SpecialModelRenderer.Unbaked {
+			private Unbaked() {}
 
-	@Nullable
-	public static Identifier getEMLID(String IdWithVariant) {
-		return Identifier.tryParse(IdWithVariant.split("#")[0]);
+			@Override
+			public MapCodec<Unbaked> getCodec() {
+				return UnbakedInstance.this.codec;
+			}
+
+			@Override
+			public SpecialModelRenderer<?> bake(LoadedEntityModels entityModels) {
+				ModelPart modelPart = entityModels.getModelPart(UnbakedInstance.this.entityModelLayer);
+				ShieldEntityModel model = new ShieldEntityModel(modelPart);
+				return new FabricShieldModelRenderer(
+					UnbakedInstance.this.baseModel,
+					UnbakedInstance.this.baseModelNoPat,
+					model
+				);
+			}
+		}
 	}
 }
