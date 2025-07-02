@@ -39,7 +39,6 @@ dependencies {
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	
 }
 
 processResources {
@@ -63,6 +62,8 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+
+	exclude "data/fabricshieldlib/tags/item/supports_banner.json"
 }
 
 // configure the maven publication
@@ -79,8 +80,6 @@ publishing {
 	}
 	repositories {
 	}
-
-
 }
 
 fabricApi {

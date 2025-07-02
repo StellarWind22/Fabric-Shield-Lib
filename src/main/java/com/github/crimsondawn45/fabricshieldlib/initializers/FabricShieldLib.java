@@ -2,17 +2,16 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldDecoratorRecipe;
+
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.component.ComponentType;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Unit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +29,6 @@ public class FabricShieldLib implements ModInitializer {
 	 * Fabric Shield Lib's logger.
 	 */
 	public static final Logger logger = LoggerFactory.getLogger(MOD_ID);
-
-	/**
-	 * If a shield item supports banner, it should carry this component.
-	 */
-	public static final ComponentType<Unit> MODEL_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE,
-		Identifier.of(MOD_ID, "shieldlibmodelcomponent"),
-		ComponentType.<Unit>builder().codec(Unit.CODEC).packetCodec(Unit.PACKET_CODEC).build()
-	);
 
 	/**
 	 * Recipe type and serializer for banner decoration recipe.

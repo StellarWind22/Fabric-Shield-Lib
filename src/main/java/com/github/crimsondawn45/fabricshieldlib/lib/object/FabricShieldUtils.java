@@ -1,6 +1,5 @@
 package com.github.crimsondawn45.fabricshieldlib.lib.object;
 
-import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.entity.EquipmentSlot;
@@ -50,15 +49,16 @@ public class FabricShieldUtils {
 	 * @return true if the itemStack supports banner.
 	 */
 	public static boolean supportsBanner(ItemStack itemStack) {
-		return itemStack.contains(FabricShieldLib.MODEL_COMPONENT);
+		return itemStack.isIn(FabricShieldTags.SUPPORTS_BANNER);
 	}
 
 	/**
 	 * @param item
 	 * @return true if the item supports banner.
 	 */
+	@SuppressWarnings("deprecation")
 	public static boolean supportsBanner(Item item) {
-		return item.getComponents().contains(FabricShieldLib.MODEL_COMPONENT);
+		return item.getRegistryEntry().isIn(FabricShieldTags.SUPPORTS_BANNER);
 	}
 
 	public static Item.Settings vanillaShieldSettings(Item.Settings settings) {

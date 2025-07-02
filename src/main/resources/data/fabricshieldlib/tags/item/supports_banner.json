@@ -1,0 +1,7 @@
+{
+	"replace": false,
+	"values": [
+		"fabricshieldlib:fabric_banner_shield",
+		"fabricshieldlib:fabric_component_shield"
+	]
+}

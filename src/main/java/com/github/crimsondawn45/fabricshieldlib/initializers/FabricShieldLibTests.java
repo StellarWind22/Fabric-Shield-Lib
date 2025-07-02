@@ -23,7 +23,6 @@ import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Unit;
 
 public class FabricShieldLibTests {
 	/**
@@ -38,15 +37,13 @@ public class FabricShieldLibTests {
 	private final static FabricShieldItem fabric_banner_shield = registerItem("fabric_banner_shield",
 		(props) -> new FabricShieldItem(props
 				.maxDamage(FabricShieldUtils.VANILLA_SHIELD_DURABILITY)
-				.component(FabricShieldLib.MODEL_COMPONENT, Unit.INSTANCE),
-			85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
+			, 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
 	/**
 	 * Test shield item using the {@link BlocksAttacksComponent}
 	 */
 	private final static FabricShieldItem fabric_component_shield = registerItem("fabric_component_shield",
 		(props) -> new FabricShieldItem(props.maxDamage(100)
-			.component(FabricShieldLib.MODEL_COMPONENT, Unit.INSTANCE)
 			.component(DataComponentTypes.BLOCKS_ATTACKS,
 				new BlocksAttacksComponent(0.25F, 150F / 100F,
 					List.of(new BlocksAttacksComponent.DamageReduction(180.0F, Optional.empty(), 0.0F, 0.5F)),
