@@ -46,15 +46,15 @@ public class FabricShieldUtils {
 
 	/**
 	 * @param itemStack
-	 * @return true if the itemStack supports banner.
+	 * @return true if the itemStack (the shield) supports banner.
 	 */
 	public static boolean supportsBanner(ItemStack itemStack) {
-		return itemStack.isIn(FabricShieldTags.SUPPORTS_BANNER);
+		return supportsBanner(itemStack.getItem());
 	}
 
 	/**
 	 * @param item
-	 * @return true if the item supports banner.
+	 * @return true if the item (the shield) supports banner.
 	 */
 	@SuppressWarnings("deprecation")
 	public static boolean supportsBanner(Item item) {

@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 plugins {
 	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
@@ -58,12 +61,32 @@ java {
 	withSourcesJar()
 }
 
+// Remove debug tags
+jar.doFirst {
+	def tagDir = file("$buildDir/resources/main/data/fabricshieldlib/tags/item")
+	def entriesToRemove = [
+		'fabricshieldlib:fabric_banner_shield',
+		'fabricshieldlib:fabric_component_shield'
+	]
+
+	if (tagDir.exists()) {
+		tagDir.eachFileMatch(~/.+\.json$/) { File jsonFile ->
+			def json = new JsonSlurper().parse(jsonFile)
+
+			if (json.values instanceof List) {
+				json.values.removeAll { it in entriesToRemove }
+
+				jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+				System.out.println("Patched: ${jsonFile}")
+			}
+		}
+	}
+}
+
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
-
-	exclude "data/fabricshieldlib/tags/item/supports_banner.json"
 }
 
 // configure the maven publication

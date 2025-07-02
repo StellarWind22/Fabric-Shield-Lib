@@ -5,6 +5,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.ShieldDecorationRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
@@ -18,6 +19,11 @@ import net.minecraft.world.World;
 public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 	public FabricShieldDecoratorRecipe(CraftingRecipeCategory craftingRecipeCategory) {
 		super(CraftingRecipeCategory.EQUIPMENT);
+	}
+
+	public boolean supportBannerAndModded(ItemStack itemStack) {
+		// We dont want to handle vanilla shield in this recipe!
+		return !itemStack.isOf(Items.SHIELD) & FabricShieldUtils.supportsBanner(itemStack);
 	}
 
 	@Override
@@ -36,7 +42,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 					itemStack2 = itemStack3;
 				} else {
 
-					if (!(FabricShieldUtils.supportsBanner(itemStack3))) {
+					if (!supportBannerAndModded(itemStack3)) {
 						return false;
 					}
 
@@ -68,7 +74,7 @@ public class FabricShieldDecoratorRecipe extends ShieldDecorationRecipe {
 			if (!itemStack3.isEmpty()) {
 				if (itemStack3.getItem() instanceof BannerItem) {
 					itemStack = itemStack3;
-				} else if (FabricShieldUtils.supportsBanner(itemStack3)) {
+				} else if (supportBannerAndModded(itemStack3)) {
 					itemStack2 = itemStack3.copy();
 				}
 			}
