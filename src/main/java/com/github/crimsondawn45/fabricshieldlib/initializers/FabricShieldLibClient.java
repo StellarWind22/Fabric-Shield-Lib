@@ -2,15 +2,12 @@ package com.github.crimsondawn45.fabricshieldlib.initializers;
 
 import com.github.crimsondawn45.fabricshieldlib.lib.config.FabricShieldLibConfig;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShield;
-import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldModelRenderer;
-import com.mojang.serialization.MapCodec;
+import com.github.crimsondawn45.fabricshieldlib.tests.FabricShieldLibClientTests;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.render.item.model.special.SpecialModelTypes;
-import net.minecraft.client.texture.SpriteAtlasTexture;
-import net.minecraft.client.util.SpriteIdentifier;
+
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BlocksAttacksComponent;
 import net.minecraft.item.ItemStack;
@@ -23,32 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FabricShieldLibClient implements ClientModInitializer {
-	@SuppressWarnings("deprecation")
-	public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE = new SpriteIdentifier(
-		SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,
-		Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base")
-	);
-
-	@SuppressWarnings("deprecation")
-	public static final SpriteIdentifier FABRIC_BANNER_SHIELD_BASE_NO_PATTERN = new SpriteIdentifier(
-		SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,
-		Identifier.of(FabricShieldLib.MOD_ID, "entity/fabric_banner_shield_base_nopattern")
-	);
-
-	public static final Identifier FABRIC_BANNER_SHIELD_MODEL_TYPE =
-		Identifier.of(FabricShieldLib.MOD_ID, "fabric_banner_shield");
-
 	@Override
 	public void onInitializeClient() {
-		MapCodec<FabricShieldModelRenderer.UnbakedInstance.Unbaked> codec =
-			new FabricShieldModelRenderer.UnbakedInstance(
-				FABRIC_BANNER_SHIELD_BASE.getTextureId(),
-				FABRIC_BANNER_SHIELD_BASE_NO_PATTERN.getTextureId(),
-				FabricShieldLibClientTests.fabric_banner_shield_model_layer
-			).codec;
-
-		SpecialModelTypes.ID_MAPPER.put(FABRIC_BANNER_SHIELD_MODEL_TYPE, codec);
-
 		/*
 		 * Register tooltip callback this is the same as mixing into the end of:
 		 * ItemStack.getTooltip()

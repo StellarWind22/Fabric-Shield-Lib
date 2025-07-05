@@ -1,9 +1,10 @@
-package com.github.crimsondawn45.fabricshieldlib.initializers;
+package com.github.crimsondawn45.fabricshieldlib.tests;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.github.crimsondawn45.fabricshieldlib.initializers.FabricShieldLib;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldBlockCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.event.ShieldDisabledCallback;
 import com.github.crimsondawn45.fabricshieldlib.lib.object.FabricShieldItem;
@@ -24,17 +25,22 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
+/**
+ * These are test codes used internally by FabricShieldLib developers.
+ * <p>
+ * Modders are not supposed to reference this class!
+ */
 public class FabricShieldLibTests {
 	/**
 	 * Test shield item that does not support banners.
 	 */
-	private final static FabricShieldItem fabric_shield = registerItem("fabric_shield",
+	private final static FabricShieldItem FABRIC_SHIELD = registerItem("fabric_shield",
 		(props) -> new FabricShieldItem(props.maxDamage(200), 100, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
 
 	/**
 	 * Test shield item that supports banners.
 	 */
-	private final static FabricShieldItem fabric_banner_shield = registerItem("fabric_banner_shield",
+	private final static FabricShieldItem FABRIC_BANNER_SHIELD = registerItem("fabric_banner_shield",
 		(props) -> new FabricShieldItem(props
 				.maxDamage(FabricShieldUtils.VANILLA_SHIELD_DURABILITY)
 			, 85, 9, Items.OAK_PLANKS, Items.SPRUCE_PLANKS));
@@ -42,7 +48,7 @@ public class FabricShieldLibTests {
 	/**
 	 * Test shield item using the {@link BlocksAttacksComponent}
 	 */
-	private final static FabricShieldItem fabric_component_shield = registerItem("fabric_component_shield",
+	private final static FabricShieldItem FABRIC_COMPONENT_SHIELD = registerItem("fabric_component_shield",
 		(props) -> new FabricShieldItem(props.maxDamage(100)
 			.component(DataComponentTypes.BLOCKS_ATTACKS,
 				new BlocksAttacksComponent(0.25F, 150F / 100F,
@@ -54,12 +60,12 @@ public class FabricShieldLibTests {
 				)
 			), 15, Items.DIAMOND));
 
-	protected static void runTests() {
+	public static void runTests() {
 		// Add test items to the combat tab
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-			entries.addAfter(Items.SHIELD, fabric_banner_shield);
-			entries.addAfter(fabric_banner_shield, fabric_shield);
-			entries.addAfter(fabric_shield, fabric_component_shield);
+			entries.addAfter(Items.SHIELD, FABRIC_BANNER_SHIELD);
+			entries.addAfter(FABRIC_BANNER_SHIELD, FABRIC_SHIELD);
+			entries.addAfter(FABRIC_SHIELD, FABRIC_COMPONENT_SHIELD);
 		});
 
 		// Test events
