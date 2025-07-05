@@ -63,21 +63,29 @@ java {
 
 // Remove debug tags
 jar.doFirst {
-	def tagDir = file("$buildDir/resources/main/data/fabricshieldlib/tags/item")
+	def tagDirs = [
+		file("$buildDir/resources/main/data/fabricshieldlib/tags/item"),
+		file("$buildDir/resources/main/data/c/tags/item/tools"),
+		file("$buildDir/resources/main/data/minecraft/tags/item/enchantable")
+	]
+
 	def entriesToRemove = [
+		'fabricshieldlib:fabric_shield',
 		'fabricshieldlib:fabric_banner_shield',
 		'fabricshieldlib:fabric_component_shield'
 	]
 
-	if (tagDir.exists()) {
-		tagDir.eachFileMatch(~/.+\.json$/) { File jsonFile ->
-			def json = new JsonSlurper().parse(jsonFile)
-
-			if (json.values instanceof List) {
-				json.values.removeAll { it in entriesToRemove }
-
-				jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
-				System.out.println("Patched: ${jsonFile}")
+	tagDirs.each { tagDir ->
+		if (tagDir.exists()) {
+			tagDir.eachFileMatch(~/.+\.json$/) { File jsonFile ->
+				def json = new JsonSlurper().parse(jsonFile)
+	
+				if (json.values instanceof List) {
+					json.values.removeAll { it in entriesToRemove }
+	
+					jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+					System.out.println("Stripped debug items from: ${jsonFile}")
+				}
 			}
 		}
 	}
