@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+
 plugins {
 	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
@@ -39,7 +42,6 @@ dependencies {
 
 	modImplementation "maven.modrinth:midnightlib:${project.midnightlib_version}"
 	include "maven.modrinth:midnightlib:${project.midnightlib_version}"
-	
 }
 
 processResources {
@@ -57,6 +59,36 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	withSourcesJar()
+}
+
+// Remove debug tags
+jar.doFirst {
+	def tagDirs = [
+		file("$buildDir/resources/main/data/fabricshieldlib/tags/item"),
+		file("$buildDir/resources/main/data/c/tags/item/tools"),
+		file("$buildDir/resources/main/data/minecraft/tags/item/enchantable")
+	]
+
+	def entriesToRemove = [
+		'fabricshieldlib:fabric_shield',
+		'fabricshieldlib:fabric_banner_shield',
+		'fabricshieldlib:fabric_component_shield'
+	]
+
+	tagDirs.each { tagDir ->
+		if (tagDir.exists()) {
+			tagDir.eachFileMatch(~/.+\.json$/) { File jsonFile ->
+				def json = new JsonSlurper().parse(jsonFile)
+	
+				if (json.values instanceof List) {
+					json.values.removeAll { it in entriesToRemove }
+	
+					jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(json))
+					System.out.println("Stripped debug items from: ${jsonFile}")
+				}
+			}
+		}
+	}
 }
 
 jar {
@@ -79,8 +111,6 @@ publishing {
 	}
 	repositories {
 	}
-
-
 }
 
 fabricApi {

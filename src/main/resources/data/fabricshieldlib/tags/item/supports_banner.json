@@ -1,7 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"fabricshieldlib:fabric_shield",
+		"minecraft:shield",
 		"fabricshieldlib:fabric_banner_shield",
 		"fabricshieldlib:fabric_component_shield"
 	]

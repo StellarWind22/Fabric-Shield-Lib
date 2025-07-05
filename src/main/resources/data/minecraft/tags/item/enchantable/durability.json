@@ -1,5 +1,8 @@
 {
-  "replace": false,
-  "values": [
-  ]
+	"replace": false,
+	"values": [
+		"fabricshieldlib:fabric_shield",
+		"fabricshieldlib:fabric_banner_shield",
+		"fabricshieldlib:fabric_component_shield"
+	]
 }

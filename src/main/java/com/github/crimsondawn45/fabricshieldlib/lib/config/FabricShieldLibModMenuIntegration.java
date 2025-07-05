@@ -9,9 +9,8 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class FabricShieldLibModMenuIntegration implements ModMenuApi {
-
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> MidnightConfig.getScreen(parent, FabricShieldLib.MOD_ID);
-    }
+	@Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		return parent -> MidnightConfig.getScreen(parent, FabricShieldLib.MOD_ID);
+	}
 }

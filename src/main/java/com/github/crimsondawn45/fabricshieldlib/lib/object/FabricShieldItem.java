@@ -25,112 +25,130 @@ import java.util.stream.Collectors;
  * Pre-made class for quickly making custom shields.
  */
 public class FabricShieldItem extends Item implements FabricShield {
-    /**
-     * @param settings       item settings.
-     * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItems    item(s) for repairing shield.
-     */
-    @SuppressWarnings("deprecation")
+	/**
+	 * @param settings       item settings.
+	 * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
+	 * @param enchantability enchantability of shield. Vanilla: 14
+	 * @param repairItems    item(s) for repairing shield.
+	 */
+	@SuppressWarnings("deprecation")
 	public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, Item... repairItems) {
-        this(settings, coolDownTicks, enchantability, RegistryEntryList.of(Arrays.stream(repairItems).map(Item::getRegistryEntry).collect(Collectors.toList())));
-    }
+		this(settings, coolDownTicks, enchantability,
+			RegistryEntryList.of(
+				Arrays.stream(repairItems).map(Item::getRegistryEntry).collect(Collectors.toList())
+			)
+		);
+	}
 
-    /**
-     * @param settings      item settings.
-     * @param coolDownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param material      tool material.
-     */
-    public FabricShieldItem(Settings settings, int coolDownTicks, ToolMaterial material) {
-    	this(settings.maxDamage(material.durability()), coolDownTicks, material.enchantmentValue(), material.repairItems());
-    }
+	/**
+	 * @param settings      item settings.
+	 * @param coolDownTicks ticks shield will be disabled for when it with axe. Vanilla: 100
+	 * @param material      tool material.
+	 */
+	public FabricShieldItem(Settings settings, int coolDownTicks, ToolMaterial material) {
+		this(
+			settings.maxDamage(material.durability()),
+			coolDownTicks,
+			material.enchantmentValue(),
+			material.repairItems()
+		);
+	}
 
-    /**
-     * @param settings       item settings.
-     * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItemTag  item tag for repairing shield.
-     */
-    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, TagKey<Item> repairItemTag) {
-        this(settings, coolDownTicks, enchantability, Registries.createEntryLookup(Registries.ITEM).getOrThrow(repairItemTag));
-    }
+	/**
+	 * @param settings       item settings.
+	 * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
+	 * @param enchantability enchantability of shield. Vanilla: 14
+	 * @param repairItemTag  item tag for repairing shield.
+	 */
+	public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, TagKey<Item> repairItemTag) {
+		this(
+			settings,
+			coolDownTicks,
+			enchantability,
+			Registries.createEntryLookup(Registries.ITEM).getOrThrow(repairItemTag)
+		);
+	}
 
-    /**
-     * @param settings       item settings.
-     * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
-     * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItems    list of items/tags for repairing shield.
-     */
-    public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, @Nullable RegistryEntryList<Item> repairItems) {
-        super(
-             attachRepairable(FabricShieldUtils.defaultShieldSettings(settings), repairItems)
-            .enchantable(enchantability)
-            .component(DataComponentTypes.BLOCKS_ATTACKS, FabricShieldUtils.withCooldownTicks(FabricShieldUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT, coolDownTicks))
-        );
-    }
+	/**
+	 * @param settings       item settings.
+	 * @param coolDownTicks  ticks shield will be disabled for when it with axe. Vanilla: 100
+	 * @param enchantability enchantability of shield. Vanilla: 14
+	 * @param repairItems    list of items/tags for repairing shield.
+	 */
+	public FabricShieldItem(Settings settings, int coolDownTicks, int enchantability, @Nullable RegistryEntryList<Item> repairItems) {
+		super(attachRepairable(FabricShieldUtils.defaultShieldSettings(settings), repairItems)
+			.enchantable(enchantability)
+			.component(DataComponentTypes.BLOCKS_ATTACKS,
+				FabricShieldUtils.withCooldownTicks(FabricShieldUtils.VANILLA_SHIELD_BLOCKS_ATTACKS_COMPONENT, coolDownTicks)
+			)
+		);
+	}
 
-    @SuppressWarnings("deprecation")
-    public FabricShieldItem(Settings settings, int enchantability, Item... repairItems) {
-        this(settings, enchantability, RegistryEntryList.of(Arrays.stream(repairItems).map(Item::getRegistryEntry).collect(Collectors.toList())));
-    }
+	@SuppressWarnings("deprecation")
+	public FabricShieldItem(Settings settings, int enchantability, Item... repairItems) {
+		this(settings,
+			enchantability,
+			RegistryEntryList.of(Arrays.stream(repairItems).map(Item::getRegistryEntry).collect(Collectors.toList()))
+		);
+	}
 
-    /**
-     * @param settings      item settings.
-     * @param material      tool material.
-     */
-    public FabricShieldItem(Settings settings, ToolMaterial material) {
-        this(settings.maxDamage(material.durability()), material.enchantmentValue(), material.repairItems());
-    }
+	/**
+	 * @param settings item settings.
+	 * @param material tool material.
+	 */
+	public FabricShieldItem(Settings settings, ToolMaterial material) {
+		this(settings.maxDamage(material.durability()), material.enchantmentValue(), material.repairItems());
+	}
 
-    /**
-     * @param settings       item settings.
-     * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItemTag  item tag for repairing shield.
-     */
-    public FabricShieldItem(Settings settings, int enchantability, TagKey<Item> repairItemTag) {
-        this(settings, enchantability, Registries.createEntryLookup(Registries.ITEM).getOrThrow(repairItemTag));
-    }
+	/**
+	 * @param settings       item settings.
+	 * @param enchantability enchantability of shield. Vanilla: 14
+	 * @param repairItemTag  item tag for repairing shield.
+	 */
+	public FabricShieldItem(Settings settings, int enchantability, TagKey<Item> repairItemTag) {
+		this(settings, enchantability, Registries.createEntryLookup(Registries.ITEM).getOrThrow(repairItemTag));
+	}
 
-    /**
-     * @param settings       item settings.
-     * @param enchantability enchantability of shield. Vanilla: 14
-     * @param repairItems    list of items/tags for repairing shield.
-     */
-    public FabricShieldItem(Settings settings, int enchantability, @Nullable RegistryEntryList<Item> repairItems) {
-        super(
-            attachRepairable(FabricShieldUtils.defaultShieldSettings(settings), repairItems)
-            .enchantable(enchantability)
-        );
-    }
+	/**
+	 * @param settings       item settings.
+	 * @param enchantability enchantability of shield. Vanilla: 14
+	 * @param repairItems    list of items/tags for repairing shield.
+	 */
+	public FabricShieldItem(Settings settings, int enchantability, @Nullable RegistryEntryList<Item> repairItems) {
+		super(attachRepairable(FabricShieldUtils.defaultShieldSettings(settings), repairItems)
+			.enchantable(enchantability)
+		);
+	}
 
-    @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BLOCK;
-    }
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.BLOCK;
+	}
 
-    @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-        return 72000;
-    }
+	@Override
+	public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+		return 72000;
+	}
 
-    @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        user.setCurrentHand(hand);
-        return ActionResult.CONSUME;
-    }
+	@Override
+	public ActionResult use(World world, PlayerEntity user, Hand hand) {
+		user.setCurrentHand(hand);
+		return ActionResult.CONSUME;
+	}
 
-    public static Item.Settings attachRepairable(Item.Settings settings, @Nullable RegistryEntryList<Item> repairItems) {
-        return (repairItems == null ? settings : settings.component(DataComponentTypes.REPAIRABLE, new RepairableComponent(repairItems)));
-    }
+	public static Item.Settings attachRepairable(Item.Settings settings, @Nullable RegistryEntryList<Item> repairItems) {
+		return (repairItems == null ? settings
+			: settings.component(DataComponentTypes.REPAIRABLE, new RepairableComponent(repairItems)));
+	}
 
-    @Override
-    public Text getName(ItemStack stack) {
-        DyeColor dyeColor = (DyeColor)stack.get(DataComponentTypes.BASE_COLOR);
-        if (dyeColor != null) {
-            String key = this.getTranslationKey();
-            return Text.translatable(key + "." + dyeColor.name());
-        } else {
-            return super.getName(stack);
-        }
-    }
+	@Override
+	public Text getName(ItemStack stack) {
+		DyeColor dyeColor = (DyeColor) stack.get(DataComponentTypes.BASE_COLOR);
+		if (dyeColor != null) {
+			String key = this.getTranslationKey();
+			return Text.translatable(key + "." + dyeColor.name());
+		} else {
+			return super.getName(stack);
+		}
+	}
 }
