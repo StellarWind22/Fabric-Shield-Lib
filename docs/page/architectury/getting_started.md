@@ -67,9 +67,9 @@ dependencies {
 ---
 
 ### Creating your first shield:
-- [Vanilla Style](tower_shield.md)
-- [Bring Your Own Model](component_shield.md)
-- [New shield shape](new_shape_shield.md)
+- [Vanilla Style(Tower Shield)](tower_shield.md)
+- [Component Shield(No Banner Support)](component_shield.md)
+- [New shield shape](custom_model.md)
 
 ---
 [![](../../image/architectury_64.png)](../architectury/getting_started.md)
